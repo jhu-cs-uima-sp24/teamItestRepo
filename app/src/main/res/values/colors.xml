@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
+    <color name="dark_gray">#FF222222</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="med_grass">#229954</color>
-    <color name="pale_grass">#D4EFDF</color>
-    <color name="peri">#A4A4FF</color>
-    <color name="navy">#1B4F72</color>
+
+    <color name="task_yellow">#F8DE9C</color>
+    <color name="task_pink">#FCB2DA</color>
+    <color name="task_blue">#C0D6F9</color>
+    <color name="task_green">#BCF1D1</color>
+    <color name="primary_pink">#FFD8D8</color>
+    <color name="secondary_pink">#FFF5F5</color>
+    <color name="timer_green">#7BA37D</color>
 </resources>

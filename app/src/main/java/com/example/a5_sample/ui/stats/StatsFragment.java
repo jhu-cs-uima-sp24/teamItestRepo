@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.a5_sample.databinding.FragmentChatBinding;
 import com.example.a5_sample.databinding.FragmentStatsBinding;
 
 public class StatsFragment extends Fragment {
