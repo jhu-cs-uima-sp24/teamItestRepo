@@ -30,6 +30,15 @@
     <string name="leave">* LEAVE *</string>
     <string name="storage">A5_CONTEXT_SP</string>
     <string name="stats_nav">Stats</string>
+    <string name="timerText">Timer</string>
+    <string name="stopwatchText">Stopwatch</string>
+    <string name="nameText">Name</string>
+    <string name="enterTaskNameHint">Enter Task Name</string>
+    <string name="enterDescriptionHint">Enter Description</string>
+    <string name="descriptionText">Description:</string>
+    <string name="task_nameText">Task Name:</string>
+    <string name="create_eventText">Create Event</string>
+    <string name="tagText">Tag:</string>
 
 
 </resources>
