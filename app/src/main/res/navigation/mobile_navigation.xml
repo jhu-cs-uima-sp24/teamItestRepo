@@ -23,10 +23,5 @@
         android:label="Stats"
         tools:layout="@layout/fragment_stats" />
 
-    <fragment
-        android:id="@+id/navigation_newEvent"
-        android:name="com.example.a5_sample.ui.createEvent.home.CreateEventFragment"
-        android:label="New Event"
-        tools:layout="@layout/activity_new_event" />
 
 </navigation>
