@@ -1,5 +1,6 @@
 package com.example.a5_sample.ui.stats;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +34,10 @@ public class StatsFragment extends Fragment {
 //        return root;
         binding = FragmentStatsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        binding.textStats.setText("This is the stats tab.");
+
+        StatsDataFragment firstFragment = new StatsDataFragment();
+
+
         return root;
     }
 
