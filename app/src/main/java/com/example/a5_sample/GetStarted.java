@@ -50,7 +50,7 @@ public class GetStarted extends Fragment {
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.get_started, fragment);
                     fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit(); */
+                    fragmentTransaction.commit();*/
                 }
 
 

@@ -34,6 +34,7 @@ public class EnterName extends Fragment {
     private SharedPreferences sharedPrefs;
     private SharedPreferences.Editor peditor;
     private Button nextButtonName;
+    private Button backButtonName;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -43,7 +44,12 @@ public class EnterName extends Fragment {
         View root = binding.getRoot();
         sharedPrefs = getActivity().getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
         peditor = sharedPrefs.edit();
+        String savedName = sharedPrefs.getString("user_name", null);
         name_edit = binding.nameEdit;
+        if (savedName != null) {
+            name_edit.setText(savedName);
+            name = savedName;
+        }
         name_edit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
@@ -89,6 +95,18 @@ public class EnterName extends Fragment {
                     fragmentTransaction.commit();
                 }
 
+            }
+        });
+        backButtonName = binding.backButton;
+        backButtonName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new GetStarted();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.enter_name, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
 

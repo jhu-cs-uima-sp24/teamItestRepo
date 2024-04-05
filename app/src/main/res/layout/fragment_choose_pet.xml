@@ -64,14 +64,29 @@
         android:id="@+id/next_button_choose"
         android:layout_width="125dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginLeft="75dp"
+        android:layout_marginBottom="50dp"
         android:background="@drawable/rounded_rect"
         android:fontFamily="@font/roboto"
         android:shadowColor="@color/black"
         android:text="@string/next"
         android:textAllCaps="false"
-        android:textSize="16sp"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/back_button"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="50dp" />
+        android:layout_marginRight="75dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/rounded_rect"
+        android:fontFamily="@font/roboto"
+        android:shadowColor="@color/black"
+        android:text="@string/back"
+        android:textAllCaps="false"
+        android:textSize="16sp" />
 
     <ImageView
         android:id="@+id/top_paw_prints"

@@ -32,7 +32,9 @@ public class EnterGoal extends Fragment {
     private String goal = "";
     private SharedPreferences sharedPrefs;
     private SharedPreferences.Editor peditor;
-    private Button nextButtonName;
+    private Button nextButtonGoal;
+    private Button backButtonGoal;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -61,8 +63,8 @@ public class EnterGoal extends Fragment {
                 goal_edit.setHint("Goal");
             }
         });
-        nextButtonName = binding.nextButton;
-        nextButtonName.setOnClickListener(new View.OnClickListener() {
+        nextButtonGoal = binding.nextButton;
+        nextButtonGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (goal.equals("")) {
@@ -75,6 +77,18 @@ public class EnterGoal extends Fragment {
                     startActivity(intent);
                 }
 
+            }
+        });
+        backButtonGoal = binding.backButton;
+        backButtonGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new ChoosePet();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.enter_goal, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
 
