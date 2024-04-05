@@ -2,42 +2,54 @@ package com.example.a5_sample;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.PopupWindow;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
-import com.example.a5_sample.databinding.ActivityMainBinding;
 import com.example.a5_sample.databinding.ActivityNewEventBinding;
 
 public class CreateEventActivity extends AppCompatActivity {
 
     private ActivityNewEventBinding binding;
+    private SharedPreferences myPrefs;
+    private EditText titleEditText, descriptionEditText;
     Context cntx;
 
     private NumberPicker hourPicker, minutePicker, secondPicker;
     private Button tagButton, createButton, startButton, backButton;
     private Switch timerSwitch;
+    private boolean isStopwatch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         cntx = getApplicationContext();
+        myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
+        SharedPreferences.Editor peditor = myPrefs.edit();
         binding = ActivityNewEventBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         View root = binding.getRoot();
         hourPicker = root.findViewById(R.id.numPickerHr);
         minutePicker = root.findViewById(R.id.numPickerMin);
         secondPicker = root.findViewById(R.id.numPickerSec);
+        titleEditText = root.findViewById(R.id.editTextTitle);
+        descriptionEditText = root.findViewById(R.id.editTextDescription);
+        timerSwitch = root.findViewById(R.id.timerSwitch);
+        isStopwatch = false;
+
         hourPicker.setMinValue(0);
         hourPicker.setMaxValue(11);
         minutePicker.setMinValue(0);
@@ -56,35 +68,66 @@ public class CreateEventActivity extends AppCompatActivity {
                    hourPicker.setEnabled(false);
                    minutePicker.setEnabled(false);
                    secondPicker.setEnabled(false);
+                   isStopwatch = true;
 
                 } else {
                     hourPicker.setEnabled(true);
                     minutePicker.setEnabled(true);
                     secondPicker.setEnabled(true);
+                    isStopwatch = false;
                 }
             }
         });
 
         tagButton = (Button)root.findViewById(R.id.tagButton);
         backButton = (Button)root.findViewById(R.id.backButton);
+        createButton = (Button)root.findViewById(R.id.createButton);
+        startButton = (Button)root.findViewById(R.id.startButton);
         tagButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 initPopWindow(v);
             }
         });
-
-
-        startButton = root.findViewById(R.id.startButton);
-        startButton.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Create an Intent to start StopwatchActivity
-                Intent intent = new Intent(CreateEventActivity.this, StopwatchActivity.class);
-                // Start the activity
-                startActivity(intent);
+                Intent launch = new Intent(CreateEventActivity.this, MainActivity.class);
+                startActivity(launch);
             }
         });
+        createButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int hour, minute, second;
+                hour = hourPicker.getValue();
+                minute = minutePicker.getValue();
+                second = secondPicker.getValue();
+                if (checkInput(isStopwatch)) {
+                    MainActivity.tasks.add(new Task(titleEditText.getText().toString(),descriptionEditText.getText().toString(),hour * 3600 + minute * 60 + second,tagButton.getText().toString()));
+                    MainActivity.taskAdapter.notifyDataSetChanged();
+                    finish();
+                }
+            }
+        });
+    }
+
+    private boolean checkInput(boolean isStopwatch) {
+        int hour, minute, second;
+        hour = hourPicker.getValue();
+        minute = minutePicker.getValue();
+        second = secondPicker.getValue();
+        if (TextUtils.isEmpty(titleEditText.getText().toString())) {
+            Toast.makeText(getApplicationContext(), "Must have a title!", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!isStopwatch && hour == 0 && minute == 0 && second == 0) {
+            Toast.makeText(getApplicationContext(), "Must select time duration!", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (tagButton.getText().toString().equals("Add tag")) {
+            Toast.makeText(getApplicationContext(), "Must select tag!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     private void initPopWindow(View v) {
@@ -115,6 +158,7 @@ public class CreateEventActivity extends AppCompatActivity {
                 tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_home_black_24dp, 0, 0, 0);
                 tagButton.setBackgroundColor(getResources().getColor(R.color.task_blue));
                 tagButton.setText("Gaming");
+                popWindow.dismiss();
             }
         });
         breakButton.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +167,7 @@ public class CreateEventActivity extends AppCompatActivity {
                 tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_home_black_24dp, 0, 0, 0);
                 tagButton.setBackgroundColor(getResources().getColor(R.color.task_pink));
                 tagButton.setText("Break");
+                popWindow.dismiss();
             }
         });
         studyButton.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +176,7 @@ public class CreateEventActivity extends AppCompatActivity {
                 tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_home_black_24dp, 0, 0, 0);
                 tagButton.setBackgroundColor(getResources().getColor(R.color.task_green));
                 tagButton.setText("Study");
+                popWindow.dismiss();
             }
         });
         workOutButton.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +185,7 @@ public class CreateEventActivity extends AppCompatActivity {
                 tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_home_black_24dp, 0, 0, 0);
                 tagButton.setBackgroundColor(getResources().getColor(R.color.task_yellow));
                 tagButton.setText("Workout");
+                popWindow.dismiss();
             }
         });
     }

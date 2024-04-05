@@ -44,14 +44,14 @@ public class MainActivity extends AppCompatActivity {
 
         tasks = new ArrayList<Task>();
         completedTasks = new ArrayList<Task>();
-        tasks.add(new Task("UIMA HW", "Finish the UIMA homework", 10, "Study"));
-        tasks.add(new Task("Other HW", "Finish the Other homework", 10, "Study"));
-        tasks.add(new Task("UIMA HW", "Finish the UIMA homework", 10, "Study"));
-        tasks.add(new Task("Other HW", "Finish the Other homework", 10, "Study"));
-        tasks.add(new Task("UIMA HW", "Finish the UIMA homework", 10, "Study"));
-        tasks.add(new Task("Other HW", "Finish the Other homework", 10, "Study"));
-        tasks.add(new Task("UIMA HW", "Finish the UIMA homework", 10, "Study"));
-        tasks.add(new Task("Other HW", "Finish the Other homework", 10, "Study"));
+//        tasks.add(new Task("UIMA HW", "Finish the UIMA homework", 10, "Study"));
+//        tasks.add(new Task("Other HW", "Finish the Other homework", 10, "Study"));
+//        tasks.add(new Task("UIMA HW", "Finish the UIMA homework", 10, "Study"));
+//        tasks.add(new Task("Other HW", "Finish the Other homework", 10, "Study"));
+//        tasks.add(new Task("UIMA HW", "Finish the UIMA homework", 10, "Study"));
+//        tasks.add(new Task("Other HW", "Finish the Other homework", 10, "Study"));
+//        tasks.add(new Task("UIMA HW", "Finish the UIMA homework", 10, "Study"));
+//        tasks.add(new Task("Other HW", "Finish the Other homework", 10, "Study"));
         taskAdapter = new TaskAdapter(this, R.layout.roomlayout, tasks);
         completedTaskAdapter = new TaskAdapter(this, R.layout.roomlayout, completedTasks);
         completedTasks.add(new Task("More HW", "Finish the More homework", 10, "Study"));
