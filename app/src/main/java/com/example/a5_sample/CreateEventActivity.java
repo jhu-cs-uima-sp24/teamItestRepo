@@ -73,11 +73,16 @@ public class CreateEventActivity extends AppCompatActivity {
                 initPopWindow(v);
             }
         });
-        backButton.setOnClickListener(new View.OnClickListener() {
+
+
+        startButton = root.findViewById(R.id.startButton);
+        startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent launch = new Intent(CreateEventActivity.this, MainActivity.class);
-                startActivity(launch);
+                // Create an Intent to start StopwatchActivity
+                Intent intent = new Intent(CreateEventActivity.this, StopwatchActivity.class);
+                // Start the activity
+                startActivity(intent);
             }
         });
     }

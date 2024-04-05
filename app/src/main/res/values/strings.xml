@@ -50,6 +50,7 @@
     <string name="paw_with_question_marks_for_loading_screen">Paw with question marks for loading screen.</string>
     <string name="pets_loading">The petpals are getting ready, one second!</string>
     <string name="back">Back!</string>
+    <string name="name">Name!</string>
 
 
 </resources>
