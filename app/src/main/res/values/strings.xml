@@ -4,7 +4,7 @@
     <string name="title_home">Home</string>
     <string name="title_chat">Chat</string>
     <string name="title_profile">Profile</string>
-
+    <string name="completed_sessions">Completed Sessions</string>
     <string name="student">Student</string>
     <string name="majors">majors/minors</string>
     <string name="year">graduation year</string>
@@ -31,6 +31,7 @@
     <string name="task_nameText">Task Name:</string>
     <string name="create_eventText">Create Event</string>
     <string name="tagText">Tag:</string>
+    <string name="completed_session">Completed Session</string>
 
 
     <string name="welcome_to">Welcome to</string>
