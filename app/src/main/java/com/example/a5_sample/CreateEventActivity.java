@@ -1,6 +1,7 @@
 package com.example.a5_sample;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -69,6 +70,17 @@ public class CreateEventActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 initPopWindow(v);
+            }
+        });
+
+        startButton = root.findViewById(R.id.startButton);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an Intent to start StopwatchActivity
+                Intent intent = new Intent(CreateEventActivity.this, StopwatchActivity.class);
+                // Start the activity
+                startActivity(intent);
             }
         });
     }
