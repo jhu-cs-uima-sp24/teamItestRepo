@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import android.content.Intent;
 
 import com.example.a5_sample.databinding.FragmentGetStartedBinding;
 
@@ -42,15 +43,15 @@ public class GetStarted extends Fragment {
                     fragmentTransaction.commit();
                     root.setVisibility(View.GONE);
                 } else {
-                    //Intent intent = new Intent(getActivity(), MainActivity.class);
-                    //startActivity(intent);
-                    Fragment fragment = new EnterName(); //for debugging
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
+                    /*Fragment fragment = new EnterName(); //for debugging
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.get_started, fragment);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
-                    root.setVisibility(View.GONE);
+                    root.setVisibility(View.GONE);*/
                 }
 
 
