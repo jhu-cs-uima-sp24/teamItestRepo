@@ -20,6 +20,24 @@
         android:src="@drawable/pause_button"
         android:contentDescription="Pause"/>
 
+    <ImageButton
+        android:id="@+id/stopwatchEnd"
+        android:layout_width="141dp"
+        android:layout_height="141dp"
+        android:contentDescription="StopwatchEnd"
+        android:scaleType="center"
+        android:src="@drawable/baseline_arrow_circle_right_24"
+        />
+
+    <ImageButton
+        android:id="@+id/stopwatchReturn"
+        android:layout_width="92dp"
+        android:layout_height="60dp"
+        android:contentDescription="StopwatchReturn"
+        android:scaleType="center"
+        android:src="@drawable/logo"
+        />
+
 
 
 </LinearLayout>

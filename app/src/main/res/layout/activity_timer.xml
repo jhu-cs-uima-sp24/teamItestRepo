@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center"
+    android:orientation="vertical"
     android:padding="16dp">
 
     <TextView
@@ -12,13 +14,47 @@
         android:layout_height="wrap_content"
         android:text="00:00:00"
         android:textSize="48sp"
-        android:layout_marginBottom="32dp"/>
+        app:layout_constraintBottom_toTopOf="@+id/timerstartPauseButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/timerstartPauseButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="254dp"
+        android:layout_height="253dp"
+        android:contentDescription="Pause"
+        android:scaleType="center"
+        android:scaleX="0.3"
+        android:scaleY="0.3"
         android:src="@drawable/pause_button"
-        android:contentDescription="Pause"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</LinearLayout>
+    <ImageButton
+        android:id="@+id/timerEnd"
+        android:layout_width="141dp"
+        android:layout_height="141dp"
+        android:contentDescription="End"
+        android:scaleType="center"
+        android:src="@drawable/baseline_arrow_circle_right_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timerTextView"
+        app:layout_constraintVertical_bias="0.732" />
+
+
+    <ImageButton
+        android:id="@+id/timerReturn"
+        android:layout_width="92dp"
+        android:layout_height="60dp"
+        android:contentDescription="TimerReturn"
+        android:scaleType="center"
+        android:src="@drawable/logo"
+        app:layout_constraintBottom_toTopOf="@+id/timerTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.732" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
