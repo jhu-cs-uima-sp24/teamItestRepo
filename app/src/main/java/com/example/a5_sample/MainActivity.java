@@ -24,9 +24,12 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
-    public static ArrayList<StudyRoom> rooms;
-    public static StudyRoomAdapter roomsAdapter;
-    public StudyRoom current;
+    public static ArrayList<Task> tasks;
+
+    public static ArrayList<Task> completedTasks;
+    public static TaskAdapter taskAdapter;
+    public static TaskAdapter completedTaskAdapter;
+    public Task current;
     public Random randy = new Random();
 
     @Override
@@ -39,12 +42,24 @@ public class MainActivity extends AppCompatActivity {
         peditor.putBoolean("inRoom",false);
         peditor.apply();
 
-        rooms = new ArrayList<StudyRoom>();
-        rooms.add(new StudyRoom("Malone 228" , 30));
-        rooms.add(new StudyRoom("Malone 107", 20));
-        rooms.add(new StudyRoom("Hackerman 306", 12));
-        rooms.add(new StudyRoom("Dorm 101", 1)); // to test room full
-        roomsAdapter = new StudyRoomAdapter(this, R.layout.roomlayout, rooms);
+        tasks = new ArrayList<Task>();
+        completedTasks = new ArrayList<Task>();
+        tasks.add(new Task("UIMA HW", "Finish the UIMA homework", 10, "Study"));
+        tasks.add(new Task("Other HW", "Finish the Other homework", 10, "Study"));
+        tasks.add(new Task("UIMA HW", "Finish the UIMA homework", 10, "Study"));
+        tasks.add(new Task("Other HW", "Finish the Other homework", 10, "Study"));
+        tasks.add(new Task("UIMA HW", "Finish the UIMA homework", 10, "Study"));
+        tasks.add(new Task("Other HW", "Finish the Other homework", 10, "Study"));
+        tasks.add(new Task("UIMA HW", "Finish the UIMA homework", 10, "Study"));
+        tasks.add(new Task("Other HW", "Finish the Other homework", 10, "Study"));
+        taskAdapter = new TaskAdapter(this, R.layout.roomlayout, tasks);
+        completedTaskAdapter = new TaskAdapter(this, R.layout.roomlayout, completedTasks);
+        completedTasks.add(new Task("More HW", "Finish the More homework", 10, "Study"));
+        completedTasks.add(new Task("Even More HW", "Finish the Even homework", 10, "Study"));
+        completedTasks.add(new Task("More HW", "Finish the More homework", 10, "Study"));
+        completedTasks.add(new Task("Even More HW", "Finish the Even homework", 10, "Study"));
+        completedTasks.add(new Task("More HW", "Finish the More homework", 10, "Study"));
+        completedTasks.add(new Task("Even More HW", "Finish the Even homework", 10, "Study"));
         current = null;
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());

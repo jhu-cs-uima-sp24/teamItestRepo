@@ -4,6 +4,7 @@
     <string name="title_home">Home</string>
     <string name="title_chat">Chat</string>
     <string name="title_profile">Profile</string>
+    <string name="completed_sessions">Completed Sessions</string>
     <!-- TODO: Remove or change this placeholder text
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
@@ -39,6 +40,7 @@
     <string name="task_nameText">Task Name:</string>
     <string name="create_eventText">Create Event</string>
     <string name="tagText">Tag:</string>
+    <string name="completed_session">Completed Session</string>
 
 
 </resources>
