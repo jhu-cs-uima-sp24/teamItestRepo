@@ -1,7 +1,9 @@
 package com.example.a5_sample;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,7 +26,6 @@ public class TimerActivity extends AppCompatActivity {
 
     private ImageButton returnEvent;
     private int hours, minutes, secs;
-    private int fullSecond = 3600;
 
     private int secondPast;
     private boolean isRunning;
@@ -32,11 +33,18 @@ public class TimerActivity extends AppCompatActivity {
     private boolean sessionFinished;
 
 
+    private Context cntx;
+    private SharedPreferences myPrefs;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
+        cntx = getApplicationContext();
+        myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
+        String title = myPrefs.getString("title","");
+        int fullSecond = myPrefs.getInt("seconds",0);
         hours = fullSecond / 3600;
         minutes = (fullSecond % 3600) / 60;
         secs = fullSecond % 60;
@@ -70,12 +78,19 @@ public class TimerActivity extends AppCompatActivity {
 
         returnEvent.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                navigateToMainActivity();
+            public void onClick(View view) { // user quits to main, task doesn't end
+                String title = myPrefs.getString("title","");
+                Task currentTask = MainActivity.tasks.get(MainActivity.taskAdapter.findTask(title));
+                currentTask.setTimeLeft(currentTask.getTimeLeft()-secondPast);
+                currentTask.setTimeSpent(secondPast);
+                MainActivity.taskAdapter.notifyDataSetChanged();
+                Intent intent = new Intent(TimerActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
             }
         });
 
-        runTimer();
+        runTimer(fullSecond);
     }
 
 
@@ -96,22 +111,29 @@ public class TimerActivity extends AppCompatActivity {
 
         positiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { // user ends event, event is put in to do list
                 // User confirmed to exit, navigate to MainActivity
                 sessionFinished = true;
-                navigateToMainActivity();
+
+                myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
+                String title = myPrefs.getString("title","");
+                Task currentTask = MainActivity.tasks.get(MainActivity.taskAdapter.findTask(title));
+                Task newTask = new Task(currentTask.getTaskName(),currentTask.getDescription(),secondPast,currentTask.getTag(), currentTask.getIsStopWatch());
+                newTask.setFinished(true);
+                MainActivity.completedTasks.add(newTask);
+                MainActivity.tasks.remove(MainActivity.taskAdapter.findTask(title));
+                MainActivity.taskAdapter.notifyDataSetChanged();
+                MainActivity.completedTaskAdapter.notifyDataSetChanged();
+
+                Intent intent = new Intent(TimerActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+
                 dialog.dismiss();
             }
         });
     }
 
-
-    private void navigateToMainActivity() {
-        Intent intent = new Intent(TimerActivity.this, MainActivity.class);
-        intent.putExtra("secondPast", secondPast);
-        intent.putExtra("IsSessionFinished", sessionFinished);
-        startActivity(intent);
-    }
 
     private void startTimer() {
         isRunning = true;
@@ -124,15 +146,16 @@ public class TimerActivity extends AppCompatActivity {
     }
 
 
-    private void runTimer(){
+    private void runTimer(int fullSecond){
         final Handler handler = new Handler();
 
+        final int[] fullSecondArray = new int[]{fullSecond};
         handler.post(new Runnable() {@Override
 
         public void run() {
-            hours = fullSecond / 3600;
-            minutes = (fullSecond % 3600) / 60;
-            secs = fullSecond % 60;
+            hours = fullSecondArray[0] / 3600;
+            minutes = (fullSecondArray[0] % 3600) / 60;
+            secs = fullSecondArray[0] % 60;
 
             // if running increment the seconds
             if (isRunning) {
@@ -140,7 +163,7 @@ public class TimerActivity extends AppCompatActivity {
 
                 timerTextView.setText(time);
 
-                fullSecond--;
+                fullSecondArray[0]--;
                 secondPast++;
             }
             handler.postDelayed(this, 1000);

@@ -14,15 +14,17 @@ public class Task {
 
     private String Tag;
 
-    private boolean started;
+    private boolean started,finished, isStopWatch;
 
-    public Task(String TaskName, String description, int time_left, String Tag) {
+    public Task(String TaskName, String description, int time_left, String Tag, boolean isStopWatch) {
         this.TaskName = TaskName;
         this.description = description;
         this.time_left = time_left;
         this.Tag = Tag;
         this.time_spent = 0;
         this.started = false;
+        this.finished = false;
+        this.isStopWatch = isStopWatch;
     }
 
     public String getTaskName() {
@@ -48,6 +50,10 @@ public class Task {
     public boolean getStarted() {
         return started;
     }
+    public boolean getFinished() {
+        return finished;
+    }
+    public boolean getIsStopWatch() {return isStopWatch;}
 
     public void setTaskName(String TaskName) {
         this.TaskName = TaskName;
@@ -67,5 +73,9 @@ public class Task {
 
     public void setTag(String Tag) {
         this.Tag = Tag;
+    }
+
+    public void setFinished(Boolean finished) {
+        this.finished = finished;
     }
 }

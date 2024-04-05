@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.NumberPicker;
 import android.widget.PopupWindow;
 import android.widget.Switch;
@@ -29,7 +30,8 @@ public class CreateEventActivity extends AppCompatActivity {
     Context cntx;
 
     private NumberPicker hourPicker, minutePicker, secondPicker;
-    private Button tagButton, createButton, startButton, backButton;
+    private Button tagButton, createButton, startButton;
+    private ImageButton backButton;
     private Switch timerSwitch;
     private boolean isStopwatch;
 
@@ -80,7 +82,7 @@ public class CreateEventActivity extends AppCompatActivity {
         });
 
         tagButton = (Button)root.findViewById(R.id.tagButton);
-        backButton = (Button)root.findViewById(R.id.backButton);
+        backButton = (ImageButton) root.findViewById(R.id.backButton);
         createButton = (Button)root.findViewById(R.id.createButton);
         startButton = (Button)root.findViewById(R.id.startButton);
         tagButton.setOnClickListener(new View.OnClickListener() {
@@ -93,8 +95,25 @@ public class CreateEventActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent launch = new Intent(CreateEventActivity.this, StopwatchActivity.class);
-                startActivity(launch);
+                if (checkInput(isStopwatch)) {
+                    int hour, minute, second;
+                    hour = hourPicker.getValue();
+                    minute = minutePicker.getValue();
+                    second = secondPicker.getValue();
+                    peditor.putString("title",titleEditText.getText().toString());
+                    peditor.putInt("seconds",hour * 3600 + minute * 60 + second);
+                    peditor.putString("description",descriptionEditText.getText().toString());
+                    peditor.apply();
+                    MainActivity.tasks.add(new Task(titleEditText.getText().toString(),descriptionEditText.getText().toString(),hour * 3600 + minute * 60 + second,tagButton.getText().toString(), isStopwatch));
+                    MainActivity.taskAdapter.notifyDataSetChanged();
+                    if (isStopwatch) {
+                        Intent launch = new Intent(CreateEventActivity.this, StopwatchActivity.class);
+                        startActivity(launch);
+                    } else {
+                        Intent launch = new Intent(CreateEventActivity.this, TimerActivity.class);
+                        startActivity(launch);
+                    }
+                }
             }
         });
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +131,7 @@ public class CreateEventActivity extends AppCompatActivity {
                 minute = minutePicker.getValue();
                 second = secondPicker.getValue();
                 if (checkInput(isStopwatch)) {
-                    MainActivity.tasks.add(new Task(titleEditText.getText().toString(),descriptionEditText.getText().toString(),hour * 3600 + minute * 60 + second,tagButton.getText().toString()));
+                    MainActivity.tasks.add(new Task(titleEditText.getText().toString(),descriptionEditText.getText().toString(),hour * 3600 + minute * 60 + second,tagButton.getText().toString(),isStopwatch));
                     MainActivity.taskAdapter.notifyDataSetChanged();
                     finish();
                 }

@@ -1,6 +1,8 @@
 package com.example.a5_sample;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -23,11 +25,15 @@ public class StopwatchActivity extends AppCompatActivity {
     private boolean isRunning;
 
     private boolean sessionFinished;
+    private Context cntx;
+    private SharedPreferences myPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stopwatch);
+        cntx = getApplicationContext();
+        myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
 
         // Binding UI components
         timerTextView = findViewById(R.id.stopwatchTextView);
@@ -58,7 +64,13 @@ public class StopwatchActivity extends AppCompatActivity {
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navigateToMainActivity();
+                String title = myPrefs.getString("title","");
+                Task currentTask = MainActivity.tasks.get(MainActivity.taskAdapter.findTask(title));
+                currentTask.setTimeSpent(fullSeconds);
+                MainActivity.taskAdapter.notifyDataSetChanged();
+                Intent intent = new Intent(StopwatchActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
             }
         });
 
@@ -89,17 +101,25 @@ public class StopwatchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // User confirmed to exit, navigate to MainActivity
                 sessionFinished = true;
-                navigateToMainActivity();
+
+                myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
+                String title = myPrefs.getString("title","");
+                Task currentTask = MainActivity.tasks.get(MainActivity.taskAdapter.findTask(title));
+                Task newTask = new Task(currentTask.getTaskName(),currentTask.getDescription(),0,currentTask.getTag(), currentTask.getIsStopWatch());
+                newTask.setTimeSpent(fullSeconds);
+                newTask.setFinished(true);
+                MainActivity.completedTasks.add(newTask);
+                MainActivity.tasks.remove(MainActivity.taskAdapter.findTask(title));
+                MainActivity.taskAdapter.notifyDataSetChanged();
+                MainActivity.completedTaskAdapter.notifyDataSetChanged();
+
+                Intent intent = new Intent(StopwatchActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+
                 dialog.dismiss();
             }
         });
-    }
-
-    private void navigateToMainActivity() {
-        Intent intent = new Intent(StopwatchActivity.this, MainActivity.class);
-        intent.putExtra("secondPast", fullSeconds);
-        intent.putExtra("sessionFinished", sessionFinished);
-        startActivity(intent);
     }
 
 

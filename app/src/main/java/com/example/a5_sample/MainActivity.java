@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Bundle extras = getIntent().getExtras();
         Context context = getApplicationContext();
         SharedPreferences myPrefs = context.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
         SharedPreferences.Editor peditor = myPrefs.edit();
@@ -54,12 +55,12 @@ public class MainActivity extends AppCompatActivity {
 //        tasks.add(new Task("Other HW", "Finish the Other homework", 10, "Study"));
         taskAdapter = new TaskAdapter(this, R.layout.roomlayout, tasks);
         completedTaskAdapter = new TaskAdapter(this, R.layout.roomlayout, completedTasks);
-        completedTasks.add(new Task("More HW", "Finish the More homework", 10, "Study"));
-        completedTasks.add(new Task("Even More HW", "Finish the Even homework", 10, "Study"));
-        completedTasks.add(new Task("More HW", "Finish the More homework", 10, "Study"));
-        completedTasks.add(new Task("Even More HW", "Finish the Even homework", 10, "Study"));
-        completedTasks.add(new Task("More HW", "Finish the More homework", 10, "Study"));
-        completedTasks.add(new Task("Even More HW", "Finish the Even homework", 10, "Study"));
+//        completedTasks.add(new Task("More HW", "Finish the More homework", 10, "Study"));
+//        completedTasks.add(new Task("Even More HW", "Finish the Even homework", 10, "Study"));
+//        completedTasks.add(new Task("More HW", "Finish the More homework", 10, "Study"));
+//        completedTasks.add(new Task("Even More HW", "Finish the Even homework", 10, "Study"));
+//        completedTasks.add(new Task("More HW", "Finish the More homework", 10, "Study"));
+//        completedTasks.add(new Task("Even More HW", "Finish the Even homework", 10, "Study"));
         current = null;
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());

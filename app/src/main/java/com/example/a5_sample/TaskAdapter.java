@@ -27,9 +27,9 @@ public class TaskAdapter extends ArrayAdapter<Task> {
     int resource;
     MainActivity myact;
     boolean inRoom;
-    public TaskAdapter(Context ctx, int res, List<Task> studyRoomList)
+    public TaskAdapter(Context ctx, int res, List<Task> taskList)
     {
-        super(ctx, res, studyRoomList);
+        super(ctx, res, taskList);
         resource = res;
         myact = (MainActivity) ctx;
         inRoom = false;
@@ -62,18 +62,32 @@ public class TaskAdapter extends ArrayAdapter<Task> {
 
         int hoursSpent, minutesSpent, secondsSpent, hoursLeft, minutesLeft, secondsLeft;
         hoursSpent = timeSpent / 3600;
-        minutesSpent = timeSpent / 60;
+        minutesSpent = (timeSpent%3600) / 60;
         secondsSpent = timeSpent - hoursSpent*3600 - minutesSpent*60;
 
         hoursLeft = timeLeft / 3600;
-        minutesLeft = timeLeft / 60;
+        minutesLeft = (timeLeft%3600) / 60;
         secondsLeft = timeLeft - hoursLeft*3600 - minutesLeft*60;
 
-        if (timeSpent > timeLeft) {
+        if (task.getIsStopWatch()) {
+            time.setText("Time Spent: " + hoursSpent + ":" + minutesSpent + ":" + secondsSpent);
+        } else if (task.getFinished()) {
+            time.setText("Time Spent: " + hoursLeft + ":" + minutesLeft + ":" + secondsLeft);
+        } else if ((timeSpent > timeLeft)) {
             time.setText("Time Spent: " + hoursSpent + ":" + minutesSpent + ":" + secondsSpent);
         } else {
             time.setText("Time Left: " + hoursLeft + ":" + minutesLeft + ":" + secondsLeft);
         }
+    }
+
+    public int findTask(String title) {
+        for (int i = 0; i < getCount(); i++) {
+            Task task = getItem(i);
+            if (task != null && task.getTaskName().equals(title)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     @NonNull
