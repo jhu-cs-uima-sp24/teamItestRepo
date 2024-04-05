@@ -7,14 +7,18 @@
     android:layout_height="match_parent"
     android:paddingTop="?attr/actionBarSize">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
-        app:itemBackground="@color/primary_pink"
         app:itemActiveIndicatorStyle="@style/Theme.BottomNavigationView.ActiveIndicator"
+        app:itemBackground="@color/primary_pink"
         app:itemIconTint="@color/dark_gray"
         app:itemTextColor="@color/dark_gray"
         app:layout_constraintBottom_toBottomOf="parent"

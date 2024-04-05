@@ -11,7 +11,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/card_height"
+        android:layout_height="94dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:backgroundTint="@color/primary_pink"
@@ -20,7 +20,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="387dp"
-            android:layout_height="60dp"
+            android:layout_height="84dp"
             android:layout_gravity="center"
             card_view:cardCornerRadius="10dp">
 
@@ -42,62 +42,63 @@
                     card_view:layout_constraintVertical_bias="0.135"
                     card_view:srcCompat="@drawable/ic_launcher_timer_foreground" />
 
+                <!--                <menu-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    card_view:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                    card_view:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    card_view:layout_constraintHorizontal_bias="0.954"-->
+                <!--                    card_view:layout_constraintStart_toStartOf="parent"-->
+                <!--                    card_view:layout_constraintTop_toTopOf="parent"-->
+                <!--                    card_view:background="@color/primary_pink"-->
+                <!--                    card_view:layout_constraintVertical_bias="0.219">-->
+
+                <!--                    <item-->
+                <!--                        android:id="@+id/new_game"-->
+                <!--                        app:showAsAction="ifRoom"-->
+                <!--                        android:title="Edit Event" />-->
+
+                <!--                    <item-->
+                <!--                        android:id="@+id/help"-->
+                <!--                        android:title="Delete Event" />-->
+                <!--                </menu>-->
+
+
                 <TextView
                     android:id="@+id/description_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="a5"
-                    android:textSize="8sp"
+                    android:textSize="15sp"
                     card_view:layout_constraintBottom_toBottomOf="parent"
                     card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintHorizontal_bias="0.1"
+                    card_view:layout_constraintHorizontal_bias="0.102"
                     card_view:layout_constraintStart_toStartOf="parent"
                     card_view:layout_constraintTop_toTopOf="parent"
-                    card_view:layout_constraintVertical_bias="0.51" />
-
-<!--                <menu-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    card_view:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    card_view:layout_constraintEnd_toEndOf="parent"-->
-<!--                    card_view:layout_constraintHorizontal_bias="0.954"-->
-<!--                    card_view:layout_constraintStart_toStartOf="parent"-->
-<!--                    card_view:layout_constraintTop_toTopOf="parent"-->
-<!--                    card_view:background="@color/primary_pink"-->
-<!--                    card_view:layout_constraintVertical_bias="0.219">-->
-
-<!--                    <item-->
-<!--                        android:id="@+id/new_game"-->
-<!--                        app:showAsAction="ifRoom"-->
-<!--                        android:title="Edit Event" />-->
-
-<!--                    <item-->
-<!--                        android:id="@+id/help"-->
-<!--                        android:title="Delete Event" />-->
-<!--                </menu>-->
-
+                    card_view:layout_constraintVertical_bias="0.484" />
 
                 <TextView
                     android:id="@+id/task_name_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="211dp"
+                    android:layout_height="24dp"
                     android:text="UIMA HW"
                     android:textColor="@color/black"
+                    android:textSize="20dp"
                     card_view:layout_constraintBottom_toBottomOf="parent"
                     card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintHorizontal_bias="0.116"
+                    card_view:layout_constraintHorizontal_bias="0.215"
                     card_view:layout_constraintStart_toStartOf="parent"
                     card_view:layout_constraintTop_toTopOf="parent"
-                    card_view:layout_constraintVertical_bias="0.121" />
+                    card_view:layout_constraintVertical_bias="0.116" />
 
                 <Button
                     android:id="@+id/tag_button"
-                    android:layout_width="105dp"
-                    android:layout_height="30dp"
+                    android:layout_width="85dp"
+                    android:layout_height="38dp"
                     android:backgroundTint="@color/task_green"
                     android:drawableStart="@drawable/ic_home_black_24dp"
                     android:text="Study"
-                    android:textSize="5dp"
+                    android:textSize="12dp"
                     card_view:layout_constraintBottom_toBottomOf="parent"
                     card_view:layout_constraintEnd_toEndOf="parent"
                     card_view:layout_constraintHorizontal_bias="0.404"
@@ -107,17 +108,17 @@
 
                 <TextView
                     android:id="@+id/time_spent_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="107dp"
+                    android:layout_height="21dp"
                     android:text="Time Spent: 5 mins"
                     android:textColor="@color/black"
-                    android:textSize="11sp"
+                    android:textSize="16sp"
                     card_view:layout_constraintBottom_toBottomOf="parent"
                     card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintHorizontal_bias="0.894"
+                    card_view:layout_constraintHorizontal_bias="0.931"
                     card_view:layout_constraintStart_toStartOf="parent"
                     card_view:layout_constraintTop_toTopOf="parent"
-                    card_view:layout_constraintVertical_bias="0.711" />
+                    card_view:layout_constraintVertical_bias="0.733" />
 
                 <TextView
                     android:id="@+id/textView5"
@@ -128,7 +129,7 @@
                     android:drawablePadding="2dp"
                     android:text="Start"
 
-                    android:textSize="10dp"
+                    android:textSize="20dp"
                     card_view:layout_constraintBottom_toBottomOf="parent"
                     card_view:layout_constraintEnd_toEndOf="parent"
                     card_view:layout_constraintHorizontal_bias="0.088"

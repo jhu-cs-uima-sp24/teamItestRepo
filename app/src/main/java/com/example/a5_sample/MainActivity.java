@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import androidx.appcompat.widget.Toolbar;
+
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor peditor = myPrefs.edit();
         peditor.putBoolean("inRoom",false);
         peditor.apply();
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         tasks = new ArrayList<Task>();
         completedTasks = new ArrayList<Task>();
