@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/container"
+    android:id="@+id/container_id"
     android:paddingTop="?attr/actionBarSize">
 
     <FrameLayout
@@ -18,7 +18,7 @@
         android:layout_height="match_parent" />
 
     <FrameLayout
-        android:id="@+id/enter_pet"
+        android:id="@+id/pet_name"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -33,6 +33,7 @@ public class ChoosePet extends Fragment {
     private Button nextButtonChoose;
 
     private Button backButtonChoose;
+    private ImageView selected;
 
     @Nullable
     @Override
@@ -48,6 +49,20 @@ public class ChoosePet extends Fragment {
         for (int resId : imageResources) {
             addImageToContainer(resId);
         }
+        int pet_choosen = sharedPrefs.getInt("pet_id", -1);
+        if (pet_choosen != -1) {
+            binding.selectedImage.setImageResource(pet_choosen);
+            binding.selectedImage.setVisibility(View.VISIBLE);
+            binding.imageContainer.setVisibility(View.INVISIBLE);
+            binding.horizontalScrollView.setVisibility(View.INVISIBLE);
+            binding.deselectionPrompt.setVisibility(View.VISIBLE);
+            binding.bottomPawPrints.setVisibility(View.VISIBLE);
+            binding.bottomPawPrintsCropped.setVisibility(View.INVISIBLE);
+            pet = pet_choosen;
+        } else {
+            binding.bottomPawPrints.setVisibility(View.INVISIBLE);
+            binding.bottomPawPrintsCropped.setVisibility(View.VISIBLE);
+        }
 
         nextButtonChoose = binding.nextButtonChoose;
         nextButtonChoose.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +73,7 @@ public class ChoosePet extends Fragment {
                 } else {
                     pet_type = getResources().getResourceEntryName(pet);
                     peditor.putString("pet_type", pet_type);
+                    peditor.putInt("pet_id", pet);
                     peditor.apply();
                     // Replace the current fragment with the next fragment
                     Fragment fragment = new EnterGoal();
@@ -66,6 +82,7 @@ public class ChoosePet extends Fragment {
                     fragmentTransaction.replace(R.id.choose_pet, fragment);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
+                    rootView.setVisibility(View.GONE);
                 }
 
             }
@@ -81,7 +98,23 @@ public class ChoosePet extends Fragment {
                 fragmentTransaction.replace(R.id.choose_pet, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+                rootView.setVisibility(View.GONE);
+                if (pet == -1) {
+                    peditor.putInt("pet_id", -1);
+                    peditor.apply();
+                }
             }
+        });
+
+        selected = binding.selectedImage;
+        selected.setOnClickListener(v -> {
+            binding.selectedImage.setVisibility(View.INVISIBLE); // Make the selected image invisible
+            binding.horizontalScrollView.setVisibility(View.VISIBLE); // Make the HorizontalScrollView visible
+            binding.imageContainer.setVisibility(View.VISIBLE); // Make the imageContainer visible
+            binding.deselectionPrompt.setVisibility(View.INVISIBLE);
+            binding.bottomPawPrints.setVisibility(View.INVISIBLE);
+            binding.bottomPawPrintsCropped.setVisibility(View.VISIBLE);
+            pet = -1;
         });
 
         return rootView;
@@ -97,6 +130,11 @@ public class ChoosePet extends Fragment {
         imageView.setOnClickListener(v -> {
             binding.selectedImage.setImageResource(resId);
             binding.selectedImage.setVisibility(View.VISIBLE);
+            binding.imageContainer.setVisibility(View.INVISIBLE);
+            binding.horizontalScrollView.setVisibility(View.INVISIBLE);
+            binding.deselectionPrompt.setVisibility(View.VISIBLE);
+            binding.bottomPawPrints.setVisibility(View.VISIBLE);
+            binding.bottomPawPrintsCropped.setVisibility(View.INVISIBLE);
             pet = resId;
         });
         binding.imageContainer.addView(imageView);

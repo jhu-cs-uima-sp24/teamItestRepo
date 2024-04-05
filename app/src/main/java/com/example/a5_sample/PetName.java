@@ -22,8 +22,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.a5_sample.databinding.FragmentEnterNameBinding;
 import com.example.a5_sample.databinding.FragmentPetNameBinding;
 
 
@@ -39,7 +37,6 @@ public class PetName extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        Log.d("tag", "petname");
         binding = FragmentPetNameBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         sharedPrefs = getActivity().getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
@@ -90,9 +87,10 @@ public class PetName extends Fragment {
                     Fragment fragment = new ChoosePet();
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.enter_pet, fragment);
+                    fragmentTransaction.replace(R.id.pet_name, fragment);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
+                    root.setVisibility(View.GONE);
                 }
 
             }
@@ -105,9 +103,10 @@ public class PetName extends Fragment {
                 Fragment fragment = new EnterName();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.enter_pet, fragment);
+                fragmentTransaction.replace(R.id.pet_name, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+                root.setVisibility(View.GONE);
             }
         });
         return root;

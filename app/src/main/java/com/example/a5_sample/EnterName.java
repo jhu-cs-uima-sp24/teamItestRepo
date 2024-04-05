@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
@@ -21,7 +22,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.SharedPreferences;
-import androidx.fragment.app.FragmentManager;
+
 
 import com.example.a5_sample.databinding.FragmentEnterNameBinding;
 
@@ -39,7 +40,6 @@ public class EnterName extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        Log.d("tag", "name");
         binding = FragmentEnterNameBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         sharedPrefs = getActivity().getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
@@ -93,6 +93,7 @@ public class EnterName extends Fragment {
                     fragmentTransaction.replace(R.id.enter_name, fragment);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
+                    root.setVisibility(View.GONE);
                 }
 
             }
@@ -107,6 +108,7 @@ public class EnterName extends Fragment {
                 fragmentTransaction.replace(R.id.enter_name, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+                root.setVisibility(View.GONE);
             }
         });
 

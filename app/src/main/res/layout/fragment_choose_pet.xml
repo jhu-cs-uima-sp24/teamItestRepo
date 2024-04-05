@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@android:color/transparent"
+    tools:context=".ChoosePet">
 
 
     <HorizontalScrollView
@@ -11,8 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:paddingBottom="-50dp"
-        android:scrollbars="horizontal">
+        android:paddingTop="125dp"
+        android:scrollbars="horizontal"
+        android:scrollbarThumbHorizontal="@color/primary_pink">
 
         <LinearLayout
             android:id="@+id/imageContainer"
@@ -27,12 +29,12 @@
 
     <ImageView
         android:id="@+id/selectedImage"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:contentDescription="@string/selected_image"
         android:scaleType="centerCrop"
         android:layout_gravity="center"
-        android:layout_marginBottom="-75dp"
+        android:layout_marginBottom="-80dp"
         android:visibility="gone"
          />
 
@@ -60,12 +62,26 @@
         android:textSize="34sp"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/deselection_prompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primary_pink"
+        android:textSize="24sp"
+        android:layout_gravity="center"
+        android:text="@string/press_deselct"
+        android:layout_marginBottom="50dp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        />
+
+
     <Button
         android:id="@+id/next_button_choose"
         android:layout_width="125dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginLeft="75dp"
+        android:layout_marginStart="75dp"
         android:layout_marginBottom="50dp"
         android:background="@drawable/rounded_rect"
         android:fontFamily="@font/roboto"
@@ -79,7 +95,7 @@
         android:layout_width="125dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginRight="75dp"
+        android:layout_marginEnd="75dp"
         android:layout_marginBottom="50dp"
         android:background="@drawable/rounded_rect"
         android:fontFamily="@font/roboto"
@@ -89,15 +105,26 @@
         android:textSize="16sp" />
 
     <ImageView
-        android:id="@+id/top_paw_prints"
+        android:id="@+id/bottom_paw_prints"
         android:layout_width="125dp"
         android:layout_height="200dp"
         android:layout_gravity="bottom|end"
         android:contentDescription="@string/paw_print_design"
-        android:src="@drawable/paws" />
+        android:src="@drawable/paws"
+        />
 
     <ImageView
-        android:id="@+id/bottom_paw_prints"
+        android:id="@+id/bottom_paw_prints_cropped"
+        android:layout_width="128dp"
+        android:layout_height="165dp"
+        android:layout_gravity="bottom|end"
+        android:contentDescription="@string/paw_print_design"
+        android:src="@drawable/paws_cropped"
+        android:visibility="gone"
+        />
+
+    <ImageView
+        android:id="@+id/top_paw_prints"
         android:layout_width="125dp"
         android:layout_height="200dp"
         android:contentDescription="@string/paw_print_design"

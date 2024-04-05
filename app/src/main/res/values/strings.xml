@@ -51,6 +51,7 @@
     <string name="pets_loading">The petpals are getting ready, one second!</string>
     <string name="back">Back!</string>
     <string name="name">Name!</string>
+    <string name="press_deselct">Press the pet to choose another one!</string>
 
 
 </resources>

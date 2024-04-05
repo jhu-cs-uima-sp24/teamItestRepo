@@ -44,7 +44,12 @@ public class EnterGoal extends Fragment {
         View root = binding.getRoot();
         sharedPrefs = getActivity().getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
         peditor = sharedPrefs.edit();
+
         goal_edit = binding.goalEdit;
+        String goal_choosen = sharedPrefs.getString("user_goal", null);
+        if (goal_choosen != null) {
+            goal_edit.setText(goal_choosen);
+        }
         goal_edit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
@@ -89,6 +94,7 @@ public class EnterGoal extends Fragment {
                 fragmentTransaction.replace(R.id.enter_goal, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+                root.setVisibility(View.GONE);
             }
         });
 

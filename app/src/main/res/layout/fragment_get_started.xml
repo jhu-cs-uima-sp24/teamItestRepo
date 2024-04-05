@@ -6,11 +6,12 @@
     tools:context=".GetStarted">
 
 
+
     <ImageView
         android:id="@+id/top_paw_prints"
         android:layout_width="125dp"
         android:layout_height="200dp"
-        android:layout_gravity="bottom|end"
+        android:gravity="top|start"
         android:contentDescription="@string/paw_print_design"
         android:src="@drawable/paws" />
 
@@ -18,6 +19,7 @@
         android:id="@+id/bottom_paw_prints"
         android:layout_width="125dp"
         android:layout_height="200dp"
+        android:layout_gravity="bottom|end"
         android:contentDescription="@string/paw_print_design"
         android:src="@drawable/paws" />
 
@@ -51,7 +53,7 @@
         android:layout_width="125dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="-100dp"
+        android:layout_marginBottom="-200dp"
         android:background="@drawable/rounded_rect"
         android:fontFamily="@font/roboto"
         android:shadowColor="@color/black"

@@ -1,14 +1,12 @@
 package com.example.a5_sample;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -42,15 +40,17 @@ public class GetStarted extends Fragment {
                     fragmentTransaction.replace(R.id.enter_name, fragment);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
+                    root.setVisibility(View.GONE);
                 } else {
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    startActivity(intent);
-                    /*Fragment fragment = new EnterName(); //for debugging
+                    //Intent intent = new Intent(getActivity(), MainActivity.class);
+                    //startActivity(intent);
+                    Fragment fragment = new EnterName(); //for debugging
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.get_started, fragment);
                     fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();*/
+                    fragmentTransaction.commit();
+                    root.setVisibility(View.GONE);
                 }
 
 
