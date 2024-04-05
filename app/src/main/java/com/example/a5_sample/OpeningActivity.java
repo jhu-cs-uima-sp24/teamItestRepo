@@ -10,47 +10,41 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.a5_sample.databinding.ActivityOpeningBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
+import com.example.a5_sample.databinding.ActivityMainBinding;
+
+import java.util.ArrayList;
+import java.util.Random;
+
 public class OpeningActivity extends AppCompatActivity {
+
+    private ActivityOpeningBinding binding;
+    SharedPreferences.Editor peditor;
+    SharedPreferences myPrefs;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opening);
         Context context = getApplicationContext();
-        EditText nameInput = (EditText) findViewById(R.id.editTextLoginName);
-        SharedPreferences myPrefs = context.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
-        if (myPrefs.contains("LOGIN_name")) {
-            nameInput.setText(myPrefs.getString("LOGIN_name",null));
+        myPrefs = context.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
+
+        binding = ActivityOpeningBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        if (savedInstanceState == null) {
+            // If not added, replace the content with GetStarted fragment
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.get_started, new GetStarted())
+                    .commit();
         }
-//        Button lbtn = (Button) findViewById(R.id.loginBtn);
-//        lbtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String name = String.valueOf(nameInput.getText());
-//                if (name.isEmpty()) {
-//                    Toast.makeText(getApplicationContext(), "Name can't be empty!", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    SharedPreferences.Editor editor = myPrefs.edit();
-//                    editor.putString("LOGIN_name", name);
-//                    editor.apply();
-//                }
-//            }
-//        });
 
     }
 
-    public void loginOnClick(View view) {
-        EditText nameInput = (EditText) findViewById(R.id.editTextLoginName);
-        Context context = getApplicationContext();
-        SharedPreferences myPrefs = context.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
-        String name = String.valueOf(nameInput.getText());
-        if (name.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Name can't be empty!", Toast.LENGTH_SHORT).show();
-        } else {
-            SharedPreferences.Editor editor = myPrefs.edit();
-            editor.putString("LOGIN_name", name);
-            //Log.d("login name", Objects.requireNonNull(myPrefs.getString("LOGIN_name", null)));
-            editor.apply();
-        }
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
 }

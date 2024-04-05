@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.LifePal" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="Theme.LifePal" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="android:textColorPrimary">@color/dark_gray</item>
         <item name="colorPrimary">@color/primary_pink</item>
@@ -27,5 +27,11 @@
     <style name="ActionBarTitleTextStyle">
         <item name="android:textColor">@color/black</item>
     </style>
+
+    <style name="AppTheme.NoActionBar" parent="Theme.LifePal">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
 
 </resources>

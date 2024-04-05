@@ -10,7 +10,7 @@
         <activity
             android:name=".OpeningActivity"
             android:exported="true"
-            android:theme="@style/Theme.LifePal">
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,7 +35,13 @@
 
         </activity>
 
+<<<<<<< HEAD
 
+=======
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+>>>>>>> 71fbd58e8221ace29244647a9cb03bc3684a63a1
     </application>
 
 </manifest>
