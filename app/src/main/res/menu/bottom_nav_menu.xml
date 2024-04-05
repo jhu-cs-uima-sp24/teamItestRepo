@@ -16,10 +16,6 @@
         android:icon="@drawable/profile_icon"
         android:title="@string/title_profile" />
 
-    <item
-        android:id="@+id/navigation_newEvent"
-        android:icon="@drawable/profile_icon"
-        android:title="New Event" />
 
 
 

@@ -10,5 +10,6 @@
     <color name="task_green">#BCF1D1</color>
     <color name="primary_pink">#FFD8D8</color>
     <color name="secondary_pink">#FFF5F5</color>
+    <color name="dark_pink">#FFBCBC</color>
     <color name="timer_green">#7BA37D</color>
 </resources>

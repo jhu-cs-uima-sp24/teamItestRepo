@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GetStarted">
+
+
+    <ImageView
+        android:id="@+id/top_paw_prints"
+        android:layout_width="125dp"
+        android:layout_height="200dp"
+        android:layout_gravity="bottom|end"
+        android:contentDescription="@string/paw_print_design"
+        android:src="@drawable/paws" />
+
+    <ImageView
+        android:id="@+id/bottom_paw_prints"
+        android:layout_width="125dp"
+        android:layout_height="200dp"
+        android:contentDescription="@string/paw_print_design"
+        android:src="@drawable/paws" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:contentDescription="@string/logo"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:layout_gravity="center"
+        android:src="@drawable/logo" />
+
+
+    <TextView
+        android:id="@+id/welcome_to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/roboto"
+        android:text="@string/welcome_to"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/primary_pink"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="80dp"/>
+
+    <Button
+        android:id="@+id/get_started_button"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="-100dp"
+        android:background="@drawable/rounded_rect"
+        android:fontFamily="@font/roboto"
+        android:shadowColor="@color/black"
+        android:text="@string/get_started"
+        android:textAllCaps="false"
+        android:textSize="16sp" />
+
+
+</FrameLayout>

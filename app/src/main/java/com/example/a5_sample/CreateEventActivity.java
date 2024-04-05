@@ -1,6 +1,7 @@
 package com.example.a5_sample;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -24,7 +25,7 @@ public class CreateEventActivity extends AppCompatActivity {
     Context cntx;
 
     private NumberPicker hourPicker, minutePicker, secondPicker;
-    private Button tagButton, createButton, startButton;
+    private Button tagButton, createButton, startButton, backButton;
     private Switch timerSwitch;
 
     @Override
@@ -65,10 +66,18 @@ public class CreateEventActivity extends AppCompatActivity {
         });
 
         tagButton = (Button)root.findViewById(R.id.tagButton);
+        backButton = (Button)root.findViewById(R.id.backButton);
         tagButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 initPopWindow(v);
+            }
+        });
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent launch = new Intent(CreateEventActivity.this, MainActivity.class);
+                startActivity(launch);
             }
         });
     }
@@ -91,5 +100,41 @@ public class CreateEventActivity extends AppCompatActivity {
             }
         });
         popWindow.showAsDropDown(v, 0, 0);
+        Button gamingButton = view.findViewById(R.id.gamingButton);
+        Button breakButton = view.findViewById(R.id.breakButton);
+        Button studyButton = view.findViewById(R.id.studyButton);
+        Button workOutButton = view.findViewById(R.id.workOutButton);
+        gamingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_home_black_24dp, 0, 0, 0);
+                tagButton.setBackgroundColor(getResources().getColor(R.color.task_blue));
+                tagButton.setText("Gaming");
+            }
+        });
+        breakButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_home_black_24dp, 0, 0, 0);
+                tagButton.setBackgroundColor(getResources().getColor(R.color.task_pink));
+                tagButton.setText("Break");
+            }
+        });
+        studyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_home_black_24dp, 0, 0, 0);
+                tagButton.setBackgroundColor(getResources().getColor(R.color.task_green));
+                tagButton.setText("Study");
+            }
+        });
+        workOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_home_black_24dp, 0, 0, 0);
+                tagButton.setBackgroundColor(getResources().getColor(R.color.task_yellow));
+                tagButton.setText("Workout");
+            }
+        });
     }
 }
