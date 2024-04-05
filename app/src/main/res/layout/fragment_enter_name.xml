@@ -69,12 +69,27 @@
         android:id="@+id/next_button"
         android:layout_width="125dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="center|right"
+        android:layout_marginRight="75dp"
         android:layout_marginBottom="-225dp"
         android:background="@drawable/rounded_rect"
         android:fontFamily="@font/roboto"
         android:shadowColor="@color/black"
-        android:text="@string/next"
+        android:text="@string/name"
+        android:textAllCaps="false"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/back_button"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|left"
+        android:layout_marginLeft="75dp"
+        android:layout_marginBottom="-225dp"
+        android:background="@drawable/rounded_rect"
+        android:fontFamily="@font/roboto"
+        android:shadowColor="@color/black"
+        android:text="@string/back"
         android:textAllCaps="false"
         android:textSize="16sp" />
 

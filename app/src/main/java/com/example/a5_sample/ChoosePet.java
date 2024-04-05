@@ -30,7 +30,9 @@ public class ChoosePet extends Fragment {
     private String pet_type= "";
     private SharedPreferences sharedPrefs;
     private SharedPreferences.Editor peditor;
-    private Button nextButtonName;
+    private Button nextButtonChoose;
+
+    private Button backButtonChoose;
 
     @Nullable
     @Override
@@ -47,8 +49,8 @@ public class ChoosePet extends Fragment {
             addImageToContainer(resId);
         }
 
-        nextButtonName = binding.nextButtonChoose;
-        nextButtonName.setOnClickListener(new View.OnClickListener() {
+        nextButtonChoose = binding.nextButtonChoose;
+        nextButtonChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (pet == -1) {
@@ -66,6 +68,19 @@ public class ChoosePet extends Fragment {
                     fragmentTransaction.commit();
                 }
 
+            }
+        });
+
+        backButtonChoose = binding.backButton;
+        backButtonChoose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new PetName();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.choose_pet, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
 

@@ -34,6 +34,7 @@ public class PetName extends Fragment {
     private SharedPreferences sharedPrefs;
     private SharedPreferences.Editor peditor;
     private Button nextButtonPet;
+    private Button backButtonPet;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -44,7 +45,11 @@ public class PetName extends Fragment {
         sharedPrefs = getActivity().getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
         peditor = sharedPrefs.edit();
         pet_edit = binding.petEdit;
-        Log.d("tag", "petname vars");
+        String savedPetName = sharedPrefs.getString("pet_name", null);
+        if (savedPetName != null) {
+            pet_edit.setText(savedPetName);
+            pet_name = savedPetName;
+        }
         pet_edit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
@@ -71,7 +76,6 @@ public class PetName extends Fragment {
                 pet_edit.setHint("Name");
             }
         });
-        Log.d("tag", "edittext");
         nextButtonPet = binding.nextButtonPet;
         nextButtonPet.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +97,19 @@ public class PetName extends Fragment {
 
             }
         });
-        Log.d("tag", "button");
+
+        backButtonPet = binding.backButton;
+        backButtonPet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new EnterName();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.enter_pet, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
         return root;
     }
 
