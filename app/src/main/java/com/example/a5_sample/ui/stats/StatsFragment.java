@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.a5_sample.R;
 import com.example.a5_sample.databinding.FragmentStatsBinding;
 
 public class StatsFragment extends Fragment {
@@ -32,10 +33,19 @@ public class StatsFragment extends Fragment {
 //        final TextView textView = binding.textDashboard;
 //        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 //        return root;
+
         binding = FragmentStatsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        StatsDataFragment firstFragment = new StatsDataFragment();
+
+
+        if (savedInstanceState == null) {
+            StatsDataFragment firstFragment = new StatsDataFragment();
+            getChildFragmentManager().beginTransaction()
+                    .add(R.id.fragmentContainerView, firstFragment, "StatsDataFragment")
+                    .commit();
+        }
+
 
 
         return root;
