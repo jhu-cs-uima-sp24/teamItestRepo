@@ -95,7 +95,9 @@ public class CreateEventActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkInput(isStopwatch)) {
+                if (MainActivity.taskAdapter.findTask(titleEditText.getText().toString())!=-1) {
+                    Toast.makeText(getApplicationContext(), "Task Name Must Be Unique!", Toast.LENGTH_SHORT).show();
+                } else if (checkInput(isStopwatch)) {
                     int hour, minute, second;
                     hour = hourPicker.getValue();
                     minute = minutePicker.getValue();
@@ -130,7 +132,9 @@ public class CreateEventActivity extends AppCompatActivity {
                 hour = hourPicker.getValue();
                 minute = minutePicker.getValue();
                 second = secondPicker.getValue();
-                if (checkInput(isStopwatch)) {
+                if (MainActivity.taskAdapter.findTask(titleEditText.getText().toString())!=-1) {
+                    Toast.makeText(getApplicationContext(), "Task Name Must Be Unique!", Toast.LENGTH_SHORT).show();
+                } else if (checkInput(isStopwatch)) {
                     MainActivity.tasks.add(new Task(titleEditText.getText().toString(),descriptionEditText.getText().toString(),hour * 3600 + minute * 60 + second,tagButton.getText().toString(),isStopwatch));
                     MainActivity.taskAdapter.notifyDataSetChanged();
                     finish();

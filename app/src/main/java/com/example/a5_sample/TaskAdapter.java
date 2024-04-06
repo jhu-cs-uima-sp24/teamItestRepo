@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -109,6 +110,12 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         SharedPreferences.Editor peditor = myPrefs.edit();
         ImageButton editbutton = (android.widget.ImageButton) itemView.findViewById(R.id.imageButton3);
 
+        ImageView taskIcon = (ImageView) itemView.findViewById(R.id.imageView);
+        if (task.getIsStopWatch()) {
+            taskIcon.setBackgroundResource(R.drawable.outline_alarm_24);
+        } else {
+            taskIcon.setBackgroundResource(R.drawable.ic_launcher_timer_foreground);
+        }
         // Setting onClick behavior to the button
         editbutton.setOnClickListener(new View.OnClickListener() {
             @Override
