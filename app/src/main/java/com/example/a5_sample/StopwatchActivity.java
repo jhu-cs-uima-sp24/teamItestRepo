@@ -53,7 +53,7 @@ public class StopwatchActivity extends AppCompatActivity {
         title.setText(titleString);
         Intent intent = getIntent();
         index = intent.getIntExtra("index",0);
-
+        stopwatchCurrentlyPause.setVisibility(View.VISIBLE);
 //        startStopwatch();
 //        isRunning = true;
         startPauseButton.setOnClickListener(new View.OnClickListener() {

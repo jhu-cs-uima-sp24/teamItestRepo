@@ -2,7 +2,6 @@
     <string name="app_name">LifePalL</string>
     <string name="title_stats">Stats</string>
     <string name="title_home">Home</string>
-    <string name="title_chat">Chat</string>
     <string name="title_profile">Profile</string>
     <string name="completed_sessions">Completed Sessions</string>
     <string name="student">Student</string>
@@ -12,13 +11,9 @@
     <string name="login">LOGIN</string>
     <string name="logout">Logout</string>
     <string name="add">New Room</string>
-    <string name="enter_name">Room Location</string>
-    <string name="enter_cap">Room Capacity</string>
     <string name="save">SAVE</string>
     <string name="quit">QUIT</string>
-    <string name="enter">ENTER</string>
-    <string name="leave">* LEAVE *</string>
-    <string name="storage">A5_CONTEXT_SP</string>
+    <string name="storage">CONTEXT_SP</string>
 
 
     <string name="stats_nav">Stats</string>
