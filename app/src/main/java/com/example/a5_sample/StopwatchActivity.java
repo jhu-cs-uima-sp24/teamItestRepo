@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Locale;
 
 public class StopwatchActivity extends AppCompatActivity {
-    private TextView timerTextView;
+    private TextView timerTextView, title;
     private ImageButton startPauseButton;
     private ImageButton endButton;
     private ImageButton returnButton;
@@ -40,6 +40,9 @@ public class StopwatchActivity extends AppCompatActivity {
         startPauseButton = findViewById(R.id.stopwatchstartPauseButton);
         endButton = findViewById(R.id.stopwatchEnd);
         returnButton = findViewById(R.id.stopwatchReturn);
+        title = findViewById(R.id.title);
+        String titleString = myPrefs.getString("title","");
+        title.setText(titleString);
 
         startStopwatch();
         isRunning = true;
@@ -125,12 +128,12 @@ public class StopwatchActivity extends AppCompatActivity {
 
     private void startStopwatch() {
         isRunning = true;
-        startPauseButton.setImageResource(R.drawable.pause_button);
+        startPauseButton.setImageResource(R.drawable.pausebutton);
     }
 
     private void pauseStopwatch(){
         isRunning = false;
-        startPauseButton.setImageResource(R.drawable.chat_icon);
+        startPauseButton.setImageResource(R.drawable.resumebutton);
     }
 
     private void runStopwatch(){

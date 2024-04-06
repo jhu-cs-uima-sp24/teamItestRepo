@@ -13,48 +13,69 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="00:00:00"
-        android:textSize="48sp"
-        app:layout_constraintBottom_toTopOf="@+id/timerstartPauseButton"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.411" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create New Event"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.288"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.028"/>
 
     <ImageButton
         android:id="@+id/timerstartPauseButton"
-        android:layout_width="254dp"
-        android:layout_height="253dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:contentDescription="Pause"
-        android:scaleType="center"
-        android:scaleX="0.3"
-        android:scaleY="0.3"
-        android:src="@drawable/pause_button"
+        android:src="@drawable/pausebutton"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.268"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.662" />
 
     <ImageButton
         android:id="@+id/timerEnd"
-        android:layout_width="141dp"
-        android:layout_height="141dp"
-        android:contentDescription="End"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:contentDescription="StopwatchEnd"
         android:scaleType="center"
-        android:src="@drawable/baseline_arrow_circle_right_24"
+        android:src="@drawable/endbutton"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timerTextView"
-        app:layout_constraintVertical_bias="0.732" />
+        app:layout_constraintHorizontal_bias="0.725"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.662" />
 
 
     <ImageButton
         android:id="@+id/timerReturn"
-        android:layout_width="92dp"
-        android:layout_height="60dp"
-        android:contentDescription="TimerReturn"
-        android:scaleType="center"
-        android:src="@drawable/logo"
-        app:layout_constraintBottom_toTopOf="@+id/timerTextView"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="timerReturn"
+        android:src="@drawable/return_48dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.732" />
+        app:layout_constraintVertical_bias="0.019" /> />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

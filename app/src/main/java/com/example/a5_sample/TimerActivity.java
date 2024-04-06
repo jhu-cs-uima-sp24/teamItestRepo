@@ -19,7 +19,7 @@ import java.util.Locale;
 
 public class TimerActivity extends AppCompatActivity {
 
-    private TextView timerTextView;
+    private TextView timerTextView, title;
     private ImageButton startPauseButton;
 
     private ImageButton endEventButton;
@@ -43,7 +43,7 @@ public class TimerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timer);
         cntx = getApplicationContext();
         myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
-        String title = myPrefs.getString("title","");
+        String titleString = myPrefs.getString("title","");
         int fullSecond = myPrefs.getInt("seconds",0);
         hours = fullSecond / 3600;
         minutes = (fullSecond % 3600) / 60;
@@ -56,8 +56,12 @@ public class TimerActivity extends AppCompatActivity {
         timerTextView = findViewById(R.id.timerTextView);
         timerTextView.setText(time);
         startPauseButton = findViewById(R.id.timerstartPauseButton);
+        startPauseButton.setImageResource(R.drawable.resumebutton);
         endEventButton = findViewById(R.id.timerEnd);
         returnEvent = findViewById(R.id.timerReturn);
+        title = findViewById(R.id.title);
+        title.setText(titleString);
+
         startPauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -137,12 +141,12 @@ public class TimerActivity extends AppCompatActivity {
 
     private void startTimer() {
         isRunning = true;
-        startPauseButton.setImageResource(R.drawable.pause_button);
+        startPauseButton.setImageResource(R.drawable.pausebutton);
     }
 
     private void pauseTimer(){
         isRunning = false;
-        startPauseButton.setImageResource(R.drawable.chat_icon);
+        startPauseButton.setImageResource(R.drawable.resumebutton);
     }
 
 
