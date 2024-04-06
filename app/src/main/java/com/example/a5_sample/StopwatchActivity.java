@@ -17,6 +17,8 @@ import java.util.Locale;
 
 public class StopwatchActivity extends AppCompatActivity {
     private TextView timerTextView, title;
+
+    private TextView stopwatchCurrentlyPause;
     private ImageButton startPauseButton;
     private ImageButton endButton;
     private ImageButton returnButton;
@@ -42,6 +44,8 @@ public class StopwatchActivity extends AppCompatActivity {
         endButton = findViewById(R.id.stopwatchEnd);
         returnButton = findViewById(R.id.stopwatchReturn);
         title = findViewById(R.id.title);
+        stopwatchCurrentlyPause = findViewById(R.id.CurrentlyPausedStopwatch);
+        stopwatchCurrentlyPause.setVisibility(View.INVISIBLE);
         String titleString = myPrefs.getString("title","");
         title.setText(titleString);
 
@@ -51,8 +55,10 @@ public class StopwatchActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isRunning) {
+                    stopwatchCurrentlyPause.setVisibility(View.VISIBLE);
                     pauseStopwatch();
                 } else {
+                    stopwatchCurrentlyPause.setVisibility(View.INVISIBLE);
                     startStopwatch();
                 }
             }

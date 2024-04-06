@@ -20,11 +20,14 @@ import java.util.Locale;
 public class TimerActivity extends AppCompatActivity {
 
     private TextView timerTextView, title;
+
+    private TextView currentlyPause;
     private ImageButton startPauseButton;
 
     private ImageButton endEventButton;
 
     private ImageButton returnEvent;
+    private Button backHome;
     private int hours, minutes, secs;
 
     private int secondPast;
@@ -59,15 +62,43 @@ public class TimerActivity extends AppCompatActivity {
         startPauseButton.setImageResource(R.drawable.resumebutton);
         endEventButton = findViewById(R.id.timerEnd);
         returnEvent = findViewById(R.id.timerReturn);
+        backHome = findViewById(R.id.backMainButton);
         title = findViewById(R.id.title);
         title.setText(titleString);
+        currentlyPause = findViewById(R.id.CurrentlyPaused);
+
+
+
+        backHome.setVisibility(View.INVISIBLE);
+        backHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
+                String title = myPrefs.getString("title","");
+                Task currentTask = MainActivity.tasks.get(MainActivity.taskAdapter.findTask(title));
+                Task newTask = new Task(currentTask.getTaskName(),currentTask.getDescription(),secondPast,currentTask.getTag(), currentTask.getIsStopWatch());
+                newTask.setFinished(true);
+                MainActivity.completedTasks.add(newTask);
+                MainActivity.tasks.remove(MainActivity.taskAdapter.findTask(title));
+                MainActivity.taskAdapter.notifyDataSetChanged();
+                MainActivity.completedTaskAdapter.notifyDataSetChanged();
+
+                Intent intent = new Intent(TimerActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
+        });
+
+
 
         startPauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isRunning) {
+                    currentlyPause.setVisibility(View.VISIBLE);
                     pauseTimer();
                 } else {
+                    currentlyPause.setVisibility(View.INVISIBLE);
                     startTimer();
                 }
             }
@@ -169,6 +200,18 @@ public class TimerActivity extends AppCompatActivity {
 
                 fullSecondArray[0]--;
                 secondPast++;
+
+                if(fullSecondArray[0] < 0){
+                    isRunning = false;
+                    sessionFinished = true;
+                    startPauseButton.setVisibility(View.GONE);
+                    endEventButton.setVisibility(View.GONE);
+                    returnEvent.setVisibility(View.GONE);
+                    backHome.setVisibility(View.VISIBLE);
+                    currentlyPause.setVisibility(View.VISIBLE);
+                    currentlyPause.setText("Session Complete");
+
+                }
             }
             handler.postDelayed(this, 1000);
         }
