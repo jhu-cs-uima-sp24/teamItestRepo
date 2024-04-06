@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -93,7 +94,11 @@ public class StatsDataFragment extends Fragment {
         adapter = new TagAdapter(tags, screenHeight);
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(0));
-
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        int spanCount = 2; // 2 columns
+        int spacing = 50;
+        boolean includeEdge = true;
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
         return view;
 
     }
@@ -107,6 +112,10 @@ public class StatsDataFragment extends Fragment {
         list.add(new TagModel("Tag 4", 90));
         list.add(new TagModel("Tag 5", 100));
         list.add(new TagModel("Tag 6", 3500));
+        list.add(new TagModel("Tag 8", 80));
+        list.add(new TagModel("Tag 9", 90));
+        list.add(new TagModel("Tag 10", 100));
+        list.add(new TagModel("Tag 11", 3500));
         // Add more contacts
         return list;
     }

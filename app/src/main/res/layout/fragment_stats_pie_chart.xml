@@ -10,10 +10,12 @@
         android:id="@+id/pieChartTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:gravity="center_horizontal"
         android:padding="16dp"
         android:text="Pie Chart"
-        android:gravity="center_horizontal"
-        android:background="#FFFFFF" />
+        android:textColor="#000000"
+        android:textSize="20sp" />
 
 
     <com.example.a5_sample.CustomPieChart
