@@ -1,13 +1,15 @@
 package com.example.a5_sample.ui.stats;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import java.util.*;
 
 import com.example.a5_sample.R;
 
@@ -33,6 +35,11 @@ public class StatsDataFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+
+    private RecyclerView recyclerView;
+    private TagAdapter adapter;
+    private List<TagModel> tags;
 
     public StatsDataFragment() {
         // Required empty public constructor
@@ -63,21 +70,33 @@ public class StatsDataFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        View view = inflater.inflate(R.layout.fragment_stats_data, container, false);
+
+
+        recyclerView = view.findViewById(R.id.tagsRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        tags = getContacts(); // Implement this method to get your data
+        adapter = new TagAdapter(tags);
+        recyclerView.setAdapter(adapter);
+
         return inflater.inflate(R.layout.fragment_stats_data, container, false);
+
     }
 
-    private void setupRecyclerView() {
-//        Map<String, Integer> tags = new HashMap<>();
-//        // Populate your map here
-//
-//        TagAdapter adapter = new TagAdapter(tags);
-//        binding.tagsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        binding.tagsRecyclerView.setAdapter(adapter);
+
+    private List<TagModel> getContacts() {
+        List<TagModel> list = new ArrayList<>();
+        list.add(new TagModel("Tag 1", 2));
+        list.add(new TagModel("Tag 2", 3));
+        // Add more contacts
+        return list;
     }
 }

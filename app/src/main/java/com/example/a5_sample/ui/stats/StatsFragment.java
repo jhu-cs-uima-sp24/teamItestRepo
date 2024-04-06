@@ -37,8 +37,6 @@ public class StatsFragment extends Fragment {
         binding = FragmentStatsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-
-
         if (savedInstanceState == null) {
             StatsDataFragment firstFragment = new StatsDataFragment();
             getChildFragmentManager().beginTransaction()
