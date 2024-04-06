@@ -7,10 +7,20 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <TextView
+        android:id="@+id/textData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Data"
+        android:gravity="center_horizontal"
+        android:background="#FFFFFF" />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tagsRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize" />
 
 </FrameLayout>
