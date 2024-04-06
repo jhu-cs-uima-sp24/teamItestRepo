@@ -11,8 +11,8 @@ import android.util.AttributeSet;
 
 public class CustomPieChart extends View {
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private float[] slicePercentages = {25, 25, 25, 25}; // Example percentages
-    private int[] colors = {0xFFFF0000, 0xFF00FF00, 0xFF0000FF, 0xFFFFFF00}; // Red, Green, Blue, Yellow
+    private float[] slicePercentages = {70, 20, 10, 0}; // Example percentages
+    private int[] colors = {0xFFE53935, 0xFF9CCC65, 0xFF42A5F5, 0xFFFFFF00}; // Red, Green, Blue, Yellow
 
     public CustomPieChart(Context context) {
         super(context);
@@ -33,7 +33,7 @@ public class CustomPieChart extends View {
         int width = getWidth();
         int height = getHeight();
         int size = Math.min(width, height);
-        RectF rect = new RectF(0, 0, size, size); // Use RectF for the pie chart bounds
+        RectF rect = new RectF((float) size /4, 0, size, (float) (size * 3) /4); // Use RectF for the pie chart bounds
 
         float startAngle = 0;
         for (int i = 0; i < slicePercentages.length; i++) {
