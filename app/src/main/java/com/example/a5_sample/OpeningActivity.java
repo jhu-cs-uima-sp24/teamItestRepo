@@ -22,6 +22,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.a5_sample.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 public class OpeningActivity extends AppCompatActivity {
@@ -30,8 +31,9 @@ public class OpeningActivity extends AppCompatActivity {
     SharedPreferences.Editor peditor;
     SharedPreferences myPrefs;
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_opening);
+        //setContentView(R.layout.activity_opening);
         Context context = getApplicationContext();
         myPrefs = context.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
 

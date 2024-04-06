@@ -49,6 +49,7 @@ public class EnterGoal extends Fragment {
         String goal_choosen = sharedPrefs.getString("user_goal", null);
         if (goal_choosen != null) {
             goal_edit.setText(goal_choosen);
+            goal = goal_choosen;
         }
         goal_edit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
