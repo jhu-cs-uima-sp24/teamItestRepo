@@ -3,6 +3,8 @@ package com.example.a5_sample.ui.home;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.a5_sample.CreateEventActivity;
@@ -58,6 +62,10 @@ public class HomeFragment extends Fragment {
         //  completedTasksTextview.setText("Finished Sessions");
 
         FloatingActionButton fab = (FloatingActionButton) myview.findViewById(R.id.fab);
+        Drawable drawable = ContextCompat.getDrawable(cntx, R.drawable.baseline_add_48);
+        drawable = DrawableCompat.wrap(drawable);
+        DrawableCompat.setTint(drawable, getResources().getColor(R.color.white));
+        fab.setImageDrawable(drawable);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
