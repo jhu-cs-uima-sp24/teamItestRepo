@@ -47,25 +47,25 @@ public class PetName extends Fragment {
             pet_edit.setText(savedPetName);
             pet_name = savedPetName;
         }
-        pet_edit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL) {
-                    InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(pet_edit.getWindowToken(), 0);
-                    pet_name = pet_edit.getText().toString();
-                    if (!pet_name.matches("[a-zA-Z]+")) {
-                        // If the entered text contains characters other than letters,
-                        // show a toast message
-                        Toast.makeText(getActivity(), "Please enter a valid name!", Toast.LENGTH_SHORT).show();
-                        // Clear the EditText
-                        pet_edit.setText("");
-                        pet_name = "";
-                    }
-                }
-                return false;
-            }
-        });
+//        pet_edit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+//                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL) {
+//                    InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                    imm.hideSoftInputFromWindow(pet_edit.getWindowToken(), 0);
+//                    pet_name = pet_edit.getText().toString();
+//                    if (!pet_name.matches("[a-zA-Z]+")) {
+//                        // If the entered text contains characters other than letters,
+//                        // show a toast message
+//                        Toast.makeText(getActivity(), "Please enter a valid name!", Toast.LENGTH_SHORT).show();
+//                        // Clear the EditText
+//                        pet_edit.setText("");
+//                        pet_name = "";
+//                    }
+//                }
+//                return false;
+//            }
+//        });
         pet_edit.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus && pet_edit.getText().length() == 0) {
                 pet_edit.setHint("");
@@ -78,7 +78,7 @@ public class PetName extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d("tag", "onClick: " + pet_name);
-                if (pet_name.equals("")) {
+                if (pet_edit.getText().toString().equals("") || !pet_edit.getText().toString().matches("^[a-zA-Z]*$")) {
                     Toast.makeText(getActivity(), "Please enter a valid name!", Toast.LENGTH_SHORT).show();
                 } else {
                     peditor.putString("pet_name", pet_name);
