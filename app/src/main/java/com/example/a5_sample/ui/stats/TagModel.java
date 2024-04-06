@@ -11,5 +11,5 @@ public class TagModel {
 
     // Getters
     public String getName() { return name; }
-    public Integer getTime() { return time; }
+    public String getTime() { return Integer.toString(time); }
 }

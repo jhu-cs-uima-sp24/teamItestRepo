@@ -42,6 +42,7 @@ public class StatsDataFragment extends Fragment {
     private List<TagModel> tags;
 
     public StatsDataFragment() {
+
         // Required empty public constructor
     }
 
@@ -53,7 +54,6 @@ public class StatsDataFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment StatsDataFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static StatsDataFragment newInstance(String param1, String param2) {
         StatsDataFragment fragment = new StatsDataFragment();
         Bundle args = new Bundle();
@@ -83,16 +83,16 @@ public class StatsDataFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.tagsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        tags = getContacts(); // Implement this method to get your data
+        tags = getTags(); // Implement this method to get your data
         adapter = new TagAdapter(tags);
         recyclerView.setAdapter(adapter);
 
-        return inflater.inflate(R.layout.fragment_stats_data, container, false);
+        return view;
 
     }
 
 
-    private List<TagModel> getContacts() {
+    private List<TagModel> getTags() {
         List<TagModel> list = new ArrayList<>();
         list.add(new TagModel("Tag 1", 2));
         list.add(new TagModel("Tag 2", 3));
