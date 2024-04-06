@@ -9,12 +9,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import java.util.*;
 
 import com.example.a5_sample.R;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -106,17 +110,21 @@ public class StatsDataFragment extends Fragment {
 
     private List<TagModel> getTags() {
         List<TagModel> list = new ArrayList<>();
-        list.add(new TagModel("Tag 1", 60));
-        list.add(new TagModel("Tag 2", 70));
-        list.add(new TagModel("Tag 3", 80));
-        list.add(new TagModel("Tag 4", 90));
-        list.add(new TagModel("Tag 5", 100));
-        list.add(new TagModel("Tag 6", 3500));
-        list.add(new TagModel("Tag 8", 80));
-        list.add(new TagModel("Tag 9", 90));
-        list.add(new TagModel("Tag 10", 100));
-        list.add(new TagModel("Tag 11", 3500));
-        // Add more contacts
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("tags").document("user1")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        Map<String, Long> entry = (Map<String, Long>) document.get("tags");
+                        for (String s: entry.keySet()) {
+                            list.add(new TagModel(s, entry.get(s).intValue()));
+                        }
+                    }
+                });
+
         return list;
     }
 }

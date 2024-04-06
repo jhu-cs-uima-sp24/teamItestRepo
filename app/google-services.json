@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "15645774296",
+    "project_id": "lifepal-fc9dc",
+    "storage_bucket": "lifepal-fc9dc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:15645774296:android:11ab5221ec7229040ba2ad",
+        "android_client_info": {
+          "package_name": "com.example.a5_sample"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0XYWpVl5I8KV-eglXau20Nc7-tOmBumE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
