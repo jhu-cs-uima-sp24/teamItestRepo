@@ -38,14 +38,15 @@ public class StopwatchActivity extends AppCompatActivity {
         // Binding UI components
         timerTextView = findViewById(R.id.stopwatchTextView);
         startPauseButton = findViewById(R.id.stopwatchstartPauseButton);
+        startPauseButton.setImageResource(R.drawable.resumebutton);
         endButton = findViewById(R.id.stopwatchEnd);
         returnButton = findViewById(R.id.stopwatchReturn);
         title = findViewById(R.id.title);
         String titleString = myPrefs.getString("title","");
         title.setText(titleString);
 
-        startStopwatch();
-        isRunning = true;
+//        startStopwatch();
+//        isRunning = true;
         startPauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
