@@ -5,6 +5,7 @@ public class TagModel {
     private int time;
 
     public TagModel(String name, int time) {
+
         this.name = name;
         this.time = time;
     }
