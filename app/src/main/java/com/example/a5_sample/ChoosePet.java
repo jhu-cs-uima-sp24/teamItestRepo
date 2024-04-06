@@ -38,17 +38,19 @@ public class ChoosePet extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         binding = FragmentChoosePetBinding.inflate(inflater,container, false);
         View rootView = binding.getRoot();
 
         sharedPrefs = getActivity().getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
         peditor = sharedPrefs.edit();
-
+        Log.d("tag", "1");
         // Populate images
         int[] imageResources = {R.drawable.dog_level0, R.drawable.cat_level0, R.drawable.mouse_level0, R.drawable.goat_level0};
         for (int resId : imageResources) {
             addImageToContainer(resId);
         }
+        Log.d("tag", "2");
         int pet_choosen = sharedPrefs.getInt("pet_id", -1);
         if (pet_choosen != -1) {
             binding.selectedImage.setImageResource(pet_choosen);
@@ -63,7 +65,7 @@ public class ChoosePet extends Fragment {
             binding.bottomPawPrints.setVisibility(View.INVISIBLE);
             binding.bottomPawPrintsCropped.setVisibility(View.VISIBLE);
         }
-
+        Log.d("tag", "3");
         nextButtonChoose = binding.nextButtonChoose;
         nextButtonChoose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +89,7 @@ public class ChoosePet extends Fragment {
 
             }
         });
+        Log.d("tag", "4");
 
         backButtonChoose = binding.backButton;
         backButtonChoose.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +108,7 @@ public class ChoosePet extends Fragment {
                 }
             }
         });
-
+        Log.d("tag", "5");
         selected = binding.selectedImage;
         selected.setOnClickListener(v -> {
             binding.selectedImage.setVisibility(View.INVISIBLE); // Make the selected image invisible
@@ -116,6 +119,7 @@ public class ChoosePet extends Fragment {
             binding.bottomPawPrintsCropped.setVisibility(View.VISIBLE);
             pet = -1;
         });
+        Log.d("tag", "6");
 
         return rootView;
     }

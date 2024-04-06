@@ -22,7 +22,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingBottom="10dp">
-            <!-- Populate this with ImageViews dynamically -->
         </LinearLayout>
 
     </HorizontalScrollView>
