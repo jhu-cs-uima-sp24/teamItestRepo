@@ -12,5 +12,9 @@ public class TagModel {
 
     // Getters
     public String getName() { return name; }
-    public String getTime() { return Integer.toString(time); }
+    public String getTime() {
+        int hours = time/60;
+        int min = time%60;
+        return Integer.toString(hours) + "H" + Integer.toString(min) + "M";
+    }
 }

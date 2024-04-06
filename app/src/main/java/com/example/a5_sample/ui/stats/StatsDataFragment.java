@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,11 +83,16 @@ public class StatsDataFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_stats_data, container, false);
 
 
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int screenHeight = displayMetrics.heightPixels;
+
         recyclerView = view.findViewById(R.id.tagsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         tags = getTags(); // Implement this method to get your data
-        adapter = new TagAdapter(tags);
+        adapter = new TagAdapter(tags, screenHeight);
         recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(0));
 
         return view;
 
@@ -94,8 +101,12 @@ public class StatsDataFragment extends Fragment {
 
     private List<TagModel> getTags() {
         List<TagModel> list = new ArrayList<>();
-        list.add(new TagModel("Tag 1", 2));
-        list.add(new TagModel("Tag 2", 3));
+        list.add(new TagModel("Tag 1", 60));
+        list.add(new TagModel("Tag 2", 70));
+        list.add(new TagModel("Tag 3", 80));
+        list.add(new TagModel("Tag 4", 90));
+        list.add(new TagModel("Tag 5", 100));
+        list.add(new TagModel("Tag 6", 3500));
         // Add more contacts
         return list;
     }

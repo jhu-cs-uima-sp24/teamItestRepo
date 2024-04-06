@@ -42,6 +42,11 @@ public class StatsFragment extends Fragment {
             getChildFragmentManager().beginTransaction()
                     .add(R.id.fragmentContainerView, firstFragment, "StatsDataFragment")
                     .commit();
+
+            StatsPieChartFragment secondFragment = new StatsPieChartFragment();
+            getChildFragmentManager().beginTransaction()
+                    .add(R.id.fragmentContainerView2, secondFragment, "StatsPieChartFragment")
+                    .commit();
         }
 
 

@@ -14,9 +14,11 @@ import java.util.*;
 
 public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
     private List<TagModel> contactList;
+    private int screenHeight;
 
-    public TagAdapter(List<TagModel> contactList) {
+    public TagAdapter(List<TagModel> contactList, int screenHeight) {
         this.contactList = contactList;
+        this.screenHeight = screenHeight;
     }
 
     @Override
@@ -30,10 +32,12 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
         TagModel tag = contactList.get(position);
         holder.tagName.setText(tag.getName());
         holder.timeName.setText(tag.getTime());
+        holder.itemView.getLayoutParams().height = screenHeight / 20;
     }
 
     @Override
     public int getItemCount() {
         return contactList.size();
     }
+
 }

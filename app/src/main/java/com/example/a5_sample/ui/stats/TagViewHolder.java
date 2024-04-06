@@ -17,6 +17,5 @@ public class TagViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         tagName = itemView.findViewById(R.id.tag_name);
         timeName = itemView.findViewById(R.id.tag_time);
-
     }
 }
