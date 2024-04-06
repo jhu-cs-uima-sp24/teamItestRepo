@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -35,6 +36,7 @@ public class TimerActivity extends AppCompatActivity {
 
     private boolean sessionFinished;
 
+    private int index;
 
     private Context cntx;
     private SharedPreferences myPrefs;
@@ -47,11 +49,17 @@ public class TimerActivity extends AppCompatActivity {
         cntx = getApplicationContext();
         myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
         String titleString = myPrefs.getString("title","");
-        int fullSecond = myPrefs.getInt("seconds",0);
-        hours = fullSecond / 3600;
-        minutes = (fullSecond % 3600) / 60;
-        secs = fullSecond % 60;
-        String time = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, secs);
+        String time;
+        int fullSecond;
+        fullSecond = myPrefs.getInt("seconds",0);
+
+            hours = fullSecond / 3600;
+            minutes = (fullSecond % 3600) / 60;
+            secs = fullSecond % 60;
+            time = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, secs);
+            //remove from shared preferences
+            SharedPreferences.Editor peditor = myPrefs.edit();
+            peditor.remove("seconds");
 
 
 
@@ -76,7 +84,8 @@ public class TimerActivity extends AppCompatActivity {
                 myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
                 String title = myPrefs.getString("title","");
                 Task currentTask = MainActivity.tasks.get(MainActivity.taskAdapter.findTask(title));
-                Task newTask = new Task(currentTask.getTaskName(),currentTask.getDescription(),secondPast,currentTask.getTag(), currentTask.getIsStopWatch());
+                Task newTask = new Task(currentTask.getTaskName(),currentTask.getDescription(),Integer.toString(secondPast),currentTask.getTag(), currentTask.getIsStopWatch());
+
                 newTask.setFinished(true);
                 MainActivity.completedTasks.add(newTask);
                 MainActivity.tasks.remove(MainActivity.taskAdapter.findTask(title));
@@ -116,8 +125,9 @@ public class TimerActivity extends AppCompatActivity {
             public void onClick(View view) { // user quits to main, task doesn't end
                 String title = myPrefs.getString("title","");
                 Task currentTask = MainActivity.tasks.get(MainActivity.taskAdapter.findTask(title));
-                currentTask.setTimeLeft(currentTask.getTimeLeft()-secondPast);
-                currentTask.setTimeSpent(secondPast);
+                int remaining_time = Integer.parseInt(currentTask.getTimeLeft())-secondPast;
+                currentTask.setTimeLeft(Integer.toString(remaining_time));
+                currentTask.setTimeSpent(Integer.toString(secondPast));
                 MainActivity.taskAdapter.notifyDataSetChanged();
                 Intent intent = new Intent(TimerActivity.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -153,12 +163,14 @@ public class TimerActivity extends AppCompatActivity {
                 myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
                 String title = myPrefs.getString("title","");
                 Task currentTask = MainActivity.tasks.get(MainActivity.taskAdapter.findTask(title));
-                Task newTask = new Task(currentTask.getTaskName(),currentTask.getDescription(),secondPast,currentTask.getTag(), currentTask.getIsStopWatch());
+                Task newTask = new Task(currentTask.getTaskName(),currentTask.getDescription(),Integer.toString(secondPast),currentTask.getTag(), currentTask.getIsStopWatch());
                 newTask.setFinished(true);
                 MainActivity.completedTasks.add(newTask);
                 MainActivity.tasks.remove(MainActivity.taskAdapter.findTask(title));
                 MainActivity.taskAdapter.notifyDataSetChanged();
                 MainActivity.completedTaskAdapter.notifyDataSetChanged();
+
+
 
                 Intent intent = new Intent(TimerActivity.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);

@@ -73,6 +73,8 @@ public class HomeFragment extends Fragment {
                 startActivity(launch);
             }
         });
+
+
         // Setting onClick behavior to the button
 
         ImageButton dropbutton = myview.findViewById(R.id.header2).findViewById(R.id.imageButton2);
@@ -82,6 +84,9 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 if(view.getRotation() == 180f) {
                     ObjectAnimator.ofFloat(view, "rotation", 180f, 0f).start();
+                    if(MainActivity.completedTasks.isEmpty()){
+                        return;
+                    }
                     completedList.setVisibility(View.GONE);
                     ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) myList.getLayoutParams();
                     lp.height = 1015;
@@ -93,6 +98,9 @@ public class HomeFragment extends Fragment {
                 }
                 else{
                     ObjectAnimator.ofFloat(view, "rotation", 0f, 180f).start();
+                    if(MainActivity.completedTasks.isEmpty()){
+                        return;
+                    }
                     view.animate().alpha(1.0f);
                     completedList.setVisibility(View.VISIBLE);
                     ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) myList.getLayoutParams();

@@ -1,10 +1,16 @@
 package com.example.a5_sample;
 
 
+import static android.provider.Settings.System.getString;
+
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 
@@ -22,11 +28,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 public class TaskAdapter extends ArrayAdapter<Task> {
     int resource;
+
     MainActivity myact;
+
     boolean inRoom;
     public TaskAdapter(Context ctx, int res, List<Task> taskList)
     {
@@ -57,9 +67,10 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         }
     }
 
-    private void handleTimeSpentTimeLeft(TextView time, Task task) {
-        int timeSpent = task.getTimeSpent();
-        int timeLeft = task.getTimeLeft();
+    private String handleTimeSpentTimeLeft(TextView time, Task task) {
+        int timeSpent = Integer.parseInt(task.getTimeSpent());
+        int timeLeft =  Integer.parseInt(task.getTimeLeft());
+
 
         int hoursSpent, minutesSpent, secondsSpent, hoursLeft, minutesLeft, secondsLeft;
         hoursSpent = timeSpent / 3600;
@@ -71,14 +82,13 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         secondsLeft = timeLeft - hoursLeft*3600 - minutesLeft*60;
 
         if (task.getIsStopWatch()) {
-            time.setText("Time Spent: " + hoursSpent + ":" + minutesSpent + ":" + secondsSpent);
+            return Integer.toString(hoursSpent) + ":" + Integer.toString(minutesSpent) + ":" + Integer.toString(secondsSpent);
         } else if (task.getFinished()) {
-            time.setText("Time Spent: " + hoursLeft + ":" + minutesLeft + ":" + secondsLeft);
-        } else if ((timeSpent > timeLeft)) {
-            time.setText("Time Spent: " + hoursSpent + ":" + minutesSpent + ":" + secondsSpent);
+            return Integer.toString(hoursSpent) + ":" + Integer.toString(minutesSpent) + ":" + Integer.toString(secondsSpent);
         } else {
-            time.setText("Time Left: " + hoursLeft + ":" + minutesLeft + ":" + secondsLeft);
+            return Integer.toString(hoursLeft) + ":" + Integer.toString(minutesLeft) + ":" + Integer.toString(secondsLeft);
         }
+
     }
 
     public int findTask(String title) {
@@ -129,8 +139,8 @@ public class TaskAdapter extends ArrayAdapter<Task> {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         // Toast message on menu item clicked
-                        Toast.makeText(context, "You Clicked " + menuItem.getTitle(), Toast.LENGTH_SHORT).show();
-                        return true;
+                            Toast.makeText(context, "You Clicked " + menuItem.getTitle(), Toast.LENGTH_SHORT).show();
+                            return true;
                     }
                 });
                 // Showing the popup menu
@@ -146,60 +156,95 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         // Button tagButton = (Button) itemView.findViewById(R.id.tagButton);
         //        tagButton.setBackgroundColor(Color.RED);
 //        button_color_mapping(tagButton, task.getTag());
+        if(task.getFinished()){
+            TextView start_finish = itemView.findViewById(R.id.start_finish_text_view);
+            start_finish.setText("Finished");
+            Drawable[] drawables = start_finish.getCompoundDrawables();
+            Drawable leftDrawable = drawables[0]; // Change index as needed (0 = left, 1 = top, 2 = right, 3 = bottom)
+
+// Tint the drawable (change its color)
+            Drawable tintedDrawable = DrawableCompat.wrap(leftDrawable).mutate(); // Wrap the drawable to make it mutable
+            DrawableCompat.setTint(tintedDrawable, Color.GREEN); // Change color as needed
+        } else if(task.getStarted()){
+            TextView start_finish = itemView.findViewById(R.id.start_finish_text_view);
+            start_finish.setText("Resume");
+        }
         TextView time = (TextView) itemView.findViewById(R.id.time_spent_text_view);
-        handleTimeSpentTimeLeft(time, task);
+        String timeString = handleTimeSpentTimeLeft(time, task);
+        String blockTimeString = "";
+        int seconds = 0;
+        if (task.getIsStopWatch()){
+            blockTimeString = "Time Spent: ";
+            seconds = Integer.parseInt(task.getTimeSpent());
+        } else {
+            blockTimeString = "Time Left: ";
+            seconds = Integer.parseInt(task.getTimeLeft());
+        }
+        blockTimeString += timeString;
+       // Log.d("timeString", timeString);
+        time.setText(blockTimeString);
+
         Button tagButton = (Button) itemView.findViewById(R.id.tag_button);
         button_color_mapping(context,tagButton, task.getTag());
         tagButton.setText(task.getTag());
 
-//        TextView name = (TextView) itemView.findViewById(R.id.room_location);
-//        name.setText(rm.getname());
-//        TextView size = (TextView) itemView.findViewById(R.id.room_size);
-//        size.setText(rm.getoccupants() + " / " + rm.getcap());
-//        Button checkin = (Button) itemView.findViewById(R.id.checkin);
-//        String availText = rm.getchecked_in() ? out : in;
-//        checkin.setText(availText);
-//        inRoom = myPrefs.getBoolean("inRoom", false);
-//        int inRoomPosition = myPrefs.getInt("position", 0);
-//        if(inRoom) {
-//            if (position == inRoomPosition) {
-//                checkin.setText(out);
-//            }
-//        }
-//        Log.d("inroom: ", Boolean.toString(inRoom));
-//        Log.d("position: ", Integer.toString(position));
-//        checkin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                if (checkin.getText().equals(out)) { // leaving room
-//                    if (!inRoom) {
-//                        Toast.makeText(myact.getApplicationContext(), "Not in a room!", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        inRoom = false;
-//                        checkin.setText(in);
-//                        peditor.putBoolean("inRoom",false);
-//                        peditor.apply();
-//                        rm.setOccupants(rm.getoccupants() - 1);
-//                        size.setText(rm.getoccupants() + " / " + rm.getcap());
-//                    }
-//                } else {
-//                    if (inRoom) {
-//                        Toast.makeText(myact.getApplicationContext(), "Already in another room!", Toast.LENGTH_SHORT).show();
-//                    } else if (rm.getoccupants()+1>rm.getcap()) {
-//                        Toast.makeText(myact.getApplicationContext(), "Room is full!", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        inRoom = true;
-//                        checkin.setText(out);
-//                        peditor.putBoolean("inRoom",true);
-//                        peditor.putInt("position",position);
-//                        peditor.apply();
-//                        rm.setOccupants(rm.getoccupants() + 1);
-//                        size.setText(rm.getoccupants() + " / " + rm.getcap());
-//                    }
-//                }
-//            }
-//        });
+        CardView cardView = (CardView) itemView.findViewById(R.id.card_view2);
+        int finalSeconds = seconds;
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (task.getIsStopWatch()) {
+                    int position = findTask(task.getTaskName());
+                    if (position != -1) {
+                        Task task = getItem(position);
+                        if (task != null) {
+                                task.setStarted(true);
+                               // task.setFinished(true);
+                               // myact.completedTasks.add(task);
+                               // myact.tasks.remove(task);
+                                myact.taskAdapter.notifyDataSetChanged();
+                                //launch activity
+
+                                peditor.putString("title",title.getText().toString());
+                                //remove Time Left: from the string
+                                peditor.putInt("seconds", finalSeconds);
+                                peditor.putString("description",description.getText().toString());
+                                peditor.apply();
+                                Intent intent;
+                                intent = new Intent(myact, StopwatchActivity.class);
+
+                                myact.startActivity(intent);
+                        }
+                    }
+                } else {
+                    int position = findTask(task.getTaskName());
+                    if (position != -1) {
+                        Task task = getItem(position);
+                        if (task != null) {
+                                task.setStarted(true);
+                               // task.setFinished(true);
+                               // myact.completedTasks.add(task);
+                               // myact.tasks.remove(task);
+                               // myact.taskAdapter.notifyDataSetChanged();
+                               // myact.completedTaskAdapter.notifyDataSetChanged();
+                                //add the intent
+                                Intent intent;
+                                peditor.putString("title",title.getText().toString());
+                                peditor.putInt("seconds", finalSeconds);
+                                peditor.putString("description",description.getText().toString());
+                                peditor.apply();
+                                intent = new Intent(myact, TimerActivity.class);
+                                myact.startActivity(intent);
+
+                                task.setStarted(true);
+                                myact.taskAdapter.notifyDataSetChanged();
+
+                        }
+                    }
+                }
+            }
+        });
+
 
         return itemView;
     }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -106,10 +107,16 @@ public class CreateEventActivity extends AppCompatActivity {
                     peditor.putInt("seconds",hour * 3600 + minute * 60 + second);
                     peditor.putString("description",descriptionEditText.getText().toString());
                     peditor.apply();
-                    MainActivity.tasks.add(new Task(titleEditText.getText().toString(),descriptionEditText.getText().toString(),hour * 3600 + minute * 60 + second,tagButton.getText().toString(), isStopwatch));
+                    int time = hour * 3600 + minute * 60 + second;
+                    String time_string = Integer.toString(time);
+                    Task t = new Task(titleEditText.getText().toString(),descriptionEditText.getText().toString(),time_string,tagButton.getText().toString(), isStopwatch);
+                    t.setStarted(true);
+                    MainActivity.tasks.add(t);
                     MainActivity.taskAdapter.notifyDataSetChanged();
                     if (isStopwatch) {
                         Intent launch = new Intent(CreateEventActivity.this, StopwatchActivity.class);
+                        int indexOf = MainActivity.tasks.size();
+                        launch.putExtra("index", indexOf);
                         startActivity(launch);
                     } else {
                         Intent launch = new Intent(CreateEventActivity.this, TimerActivity.class);
@@ -135,7 +142,9 @@ public class CreateEventActivity extends AppCompatActivity {
                 if (MainActivity.taskAdapter.findTask(titleEditText.getText().toString())!=-1) {
                     Toast.makeText(getApplicationContext(), "Task Name Must Be Unique!", Toast.LENGTH_SHORT).show();
                 } else if (checkInput(isStopwatch)) {
-                    MainActivity.tasks.add(new Task(titleEditText.getText().toString(),descriptionEditText.getText().toString(),hour * 3600 + minute * 60 + second,tagButton.getText().toString(),isStopwatch));
+                    int time = hour * 3600 + minute * 60 + second;
+                    String time_string = Integer.toString(time);
+                    MainActivity.tasks.add(new Task(titleEditText.getText().toString(),descriptionEditText.getText().toString(), time_string,tagButton.getText().toString(),isStopwatch));
                     MainActivity.taskAdapter.notifyDataSetChanged();
                     finish();
                 }

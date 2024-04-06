@@ -22,11 +22,14 @@ public class StopwatchActivity extends AppCompatActivity {
     private ImageButton startPauseButton;
     private ImageButton endButton;
     private ImageButton returnButton;
+
     private Handler handler = new Handler();
     int hours, minutes, secs, fullSeconds;
     private boolean isRunning;
 
     private boolean sessionFinished;
+
+    private int index;
     private Context cntx;
     private SharedPreferences myPrefs;
 
@@ -48,6 +51,8 @@ public class StopwatchActivity extends AppCompatActivity {
         stopwatchCurrentlyPause.setVisibility(View.INVISIBLE);
         String titleString = myPrefs.getString("title","");
         title.setText(titleString);
+        Intent intent = getIntent();
+        index = intent.getIntExtra("index",0);
 
 //        startStopwatch();
 //        isRunning = true;
@@ -76,7 +81,12 @@ public class StopwatchActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String title = myPrefs.getString("title","");
                 Task currentTask = MainActivity.tasks.get(MainActivity.taskAdapter.findTask(title));
-                currentTask.setTimeSpent(fullSeconds);
+                if(fullSeconds == 0){
+                    currentTask.setTimeSpent(Integer.toString(fullSeconds));
+                } else {
+                    currentTask.setTimeSpent(Integer.toString(fullSeconds-1));
+                }
+
                 MainActivity.taskAdapter.notifyDataSetChanged();
                 Intent intent = new Intent(StopwatchActivity.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -115,8 +125,8 @@ public class StopwatchActivity extends AppCompatActivity {
                 myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
                 String title = myPrefs.getString("title","");
                 Task currentTask = MainActivity.tasks.get(MainActivity.taskAdapter.findTask(title));
-                Task newTask = new Task(currentTask.getTaskName(),currentTask.getDescription(),0,currentTask.getTag(), currentTask.getIsStopWatch());
-                newTask.setTimeSpent(fullSeconds);
+                Task newTask = new Task(currentTask.getTaskName(),currentTask.getDescription(),"0",currentTask.getTag(), currentTask.getIsStopWatch());
+                newTask.setTimeSpent(Integer.toString(fullSeconds));
                 newTask.setFinished(true);
                 MainActivity.completedTasks.add(newTask);
                 MainActivity.tasks.remove(MainActivity.taskAdapter.findTask(title));
