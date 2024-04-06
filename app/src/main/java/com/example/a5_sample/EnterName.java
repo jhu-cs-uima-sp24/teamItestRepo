@@ -50,25 +50,25 @@ public class EnterName extends Fragment {
             name_edit.setText(savedName);
             name = savedName;
         }
-        name_edit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL) {
-                    InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(name_edit.getWindowToken(), 0);
-                    name = name_edit.getText().toString();
-                    if (!name.matches("[a-zA-Z]+")) {
-                        // If the entered text contains characters other than letters,
-                        // show a toast message
-                        Toast.makeText(getActivity(), "Please enter a valid name!", Toast.LENGTH_SHORT).show();
-                        // Clear the EditText
-                        name_edit.setText("");
-                        name = "";
-                    }
-                }
-                return false;
-            }
-        });
+//        name_edit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+//                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL) {
+//                    InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                    imm.hideSoftInputFromWindow(name_edit.getWindowToken(), 0);
+//                    name = name_edit.getText().toString();
+//                    if (name.matches("^(?:\\\\W|\\\\s)*$")) {
+//                        // If the entered text contains characters other than letters,
+//                        // show a toast message
+//                        Toast.makeText(getActivity(), "Please enter a valid name!", Toast.LENGTH_SHORT).show();
+//                        // Clear the EditText
+//                        name_edit.setText("");
+//                        name = "";
+//                    }
+//                }
+//                return false;
+//            }
+//        });
         name_edit.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus && name_edit.getText().length() == 0) {
                 name_edit.setHint("");
@@ -80,11 +80,11 @@ public class EnterName extends Fragment {
         nextButtonName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("tag", "onClick: " + name);
-                if (name.equals("")) {
+                if (name_edit.getText().toString().equals("") || !name_edit.getText().toString().matches("^[a-zA-Z]*$")) {
                     Toast.makeText(getActivity(), "Please enter a valid name!", Toast.LENGTH_SHORT).show();
-                } else {
-                    peditor.putString("user_name", name);
+                }
+                else {
+                    peditor.putString("user_name", name_edit.getText().toString());
                     peditor.apply();
                     // Replace the current fragment with the next fragment
                     Fragment fragment = new PetName();

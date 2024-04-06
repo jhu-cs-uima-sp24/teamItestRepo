@@ -206,13 +206,11 @@ public class TaskAdapter extends ArrayAdapter<Task> {
                                 //launch activity
 
                                 peditor.putString("title",title.getText().toString());
-                                //remove Time Left: from the string
                                 peditor.putInt("seconds", finalSeconds);
                                 peditor.putString("description",description.getText().toString());
                                 peditor.apply();
                                 Intent intent;
                                 intent = new Intent(myact, StopwatchActivity.class);
-
                                 myact.startActivity(intent);
                         }
                     }

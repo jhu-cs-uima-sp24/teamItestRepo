@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -29,7 +30,6 @@ public class StopwatchActivity extends AppCompatActivity {
 
     private boolean sessionFinished;
 
-    private int index;
     private Context cntx;
     private SharedPreferences myPrefs;
 
@@ -51,9 +51,13 @@ public class StopwatchActivity extends AppCompatActivity {
         stopwatchCurrentlyPause.setVisibility(View.INVISIBLE);
         String titleString = myPrefs.getString("title","");
         title.setText(titleString);
-        Intent intent = getIntent();
-        index = intent.getIntExtra("index",0);
         stopwatchCurrentlyPause.setVisibility(View.VISIBLE);
+        fullSeconds = myPrefs.getInt("seconds",0);
+        int hour = fullSeconds / 3600;
+        int minute = (fullSeconds % 3600) / 60;
+        int second = fullSeconds % 60;
+        timerTextView.setText(String.format("%02d:%02d:%02d", hour, minute, second));
+
 //        startStopwatch();
 //        isRunning = true;
         startPauseButton.setOnClickListener(new View.OnClickListener() {
@@ -155,6 +159,7 @@ public class StopwatchActivity extends AppCompatActivity {
 
     private void runStopwatch(){
         final Handler handler = new Handler();
+
 
         handler.post(new Runnable() {@Override
 
