@@ -1,16 +1,19 @@
 package com.example.a5_sample;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
+import android.util.Log;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -32,6 +35,12 @@ public class MainActivity extends AppCompatActivity {
     public static TaskAdapter completedTaskAdapter;
     public Task current;
     public Random randy = new Random();
+    private Toolbar toolbar;
+    private TextView toolbarText;
+    private RelativeLayout points;
+    private TextView pts_name;
+    private TextView pts_pts;
+    private ImageView pet_pts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +86,42 @@ public class MainActivity extends AppCompatActivity {
         String name = myPrefs.getString("loginName", "Owner");
 
 //        Toast.makeText(context.getApplicationContext(), "Created!", Toast.LENGTH_SHORT).show();
+
+        toolbar = binding.toolbar;
+        toolbarText = binding.toolbarTitle;
+        points = binding.ptBar;
+        pts_name = binding.petNamePts;
+        pts_pts = binding.petPtsPts;
+        pet_pts = binding.petPts;
+        setSupportActionBar(toolbar);
+        int pet_user = myPrefs.getInt("pet_id", -1);
+        if (pet_user != -1) {
+            pet_pts.setImageResource(pet_user);
+            Log.d("TAG", String.valueOf(pet_user));
+        }
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            // Update Toolbar title based on the current fragment
+            switch (destination.getId()) {
+                case R.id.navigation_profile:
+                    toolbarText.setText("Profile");
+                    points.setVisibility(View.INVISIBLE);
+                    toolbarText.setVisibility(View.VISIBLE);
+                    break;
+                case R.id.navigation_home:
+                    toolbarText.setVisibility(View.INVISIBLE);
+                    points.setVisibility(View.VISIBLE);
+                    String name_pts = myPrefs.getString("pet_name", null);
+                    pts_name.setText("Current Pal: " + name_pts);
+                    pts_pts.setText("pts");
+                    break;
+                default:
+                    toolbarText.setText("Analytics");
+                    points.setVisibility(View.INVISIBLE);
+                    toolbarText.setVisibility(View.VISIBLE);
+                    break;
+            }
+        });
     }
 //
 //    @Override

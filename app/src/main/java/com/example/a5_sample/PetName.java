@@ -46,6 +46,7 @@ public class PetName extends Fragment {
         if (savedPetName != null) {
             pet_edit.setText(savedPetName);
             pet_name = savedPetName;
+            Log.d("TAG", savedPetName);
         }
 //        pet_edit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 //            @Override
@@ -81,6 +82,7 @@ public class PetName extends Fragment {
                 if (pet_edit.getText().toString().equals("") || !pet_edit.getText().toString().matches("^[a-zA-Z]*$")) {
                     Toast.makeText(getActivity(), "Please enter a valid name!", Toast.LENGTH_SHORT).show();
                 } else {
+                    pet_name = pet_edit.getText().toString();
                     peditor.putString("pet_name", pet_name);
                     peditor.apply();
                     // Replace the current fragment with the next fragment
@@ -100,6 +102,9 @@ public class PetName extends Fragment {
         backButtonPet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pet_name = pet_edit.getText().toString();
+                peditor.putString("pet_name", pet_name);
+                peditor.apply();
                 Fragment fragment = new EnterName();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

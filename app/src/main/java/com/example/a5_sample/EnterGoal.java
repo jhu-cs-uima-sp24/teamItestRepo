@@ -76,6 +76,7 @@ public class EnterGoal extends Fragment {
                 if (goal.equals("")) {
                     Toast.makeText(getActivity(), "Please enter a valid goal!", Toast.LENGTH_SHORT).show();
                 } else {
+                    goal = goal_edit.getText().toString();
                     peditor.putString("user_goal", goal);
                     peditor.apply();
                     // Replace the current fragment with the next fragment
@@ -89,6 +90,9 @@ public class EnterGoal extends Fragment {
         backButtonGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                goal = goal_edit.getText().toString();
+                peditor.putString("user_goal", goal);
+                peditor.apply();
                 Fragment fragment = new ChoosePet();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
