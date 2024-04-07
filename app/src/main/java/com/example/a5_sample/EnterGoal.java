@@ -51,17 +51,17 @@ public class EnterGoal extends Fragment {
             goal_edit.setText(goal_choosen);
             goal = goal_choosen;
         }
-        goal_edit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL) {
-                    InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(goal_edit.getWindowToken(), 0);
-                    goal = goal_edit.getText().toString();
-                }
-                return false;
-            }
-        });
+//        goal_edit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+//                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL) {
+//                    InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                    imm.hideSoftInputFromWindow(goal_edit.getWindowToken(), 0);
+//                    goal = goal_edit.getText().toString();
+//                }
+//                return false;
+//            }
+//        });
         goal_edit.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus && goal_edit.getText().length() == 0) {
                 goal_edit.setHint("");
@@ -73,7 +73,7 @@ public class EnterGoal extends Fragment {
         nextButtonGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (goal.equals("")) {
+                if (goal_edit.getText().toString().equals("") || !goal_edit.getText().toString().matches("^[a-zA-Z]*$")) {
                     Toast.makeText(getActivity(), "Please enter a valid goal!", Toast.LENGTH_SHORT).show();
                 } else {
                     goal = goal_edit.getText().toString();
