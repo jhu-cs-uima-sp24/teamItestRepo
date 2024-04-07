@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -45,9 +44,9 @@ public class CreateEventActivity extends AppCompatActivity {
         binding = ActivityNewEventBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         View root = binding.getRoot();
-        hourPicker = root.findViewById(R.id.numPickerHr);
-        minutePicker = root.findViewById(R.id.numPickerMin);
-        secondPicker = root.findViewById(R.id.numPickerSec);
+        hourPicker = root.findViewById(R.id.numPickerHrEdit);
+        minutePicker = root.findViewById(R.id.numPickerMinEdit);
+        secondPicker = root.findViewById(R.id.numPickerSecEdit);
         titleEditText = root.findViewById(R.id.editTextTitle);
         descriptionEditText = root.findViewById(R.id.editTextDescription);
         timerSwitch = root.findViewById(R.id.timerSwitch);
@@ -96,7 +95,7 @@ public class CreateEventActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (MainActivity.taskAdapter.findTask(titleEditText.getText().toString())!=-1) {
+                if (MainActivity.taskAdapter.findTask(titleEditText.getText().toString())!=-1 || MainActivity.completedTaskAdapter.findTask(titleEditText.getText().toString())!=-1) {
                     Toast.makeText(getApplicationContext(), "Task Name Must Be Unique!", Toast.LENGTH_SHORT).show();
                 } else if (checkInput(isStopwatch)) {
                     int hour, minute, second;
@@ -195,7 +194,7 @@ public class CreateEventActivity extends AppCompatActivity {
         gamingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_home_black_24dp, 0, 0, 0);
+                tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.game, 0, 0, 0);
                 tagButton.setBackgroundColor(getResources().getColor(R.color.task_blue));
                 tagButton.setText("Gaming");
                 popWindow.dismiss();
@@ -204,7 +203,7 @@ public class CreateEventActivity extends AppCompatActivity {
         breakButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_home_black_24dp, 0, 0, 0);
+                tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.rest, 0, 0, 0);
                 tagButton.setBackgroundColor(getResources().getColor(R.color.task_pink));
                 tagButton.setText("Break");
                 popWindow.dismiss();
@@ -213,7 +212,7 @@ public class CreateEventActivity extends AppCompatActivity {
         studyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_home_black_24dp, 0, 0, 0);
+                tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.study, 0, 0, 0);
                 tagButton.setBackgroundColor(getResources().getColor(R.color.task_green));
                 tagButton.setText("Study");
                 popWindow.dismiss();
@@ -222,7 +221,7 @@ public class CreateEventActivity extends AppCompatActivity {
         workOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_home_black_24dp, 0, 0, 0);
+                tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.workout, 0, 0, 0);
                 tagButton.setBackgroundColor(getResources().getColor(R.color.task_yellow));
                 tagButton.setText("Workout");
                 popWindow.dismiss();

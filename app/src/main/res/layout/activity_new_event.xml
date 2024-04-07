@@ -34,7 +34,7 @@
         app:layout_constraintVertical_bias="0.21" />
 
     <NumberPicker
-        android:id="@+id/numPickerSec"
+        android:id="@+id/numPickerSecEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="40dp"
@@ -68,13 +68,13 @@
         app:layout_constraintVertical_bias="0.566" />
 
     <NumberPicker
-        android:id="@+id/numPickerMin"
+        android:id="@+id/numPickerMinEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/numPickerSec"
+        app:layout_constraintEnd_toStartOf="@+id/numPickerSecEdit"
         app:layout_constraintHorizontal_bias="0.488"
-        app:layout_constraintStart_toEndOf="@+id/numPickerHr"
+        app:layout_constraintStart_toEndOf="@+id/numPickerHrEdit"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.359" />
 
@@ -152,7 +152,7 @@
         app:layout_constraintVertical_bias="0.932" />
 
     <NumberPicker
-        android:id="@+id/numPickerHr"
+        android:id="@+id/numPickerHrEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"

@@ -13,7 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/studyButton"
         app:layout_constraintTop_toTopOf="parent"
-        android:drawableStart="@drawable/ic_home_black_24dp"
+        android:drawableStart="@drawable/rest"
         android:backgroundTint="@color/task_pink"
         app:layout_constraintHorizontal_chainStyle="spread"/>
 
@@ -25,7 +25,7 @@
         app:layout_constraintStart_toEndOf="@+id/breakButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:drawableStart="@drawable/ic_home_black_24dp"
+        android:drawableStart="@drawable/study"
         android:backgroundTint="@color/task_green"/>
 
     <Button
@@ -36,7 +36,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/workOutButton"
         app:layout_constraintTop_toBottomOf="@+id/breakButton"
-        android:drawableStart="@drawable/ic_home_black_24dp"
+        android:drawableStart="@drawable/game"
         android:backgroundTint="@color/task_blue"
         app:layout_constraintHorizontal_chainStyle="spread"/>
 
@@ -48,6 +48,6 @@
         app:layout_constraintStart_toEndOf="@+id/gamingButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/studyButton"
-        android:drawableStart="@drawable/ic_home_black_24dp"
+        android:drawableStart="@drawable/workout"
         android:backgroundTint="@color/task_yellow"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
