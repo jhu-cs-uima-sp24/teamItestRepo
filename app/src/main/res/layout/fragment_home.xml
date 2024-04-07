@@ -1,126 +1,240 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
+
     android:layout_height="match_parent"
+
     android:isScrollContainer="true"
-    android:orientation="vertical"
+
     android:paddingTop="70dp"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
     tools:context=".ui.home.HomeFragment">
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/header"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="@color/primary_pink"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/toDoList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <include
-            android:id="@+id/header"
-            layout="@layout/session_header"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent">
 
-        <ListView
-            android:id="@+id/toDoList"
-            android:layout_width="411dp"
-            android:layout_height="385dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="24dp"
-            android:isScrollContainer="true"
-            android:scrollbarAlwaysDrawVerticalTrack="true"
-            android:scrollbars="vertical"
-            android:soundEffectsEnabled="true">
+            <ImageView
+                android:id="@+id/toDoWhiteDot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.046"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/baseline_circle_24" />
 
-        </ListView>
+            <TextView
+                android:id="@+id/toDoTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="To Do List"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/toDoWhiteDot"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.615" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/header2"
-            android:layout_width="365dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/primary_pink"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.046"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/baseline_circle_24" />
+    </androidx.cardview.widget.CardView>
 
-                <TextView
-                    android:id="@+id/header_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Finished Sessions"
-                    android:textColor="@color/black"
-                    android:textSize="20dp"
-                    android:layout_marginLeft="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.165"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.523" />
 
-                <ImageButton
-                    android:id="@+id/imageButton2"
-                    android:layout_width="32dp"
-                    android:layout_height="31dp"
-                    android:background="@color/primary_pink"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.978"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.555"
-                    app:srcCompat="@drawable/baseline_keyboard_arrow_down_24" />
+    <ListView
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        android:id="@+id/toDoList"
 
-        </androidx.cardview.widget.CardView>
+        android:layout_width="wrap_content"
 
-        <ListView
-            android:id="@+id/completedList"
-            android:layout_width="409dp"
-            android:layout_height="276dp"
-            android:layout_marginTop="24dp"
-            android:animateLayoutChanges="true"
-            android:isScrollContainer="true"
-            android:scrollbarAlwaysDrawVerticalTrack="true"
-            android:scrollbars="vertical"
-            android:soundEffectsEnabled="true">
+        android:layout_height="380dp"
 
-        </ListView>
-    </LinearLayout>
+        android:layout_marginStart="24dp"
+
+        android:layout_marginTop="24dp"
+
+        android:layout_marginEnd="24dp"
+
+        android:layout_marginBottom="24dp"
+
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+
+        android:scrollbars="vertical"
+
+        android:soundEffectsEnabled="true"
+
+        app:layout_constraintBottom_toTopOf="@id/header2"
+
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@id/header" />
+
+
+    <androidx.cardview.widget.CardView
+
+        android:id="@+id/header2"
+
+        android:layout_width="0dp"
+
+        android:layout_height="40dp"
+
+        android:layout_marginStart="24dp"
+
+        android:layout_marginTop="14dp"
+
+        android:layout_marginEnd="24dp"
+
+        android:layout_marginBottom="24dp"
+
+        android:backgroundTint="@color/primary_pink"
+
+        app:cardCornerRadius="10dp"
+
+        app:cardElevation="10dp"
+
+        app:layout_constraintBottom_toTopOf="@id/completedList"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toDoList">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent">
+
+
+            <ImageView
+
+                android:id="@+id/imageView2"
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                app:layout_constraintEnd_toEndOf="@+id/imageButton2"
+
+                app:layout_constraintHorizontal_bias="0.047"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/baseline_circle_24" />
+
+
+            <TextView
+
+                android:id="@+id/header_textview"
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                android:text="Finished Sessions"
+
+                android:textColor="@color/black"
+
+                android:textSize="20dp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/imageButton2"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.384" />
+
+            <ImageButton
+
+                android:id="@+id/imageButton2"
+
+                android:layout_width="32dp"
+
+                android:layout_height="31dp"
+
+                android:background="@color/primary_pink"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintTop_toTopOf="parent"
+
+                app:srcCompat="@drawable/baseline_keyboard_arrow_down_24" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <ListView
+
+        android:id="@+id/completedList"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="380dp"
+
+        android:layout_marginTop="7dp"
+
+        android:animateLayoutChanges="true"
+
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+
+        android:scrollbars="vertical"
+
+        android:soundEffectsEnabled="true"
+        app:layout_constraintTop_toBottomOf="@+id/header2" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+
         android:id="@+id/fab"
+
         android:layout_width="56dp"
+
         android:layout_height="56dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="75dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
+
         android:contentDescription="@string/add"
-        android:visibility="visible"
+
         app:elevation="@dimen/fab_margin"
 
-        tools:layout_editor_absoluteX="175dp"
-        tools:layout_editor_absoluteY="338dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.905" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

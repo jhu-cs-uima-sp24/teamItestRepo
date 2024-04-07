@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment {
         completedList = (ListView) myview.findViewById(R.id.completedList);
         completedList.setAdapter(myact.completedTaskAdapter);
         myact.completedTaskAdapter.notifyDataSetChanged();
-        myview.findViewById(R.id.header).findViewById(R.id.imageButton2).setVisibility(View.GONE);
+      //  myview.findViewById(R.id.header).findViewById(R.id.imageButton2).setVisibility(View.GONE);
         completedList.setVisibility(View.GONE);
         //TextView completedTasksTextview = myview.findViewById(R.id.header).findViewById(R.id.task_name_textview);
        // Log.d("completedTasksTextview", completedTasksTextview.getText().toString());
@@ -94,10 +94,10 @@ public class HomeFragment extends Fragment {
                     }
                     completedList.setVisibility(View.GONE);
                     ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) myList.getLayoutParams();
-                    lp.height = 1015;
+                    lp.height = (int) (lp.height * 2);
                     myList.setLayoutParams(lp);
                     ViewGroup.LayoutParams lp2 = (ViewGroup.LayoutParams) completedList.getLayoutParams();
-                    lp2.height = 276;
+                    lp2.height = (int) (lp2.height / 2);
                     completedList.setLayoutParams(lp2);
                    // myview.findViewById(R.id.header).findViewById(R.id.imageButton2).setVisibility(View.GONE);
                 }
@@ -109,10 +109,10 @@ public class HomeFragment extends Fragment {
                     view.animate().alpha(1.0f);
                     completedList.setVisibility(View.VISIBLE);
                     ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) myList.getLayoutParams();
-                    lp.height = 411;
+                    lp.height = (int) (lp.height/2);
                     myList.setLayoutParams(lp);
                     ViewGroup.LayoutParams lp2 = (ViewGroup.LayoutParams) completedList.getLayoutParams();
-                    lp2.height = 650;
+                    lp2.height = lp2.height * 2;
                     completedList.setLayoutParams(lp2);
                   //  myview.findViewById(R.id.header).findViewById(R.id.imageButton2).setVisibility(View.VISIBLE);
                     //show list of elements by moving header2 up
