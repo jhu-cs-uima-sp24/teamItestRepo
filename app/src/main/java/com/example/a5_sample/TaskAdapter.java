@@ -165,6 +165,8 @@ public class TaskAdapter extends ArrayAdapter<Task> {
 // Tint the drawable (change its color)
             Drawable tintedDrawable = DrawableCompat.wrap(leftDrawable).mutate(); // Wrap the drawable to make it mutable
             DrawableCompat.setTint(tintedDrawable, Color.GREEN); // Change color as needed
+            ImageButton editButton = itemView.findViewById(R.id.imageButton3);
+            editButton.setVisibility(View.GONE);
         } else if(task.getStarted()){
             TextView start_finish = itemView.findViewById(R.id.start_finish_text_view);
             start_finish.setText("Resume");
@@ -190,21 +192,17 @@ public class TaskAdapter extends ArrayAdapter<Task> {
 
         CardView cardView = (CardView) itemView.findViewById(R.id.card_view2);
         int finalSeconds = seconds;
-        cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (task.getIsStopWatch()) {
-                    int position = findTask(task.getTaskName());
-                    if (position != -1) {
-                        Task task = getItem(position);
-                        if (task != null) {
+        if(!task.getFinished()){
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (task.getIsStopWatch()) {
+                        int position = findTask(task.getTaskName());
+                        if (position != -1) {
+                            Task task = getItem(position);
+                            if (task != null) {
                                 task.setStarted(true);
-                               // task.setFinished(true);
-                               // myact.completedTasks.add(task);
-                               // myact.tasks.remove(task);
                                 myact.taskAdapter.notifyDataSetChanged();
-                                //launch activity
-
                                 peditor.putString("title",title.getText().toString());
                                 peditor.putInt("seconds", finalSeconds);
                                 peditor.putString("description",description.getText().toString());
@@ -212,20 +210,14 @@ public class TaskAdapter extends ArrayAdapter<Task> {
                                 Intent intent;
                                 intent = new Intent(myact, StopwatchActivity.class);
                                 myact.startActivity(intent);
+                            }
                         }
-                    }
-                } else {
-                    int position = findTask(task.getTaskName());
-                    if (position != -1) {
-                        Task task = getItem(position);
-                        if (task != null) {
+                    } else {
+                        int position = findTask(task.getTaskName());
+                        if (position != -1) {
+                            Task task = getItem(position);
+                            if (task != null) {
                                 task.setStarted(true);
-                               // task.setFinished(true);
-                               // myact.completedTasks.add(task);
-                               // myact.tasks.remove(task);
-                               // myact.taskAdapter.notifyDataSetChanged();
-                               // myact.completedTaskAdapter.notifyDataSetChanged();
-                                //add the intent
                                 Intent intent;
                                 peditor.putString("title",title.getText().toString());
                                 peditor.putInt("seconds", finalSeconds);
@@ -237,11 +229,12 @@ public class TaskAdapter extends ArrayAdapter<Task> {
                                 task.setStarted(true);
                                 myact.taskAdapter.notifyDataSetChanged();
 
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
+        }
 
 
         return itemView;
