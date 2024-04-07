@@ -109,7 +109,7 @@
 
         android:layout_marginStart="24dp"
 
-        android:layout_marginTop="-10dp"
+        android:layout_marginTop="-20dp"
 
         android:layout_marginEnd="24dp"
 
@@ -226,7 +226,7 @@
 
         android:layout_marginEnd="32dp"
 
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="16dp"
 
         android:contentDescription="@string/add"
         app:elevation="@dimen/fab_margin"
