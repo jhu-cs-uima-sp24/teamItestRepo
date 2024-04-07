@@ -114,7 +114,7 @@ public class StatsDataFragment extends Fragment {
         list.add(new TagModel("Break", 100));
         list.add(new TagModel("Study", 100));
         list.add(new TagModel("Gaming", 100));
-        list.add(new TagModel("workout", 100));
+        list.add(new TagModel("Workout", 100));
 
 //        FirebaseFirestore db = FirebaseFirestore.getInstance();
 //
