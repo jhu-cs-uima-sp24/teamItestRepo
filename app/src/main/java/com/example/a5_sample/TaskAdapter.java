@@ -51,19 +51,19 @@ public class TaskAdapter extends ArrayAdapter<Task> {
     private void button_color_mapping(Context context, Button button, String availText) {
         switch (availText) {
             case "Study":
-                button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.study, 0, 0, 0);
+                button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.study_bold, 0, 0, 0);
                 button.setBackgroundColor(ContextCompat.getColor(context,R.color.task_green));
                 break;
             case "Break":
-                button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.rest, 0, 0, 0);
+                button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.rest_bold, 0, 0, 0);
                 button.setBackgroundColor(ContextCompat.getColor(context,R.color.task_pink));
                 break;
             case "Gaming":
-                button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.game, 0, 0, 0);
+                button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.game_bold, 0, 0, 0);
                 button.setBackgroundColor(ContextCompat.getColor(context,R.color.task_blue));
                 break;
             default:
-                button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.workout, 0, 0, 0);
+                button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.workout_bold, 0, 0, 0);
                 button.setBackgroundColor(ContextCompat.getColor(context,R.color.task_yellow));
                 break;
         }

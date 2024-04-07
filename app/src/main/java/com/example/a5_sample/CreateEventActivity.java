@@ -194,7 +194,7 @@ public class CreateEventActivity extends AppCompatActivity {
         gamingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.game, 0, 0, 0);
+                tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.game_bold, 0, 0, 0);
                 tagButton.setBackgroundColor(getResources().getColor(R.color.task_blue));
                 tagButton.setText("Gaming");
                 popWindow.dismiss();
@@ -203,7 +203,7 @@ public class CreateEventActivity extends AppCompatActivity {
         breakButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.rest, 0, 0, 0);
+                tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.rest_bold, 0, 0, 0);
                 tagButton.setBackgroundColor(getResources().getColor(R.color.task_pink));
                 tagButton.setText("Break");
                 popWindow.dismiss();
@@ -212,7 +212,7 @@ public class CreateEventActivity extends AppCompatActivity {
         studyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.study, 0, 0, 0);
+                tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.study_bold, 0, 0, 0);
                 tagButton.setBackgroundColor(getResources().getColor(R.color.task_green));
                 tagButton.setText("Study");
                 popWindow.dismiss();
@@ -221,7 +221,7 @@ public class CreateEventActivity extends AppCompatActivity {
         workOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.workout, 0, 0, 0);
+                tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.workout_bold, 0, 0, 0);
                 tagButton.setBackgroundColor(getResources().getColor(R.color.task_yellow));
                 tagButton.setText("Workout");
                 popWindow.dismiss();
