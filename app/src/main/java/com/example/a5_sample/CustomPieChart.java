@@ -18,9 +18,9 @@ import java.util.Map;
 public class CustomPieChart extends View {
     private static final String TAG = "";
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private float[] slicePercentages = {70, 20, 10, 0}; // Example percentages
-    private int[] colors = {0xFFE53935, 0xFF9CCC65, 0xFF42A5F5, 0xFFFFFF00}; // Red, Green, Blue, Yellow
-
+    private float[] slicePercentages = {60, 20, 10, 10}; // Example percentages
+    private int[] colors = {0xFFFCB2DA, 0xFFBCF1D1, 0xFFC0D6F9, 0xFFF8DE9C}; // Red, Green, Blue, Yellow
+    //#FCB2DA
 
     public CustomPieChart(Context context) {
         super(context);
@@ -59,7 +59,7 @@ public class CustomPieChart extends View {
         int width = getWidth();
         int height = getHeight();
         int size = Math.min(width, height);
-        RectF rect = new RectF((float) size /4, 0, size, (float) (size * 3) /4); // Use RectF for the pie chart bounds
+        RectF rect = new RectF((float) size /10, 0, size, (float) (size * 9) /10); // Use RectF for the pie chart bounds
 
         float startAngle = 0;
         for (int i = 0; i < slicePercentages.length; i++) {
