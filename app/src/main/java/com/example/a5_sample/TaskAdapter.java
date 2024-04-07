@@ -3,6 +3,8 @@ package com.example.a5_sample;
 
 import static android.provider.Settings.System.getString;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -49,19 +51,19 @@ public class TaskAdapter extends ArrayAdapter<Task> {
     private void button_color_mapping(Context context, Button button, String availText) {
         switch (availText) {
             case "Study":
-                button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_home_black_24dp, 0, 0, 0);
+                button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.study, 0, 0, 0);
                 button.setBackgroundColor(ContextCompat.getColor(context,R.color.task_green));
                 break;
             case "Break":
-                button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_home_black_24dp, 0, 0, 0);
+                button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.rest, 0, 0, 0);
                 button.setBackgroundColor(ContextCompat.getColor(context,R.color.task_pink));
                 break;
             case "Gaming":
-                button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_home_black_24dp, 0, 0, 0);
+                button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.game, 0, 0, 0);
                 button.setBackgroundColor(ContextCompat.getColor(context,R.color.task_blue));
                 break;
             default:
-                button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_home_black_24dp, 0, 0, 0);
+                button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.workout, 0, 0, 0);
                 button.setBackgroundColor(ContextCompat.getColor(context,R.color.task_yellow));
                 break;
         }
@@ -139,7 +141,29 @@ public class TaskAdapter extends ArrayAdapter<Task> {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         // Toast message on menu item clicked
-                            Toast.makeText(context, "You Clicked " + menuItem.getTitle(), Toast.LENGTH_SHORT).show();
+
+                            if (menuItem.getTitle().toString().equals("Delete Event")) {
+//                                Toast.makeText(context, "You Clicked " + menuItem.getTitle(), Toast.LENGTH_SHORT).show();
+                                if (MainActivity.taskAdapter.findTask(task.getTaskName()) != -1) {
+                                    MainActivity.tasks.remove(MainActivity.taskAdapter.findTask(task.getTaskName()));
+                                    MainActivity.taskAdapter.notifyDataSetChanged();
+                                } else if (MainActivity.completedTaskAdapter.findTask(task.getTaskName()) != -1) {
+                                    MainActivity.completedTasks.remove(MainActivity.completedTaskAdapter.findTask(task.getTaskName()));
+                                    MainActivity.completedTaskAdapter.notifyDataSetChanged();
+                                } else {
+                                    Toast.makeText(context, "This shouldn't happen", Toast.LENGTH_SHORT).show();
+                                }
+                            } else if (menuItem.getTitle().toString().equals("Edit Event")) {
+                                Intent launch = new Intent(myact, EditEventActivity.class);
+                                peditor.putString("title",task.getTaskName());
+                                peditor.putInt("seconds", Integer.parseInt(task.getTimeLeft()));
+                                peditor.putString("description",task.getDescription());
+                                peditor.putString("tag",task.getTag());
+                                peditor.putBoolean("isStopwatch",task.getIsStopWatch());
+                                peditor.putInt("position",position);
+                                peditor.apply();
+                                myact.startActivity(launch);
+                            }
                             return true;
                     }
                 });

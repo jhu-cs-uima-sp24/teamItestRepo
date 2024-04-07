@@ -24,8 +24,6 @@ import com.example.a5_sample.CreateEventActivity;
 import com.example.a5_sample.MainActivity;
 import com.example.a5_sample.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;

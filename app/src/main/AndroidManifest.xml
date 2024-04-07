@@ -24,6 +24,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.LifePal"/>
         <activity
+            android:name=".EditEventActivity"
+            android:exported="true"
+            android:theme="@style/Theme.LifePal"/>
+        <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan"
             android:theme="@style/Theme.LifePal"
