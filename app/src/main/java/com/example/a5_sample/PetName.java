@@ -16,6 +16,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -85,7 +86,8 @@ public class PetName extends Fragment {
                     pet_name = pet_edit.getText().toString();
                     peditor.putString("pet_name", pet_name);
                     peditor.apply();
-                    // Replace the current fragment with the next fragment
+                    InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    mgr.hideSoftInputFromWindow(pet_edit.getWindowToken(), 0);                    // Replace the current fragment with the next fragment
                     Fragment fragment = new ChoosePet();
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

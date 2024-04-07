@@ -45,13 +45,13 @@ public class GetStarted extends Fragment {
                 } else {
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
-//                    Fragment fragment = new EnterName(); //for debugging
-//                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                    fragmentTransaction.replace(R.id.get_started, fragment);
-//                    fragmentTransaction.addToBackStack(null);
-//                    fragmentTransaction.commit();
-//                    root.setVisibility(View.GONE);
+                    /*Fragment fragment = new EnterName(); //for debugging
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.get_started, fragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                    root.setVisibility(View.GONE);*/
                 }
 
 
