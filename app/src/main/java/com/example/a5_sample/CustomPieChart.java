@@ -59,7 +59,7 @@ public class CustomPieChart extends View {
         int width = getWidth();
         int height = getHeight();
         int size = Math.min(width, height);
-        RectF rect = new RectF((float) size /10, 0, size, (float) (size * 9) /10); // Use RectF for the pie chart bounds
+        RectF rect = new RectF((float) 0, 0, size, (float) size); // Use RectF for the pie chart bounds
 
         float startAngle = 0;
         for (int i = 0; i < slicePercentages.length; i++) {
