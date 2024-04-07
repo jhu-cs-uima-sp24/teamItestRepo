@@ -126,17 +126,17 @@ public class HomeFragment extends Fragment {
 
             }
         });
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("tags").document("user1");
-
-        Map<String, Integer> tags = new HashMap<>();
-        tags.put("break", 10);
-        tags.put("study", 10);
-        tags.put("gaming", 20);
-        tags.put("workout", 100);
-
-        docRef.set(tags);
+//
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        DocumentReference docRef = db.collection("tags").document("user1");
+//
+//        Map<String, Integer> tags = new HashMap<>();
+//        tags.put("break", 10);
+//        tags.put("study", 10);
+//        tags.put("gaming", 20);
+//        tags.put("workout", 100);
+//
+//        docRef.set(tags);
 
 
         return myview;

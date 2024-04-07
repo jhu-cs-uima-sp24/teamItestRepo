@@ -111,19 +111,24 @@ public class StatsDataFragment extends Fragment {
     private List<TagModel> getTags() {
         List<TagModel> list = new ArrayList<>();
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        list.add(new TagModel("Break", 100));
+        list.add(new TagModel("Study", 100));
+        list.add(new TagModel("Gaming", 100));
+        list.add(new TagModel("workout", 100));
 
-        db.collection("tags").document("user1")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        Map<String, Long> entry = (Map<String, Long>) document.get("tags");
-                        for (String s: entry.keySet()) {
-                            list.add(new TagModel(s, entry.get(s).intValue()));
-                        }
-                    }
-                });
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//
+//        db.collection("tags").document("user1")
+//                .get()
+//                .addOnCompleteListener(task -> {
+//                    if (task.isSuccessful()) {
+//                        DocumentSnapshot document = task.getResult();
+//                        Map<String, Long> entry = (Map<String, Long>) document.get("tags");
+//                        for (String s: entry.keySet()) {
+//                            list.add(new TagModel(s, entry.get(s).intValue()));
+//                        }
+//                    }
+//                });
 
         return list;
     }
