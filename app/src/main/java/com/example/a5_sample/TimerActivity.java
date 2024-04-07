@@ -28,6 +28,8 @@ public class TimerActivity extends AppCompatActivity {
     private ImageButton endEventButton;
 
     private ImageButton returnEvent;
+    private TextView descriptionView;
+    private TextView timePastView;
     private Button backHome;
     private int hours, minutes, secs;
 
@@ -40,6 +42,7 @@ public class TimerActivity extends AppCompatActivity {
 
     private Context cntx;
     private SharedPreferences myPrefs;
+    private String timePast;
 
 
     @Override
@@ -49,7 +52,11 @@ public class TimerActivity extends AppCompatActivity {
         cntx = getApplicationContext();
         myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
         String titleString = myPrefs.getString("title","");
+        descriptionView = findViewById(R.id.timerDescription);
+        String description = myPrefs.getString("description","");
+        descriptionView.setText(description);
         String time;
+        timePast = "Time Past: ";
         int fullSecond;
         fullSecond = myPrefs.getInt("seconds",0);
 
@@ -64,6 +71,7 @@ public class TimerActivity extends AppCompatActivity {
 
 
         // Binding UI components
+        timePastView = findViewById(R.id.amountPast);
         timerTextView = findViewById(R.id.timerTextView);
         timerTextView.setText(time);
         startPauseButton = findViewById(R.id.timerstartPauseButton);
@@ -207,7 +215,10 @@ public class TimerActivity extends AppCompatActivity {
             // if running increment the seconds
             if (isRunning) {
                 String time = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, secs);
+                String amountPast = String.format(Locale.getDefault(), "%02d:%02d:%02d", secondPast / 3600, (secondPast % 3600) / 60, secondPast % 60);
 
+                String finalTime = timePast + amountPast;
+                timePastView.setText(finalTime);
                 timerTextView.setText(time);
 
                 fullSecondArray[0]--;

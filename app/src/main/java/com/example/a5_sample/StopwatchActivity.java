@@ -21,6 +21,7 @@ public class StopwatchActivity extends AppCompatActivity {
 
     private TextView stopwatchCurrentlyPause;
     private ImageButton startPauseButton;
+    private TextView descriptionView;
     private ImageButton endButton;
     private ImageButton returnButton;
 
@@ -46,6 +47,9 @@ public class StopwatchActivity extends AppCompatActivity {
         startPauseButton.setImageResource(R.drawable.resumebutton);
         endButton = findViewById(R.id.stopwatchEnd);
         returnButton = findViewById(R.id.stopwatchReturn);
+        descriptionView = findViewById(R.id.DescriptionStopwatch);
+        String description = myPrefs.getString("description","");
+        descriptionView.setText(description);
         title = findViewById(R.id.title);
         stopwatchCurrentlyPause = findViewById(R.id.CurrentlyPausedStopwatch);
         stopwatchCurrentlyPause.setVisibility(View.INVISIBLE);
@@ -53,6 +57,7 @@ public class StopwatchActivity extends AppCompatActivity {
         title.setText(titleString);
         stopwatchCurrentlyPause.setVisibility(View.VISIBLE);
         fullSeconds = myPrefs.getInt("seconds",0);
+
         int hour = fullSeconds / 3600;
         int minute = (fullSeconds % 3600) / 60;
         int second = fullSeconds % 60;
