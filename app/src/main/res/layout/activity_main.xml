@@ -56,15 +56,15 @@
                 <ImageView
                     android:id="@+id/rect_pts"
                     android:layout_width="225dp"
-                    android:layout_height="30dp"
+                    android:layout_height="50dp"
                     android:background="@drawable/outlined_rounded_rect"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="5dp"/>
 
                 <ImageView
                     android:id="@+id/pet_pts"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="start"
                     android:scaleType="fitCenter"
                     android:adjustViewBounds="true"
@@ -74,11 +74,11 @@
 
                 <TextView
                     android:id="@+id/pet_name_pts"
-                    android:layout_width="wrap_content"
+                    android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:text=""
                     android:layout_centerVertical="true"
-                    android:layout_alignStart="@id/rect_pts"
+                    android:layout_alignStart="@id/pet_pts"
                     android:textSize="14sp"
                     android:paddingStart="40dp" />
                 <TextView
