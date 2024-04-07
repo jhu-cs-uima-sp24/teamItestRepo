@@ -30,6 +30,7 @@ import java.util.Calendar;
 public class StatsFragment extends Fragment {
 
     private FragmentStatsBinding binding;
+    private static View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class StatsFragment extends Fragment {
 //        return root;
 
         binding = FragmentStatsBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        root = binding.getRoot();
 
         if (savedInstanceState == null) {
             StatsDataFragment firstFragment = new StatsDataFragment();
@@ -63,13 +64,18 @@ public class StatsFragment extends Fragment {
         final Calendar c = Calendar.getInstance();
 
         Button button = (Button) root.findViewById(R.id.button6);
+        button.setText("Date: " + (c.get(Calendar.MONTH) + 1) + "/" + c.get(Calendar.DAY_OF_MONTH) + "/" + c.get(Calendar.YEAR));
+
+        DatePickerFragment currentFragment = new DatePickerFragment();
+        currentFragment.setDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Handle the button click
                 // For example, show a DatePickerDialog
-                DatePickerFragment currentFragment = new DatePickerFragment();
                 currentFragment.show(getParentFragmentManager(), "datePicker");
+
             }
         });
 
@@ -122,23 +128,29 @@ public class StatsFragment extends Fragment {
     }
 
 
-    public class DatePickerFragment extends DialogFragment
+    public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
+
+        int CurrentPickedYear;
+        int CurrentPickedMonth;
+        int CurrentPickedDay;
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker.
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-
-            // Create a new instance of DatePickerDialog and return it.
-            return new DatePickerDialog(requireContext(), this, year, month, day);
+            return new DatePickerDialog(requireContext(), this, CurrentPickedYear, CurrentPickedMonth, CurrentPickedDay);
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the date the user picks.
+            Button thisButton = (Button) root.findViewById(R.id.button6);
+            setDate(year, month, day);
+            thisButton.setText("Date: " + (month + 1) + "/" + day + "/" + year);
+        }
+
+        public void setDate(int year, int month, int day) {
+            CurrentPickedYear = year;
+            CurrentPickedMonth = month;
+            CurrentPickedDay = day;
         }
     }
 

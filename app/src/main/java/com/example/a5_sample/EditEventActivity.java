@@ -116,19 +116,19 @@ public class EditEventActivity extends AppCompatActivity {
         createButton = (Button)root.findViewById(R.id.createButton);
         saveButton = (Button)root.findViewById(R.id.saveButton);
         if (tag.equals("Gaming")) {
-            tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.game, 0, 0, 0);
+            tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.game_bold, 0, 0, 0);
             tagButton.setBackgroundColor(getResources().getColor(R.color.task_blue));
             tagButton.setText("Gaming");
         } else if (tag.equals("Break")) {
-            tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.rest, 0, 0, 0);
+            tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.rest_bold, 0, 0, 0);
             tagButton.setBackgroundColor(getResources().getColor(R.color.task_pink));
             tagButton.setText("Break");
         } else if (tag.equals("Study")) {
-            tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.study, 0, 0, 0);
+            tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.study_bold, 0, 0, 0);
             tagButton.setBackgroundColor(getResources().getColor(R.color.task_green));
             tagButton.setText("Study");
         } else if (tag.equals("Workout")) {
-            tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.workout, 0, 0, 0);
+            tagButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.workout_bold, 0, 0, 0);
             tagButton.setBackgroundColor(getResources().getColor(R.color.task_yellow));
             tagButton.setText("Workout");
         }
