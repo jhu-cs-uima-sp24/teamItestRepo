@@ -73,7 +73,7 @@ public class EnterGoal extends Fragment {
         nextButtonGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (goal_edit.getText().toString().equals("") || !goal_edit.getText().toString().matches("^[a-zA-Z]*$")) {
+                if (goal_edit.getText().toString().equals("")) {
                     Toast.makeText(getActivity(), "Please enter a valid goal!", Toast.LENGTH_SHORT).show();
                 } else {
                     goal = goal_edit.getText().toString();
