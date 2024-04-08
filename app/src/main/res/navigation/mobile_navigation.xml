@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.example.a5_sample.ui.profile.ProfileFragment"
+        android:name="com.example.LifePal.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.a5_sample.ui.home.HomeFragment"
+        android:name="com.example.LifePal.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_stats"
-        android:name="com.example.a5_sample.ui.stats.StatsFragment"
+        android:name="com.example.LifePal.ui.stats.StatsFragment"
         android:label="Stats"
         tools:layout="@layout/fragment_stats" />
 
