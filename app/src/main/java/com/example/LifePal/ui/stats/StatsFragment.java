@@ -1,28 +1,36 @@
-package com.example.LifePal.ui.stats;
+package com.example.a5_sample.ui.stats;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.example.LifePal.R;
-import com.example.LifePal.databinding.FragmentStatsBinding;
+import com.example.a5_sample.R;
+import com.example.a5_sample.databinding.FragmentStatsBinding;
 
 import java.util.Calendar;
 
 public class StatsFragment extends Fragment {
 
     private FragmentStatsBinding binding;
+    private static View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -39,7 +47,7 @@ public class StatsFragment extends Fragment {
 //        return root;
 
         binding = FragmentStatsBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        root = binding.getRoot();
 
         if (savedInstanceState == null) {
             StatsDataFragment firstFragment = new StatsDataFragment();
@@ -56,13 +64,18 @@ public class StatsFragment extends Fragment {
         final Calendar c = Calendar.getInstance();
 
         Button button = (Button) root.findViewById(R.id.button6);
+        button.setText("Date: " + (c.get(Calendar.MONTH) + 1) + "/" + c.get(Calendar.DAY_OF_MONTH) + "/" + c.get(Calendar.YEAR));
+
+        DatePickerFragment currentFragment = new DatePickerFragment();
+        currentFragment.setDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Handle the button click
                 // For example, show a DatePickerDialog
-                DatePickerFragment currentFragment = new DatePickerFragment();
                 currentFragment.show(getParentFragmentManager(), "datePicker");
+
             }
         });
 
@@ -115,23 +128,29 @@ public class StatsFragment extends Fragment {
     }
 
 
-    public class DatePickerFragment extends DialogFragment
+    public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
+
+        int CurrentPickedYear;
+        int CurrentPickedMonth;
+        int CurrentPickedDay;
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker.
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-
-            // Create a new instance of DatePickerDialog and return it.
-            return new DatePickerDialog(requireContext(), this, year, month, day);
+            return new DatePickerDialog(requireContext(), this, CurrentPickedYear, CurrentPickedMonth, CurrentPickedDay);
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the date the user picks.
+            Button thisButton = (Button) root.findViewById(R.id.button6);
+            setDate(year, month, day);
+            thisButton.setText("Date: " + (month + 1) + "/" + day + "/" + year);
+        }
+
+        public void setDate(int year, int month, int day) {
+            CurrentPickedYear = year;
+            CurrentPickedMonth = month;
+            CurrentPickedDay = day;
         }
     }
 

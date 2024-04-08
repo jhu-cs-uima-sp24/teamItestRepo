@@ -51,9 +51,6 @@ public class EditEventActivity extends AppCompatActivity {
         int hours = seconds / 3600;
         int minutes = (seconds%3600) / 60;
         seconds = seconds - hours*3600 - minutes*60;
-        Toast.makeText(getApplicationContext(), "hours"+hours, Toast.LENGTH_SHORT).show();
-        Toast.makeText(getApplicationContext(), "minutes"+minutes, Toast.LENGTH_SHORT).show();
-        Toast.makeText(getApplicationContext(), "seconds"+seconds, Toast.LENGTH_SHORT).show();
         SharedPreferences.Editor peditor = myPrefs.edit();
         binding = ActivityEditEventBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

@@ -75,8 +75,9 @@ public class EnterName extends Fragment {
             public void onClick(View v) {
                 if (name_edit.getText().toString().equals("") || !name_edit.getText().toString().matches("^[a-zA-Z]*$")) {
                     Toast.makeText(getActivity(), "Please enter a valid name!", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else if (name_edit.getText().toString().length() > 15) {
+                    Toast.makeText(getActivity(), "Please enter a name that's 15 characters or less!", Toast.LENGTH_SHORT).show();
+                } else {
                     peditor.putString("user_name", name_edit.getText().toString());
                     peditor.apply();
                     // Replace the current fragment with the next fragment

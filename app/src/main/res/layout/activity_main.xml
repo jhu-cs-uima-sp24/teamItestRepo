@@ -27,6 +27,7 @@
 
             <ImageView
                 android:id="@+id/toolbar_image"
+                android:contentDescription="@string/logo"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:layout_marginEnd="8dp"
@@ -37,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
-                android:text="Fragment Title"
+                android:text=""
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/toolbar_image"
                 android:textColor="@android:color/black"
@@ -56,15 +57,17 @@
                 <ImageView
                     android:id="@+id/rect_pts"
                     android:layout_width="225dp"
-                    android:layout_height="30dp"
+                    android:layout_height="50dp"
                     android:background="@drawable/outlined_rounded_rect"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="5dp"/>
+                    android:layout_marginEnd="5dp"
+                    android:contentDescription="@string/pet_bar_holder" />
 
                 <ImageView
                     android:id="@+id/pet_pts"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:contentDescription="@string/selected_image"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="start"
                     android:scaleType="fitCenter"
                     android:adjustViewBounds="true"
@@ -74,11 +77,11 @@
 
                 <TextView
                     android:id="@+id/pet_name_pts"
-                    android:layout_width="wrap_content"
+                    android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:text=""
                     android:layout_centerVertical="true"
-                    android:layout_alignStart="@id/rect_pts"
+                    android:layout_alignStart="@id/pet_pts"
                     android:textSize="14sp"
                     android:paddingStart="40dp" />
                 <TextView

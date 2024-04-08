@@ -76,6 +76,8 @@ public class PetName extends Fragment {
                 Log.d("tag", "onClick: " + pet_name);
                 if (pet_edit.getText().toString().equals("") || !pet_edit.getText().toString().matches("^[a-zA-Z]*$")) {
                     Toast.makeText(getActivity(), "Please enter a valid name!", Toast.LENGTH_SHORT).show();
+                } else if (pet_edit.getText().toString().length() > 10) {
+                    Toast.makeText(getActivity(), "Please enter a name that's 10 characters or less!", Toast.LENGTH_SHORT).show();
                 } else {
                     pet_name = pet_edit.getText().toString();
                     peditor.putString("pet_name", pet_name);

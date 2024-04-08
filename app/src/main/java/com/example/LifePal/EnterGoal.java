@@ -71,6 +71,8 @@ public class EnterGoal extends Fragment {
             public void onClick(View v) {
                 if (goal_edit.getText().toString().equals("")) {
                     Toast.makeText(getActivity(), "Please enter a valid goal!", Toast.LENGTH_SHORT).show();
+                } else if (goal_edit.getText().toString().length() > 20) {
+                    Toast.makeText(getActivity(), "Please enter a name that's 20 characters or less!", Toast.LENGTH_SHORT).show();
                 } else {
                     goal = goal_edit.getText().toString();
                     peditor.putString("user_goal", goal);
