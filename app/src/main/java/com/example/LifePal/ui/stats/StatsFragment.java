@@ -1,4 +1,4 @@
-package com.example.a5_sample.ui.stats;
+package com.example.LifePal.ui.stats;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -22,8 +22,10 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.a5_sample.R;
-import com.example.a5_sample.databinding.FragmentStatsBinding;
+import com.example.LifePal.R;
+import com.example.LifePal.databinding.FragmentStatsBinding;
+import com.example.LifePal.ui.stats.StatsDataFragment;
+import com.example.LifePal.ui.stats.StatsPieChartFragment;
 
 import java.util.Calendar;
 
