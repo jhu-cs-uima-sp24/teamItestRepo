@@ -20,6 +20,11 @@ import com.example.LifePal.CreateEventActivity;
 import com.example.LifePal.MainActivity;
 import com.example.LifePal.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class HomeFragment extends Fragment {
     private ListView myList;
@@ -102,7 +107,7 @@ public class HomeFragment extends Fragment {
                     ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) myList.getLayoutParams();
                     lp.height = (int) (lp.height/2);
                     myList.setLayoutParams(lp);
-                    ViewGroup.LayoutParams lp2 = (ViewGroup.LayoutParams) completedList.getLayoutParams();
+                    ViewGroup.LayoutParams lp2 = (  ViewGroup.LayoutParams) completedList.getLayoutParams();
                     lp2.height = lp2.height * 2;
                     completedList.setLayoutParams(lp2);
                   //  myview.findViewById(R.id.header).findViewById(R.id.imageButton2).setVisibility(View.VISIBLE);
