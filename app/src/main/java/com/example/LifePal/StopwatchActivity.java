@@ -9,9 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.Locale;
 
 public class StopwatchActivity extends AppCompatActivity {
@@ -19,6 +24,7 @@ public class StopwatchActivity extends AppCompatActivity {
 
     private TextView stopwatchCurrentlyPause;
     private ImageButton startPauseButton;
+    private FirebaseFirestore db;
     private TextView descriptionView;
     private ImageButton endButton;
     private ImageButton returnButton;
@@ -38,6 +44,8 @@ public class StopwatchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stopwatch);
         cntx = getApplicationContext();
         myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
+
+        db = FirebaseFirestore.getInstance();
 
         // Binding UI components
         timerTextView = findViewById(R.id.stopwatchTextView);
@@ -86,18 +94,24 @@ public class StopwatchActivity extends AppCompatActivity {
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String title = myPrefs.getString("title","");
-                Task currentTask = MainActivity.tasks.get(MainActivity.taskAdapter.findTask(title));
-                if(fullSeconds == 0){
-                    currentTask.setTimeSpent(Integer.toString(fullSeconds));
-                } else {
-                    currentTask.setTimeSpent(Integer.toString(fullSeconds-1));
-                }
+                db.collection("tasks").document(titleString)
+                        .update(
+                                "timeSpent",Integer.toString(fullSeconds)
+                        ).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                String title = myPrefs.getString("title","");
+                                Task currentTask = MainActivity.tasks.get(MainActivity.taskAdapter.findTask(title));
+                                currentTask.setTimeSpent(Integer.toString(fullSeconds));
 
-                MainActivity.taskAdapter.notifyDataSetChanged();
-                Intent intent = new Intent(StopwatchActivity.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
+                                MainActivity.taskAdapter.notifyDataSetChanged();
+                                Intent intent = new Intent(StopwatchActivity.this, MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                startActivity(intent);
+                            }
+                        }).addOnFailureListener(e -> Toast.makeText(cntx, "Failed to exit", Toast.LENGTH_LONG).show());
+
+
             }
         });
 
@@ -127,22 +141,30 @@ public class StopwatchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // User confirmed to exit, navigate to MainActivity
-                sessionFinished = true;
-
-                myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
                 String title = myPrefs.getString("title","");
-                Task currentTask = MainActivity.tasks.get(MainActivity.taskAdapter.findTask(title));
-                Task newTask = new Task(currentTask.getTaskName(),currentTask.getDescription(),"0",currentTask.getTag(), currentTask.getIsStopWatch());
-                newTask.setTimeSpent(Integer.toString(fullSeconds));
-                newTask.setFinished(true);
-                MainActivity.completedTasks.add(newTask);
-                MainActivity.tasks.remove(MainActivity.taskAdapter.findTask(title));
-                MainActivity.taskAdapter.notifyDataSetChanged();
-                MainActivity.completedTaskAdapter.notifyDataSetChanged();
+                db.collection("tasks").document(title)
+                        .update(
+                                "timeSpent",Integer.toString(fullSeconds),
+                                "finished",true
+                        ).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                sessionFinished = true;
+//                                myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
+//                                String title = myPrefs.getString("title","");
+//                                Task currentTask = MainActivity.completedTasks.get(MainActivity.completedTaskAdapter.findTask(title));
+//                                currentTask.setTimeSpent(Integer.toString(fullSeconds));
+//                                currentTask.setFinished(true);
+//                                MainActivity.taskAdapter.notifyDataSetChanged();
+//                                MainActivity.completedTaskAdapter.notifyDataSetChanged();
 
-                Intent intent = new Intent(StopwatchActivity.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
+                                Intent intent = new Intent(StopwatchActivity.this, MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                startActivity(intent);
+                            }
+                        }).addOnFailureListener(e -> Toast.makeText(cntx, "Failed to exit", Toast.LENGTH_LONG).show());
+
+
 
                 dialog.dismiss();
             }

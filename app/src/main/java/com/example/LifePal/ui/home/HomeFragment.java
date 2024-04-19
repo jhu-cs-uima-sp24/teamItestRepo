@@ -1,16 +1,20 @@
 package com.example.LifePal.ui.home;
 
+import static android.content.ContentValues.TAG;
+
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
@@ -19,15 +23,23 @@ import androidx.fragment.app.Fragment;
 import com.example.LifePal.CreateEventActivity;
 import com.example.LifePal.MainActivity;
 import com.example.LifePal.R;
+import com.example.LifePal.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class HomeFragment extends Fragment {
     private ListView myList;
+    private FirebaseFirestore db;
 
     private ListView completedList;
     private MainActivity myact;
@@ -50,12 +62,40 @@ public class HomeFragment extends Fragment {
         cntx = getActivity().getApplicationContext();
         myact = (MainActivity) getActivity();
 
+        db = FirebaseFirestore.getInstance();
+
+
+
         myList = (ListView) myview.findViewById(R.id.toDoList);
         myList.setAdapter(myact.taskAdapter);
         myact.taskAdapter.notifyDataSetChanged();
         completedList = (ListView) myview.findViewById(R.id.completedList);
         completedList.setAdapter(myact.completedTaskAdapter);
         myact.completedTaskAdapter.notifyDataSetChanged();
+
+        db.collection("tasks").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
+                if (e != null) {
+                    return;
+                }
+
+                MainActivity.tasks.clear();
+                MainActivity.completedTasks.clear();
+                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                    Task task = doc.toObject(Task.class);
+                    if (!task.getFinished()) {
+                        MainActivity.tasks.add(task);
+//                        Toast.makeText(cntx, "Fetched task: " + task.getTaskName(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        MainActivity.completedTasks.add(task);
+                    }
+                }
+                MainActivity.taskAdapter.notifyDataSetChanged();
+                MainActivity.completedTaskAdapter.notifyDataSetChanged();
+            }
+        });
+
       //  myview.findViewById(R.id.header).findViewById(R.id.imageButton2).setVisibility(View.GONE);
         completedList.setVisibility(View.GONE);
         //TextView completedTasksTextview = myview.findViewById(R.id.header).findViewById(R.id.task_name_textview);
