@@ -106,12 +106,59 @@ public class StatsDataFragment extends Fragment {
 
 
     private List<TagModel> getTags() {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         List<TagModel> list = new ArrayList<>();
 
-        list.add(new TagModel("Break", 100));
-        list.add(new TagModel("Study", 100));
-        list.add(new TagModel("Gaming", 100));
-        list.add(new TagModel("Workout", 100));
+        db.collection("tags").document("Break")
+                .get().addOnSuccessListener(documentSnapshot -> {
+                    int totalTime = 0;
+                    Map<String, Object> entry = documentSnapshot.getData();
+                    for (String s: entry.keySet()) {
+                        totalTime += (Integer) entry.get(s);
+                    }
+
+                    list.add(new TagModel("Break", totalTime));
+
+                });
+
+        db.collection("tags").document("Study")
+                .get().addOnSuccessListener(documentSnapshot -> {
+                    int totalTime = 0;
+                    Map<String, Object> entry = documentSnapshot.getData();
+                    for (String s: entry.keySet()) {
+                        totalTime += (Integer) entry.get(s);
+                    }
+
+                    list.add(new TagModel("Study", totalTime));
+
+                });
+
+
+        db.collection("tags").document("Gaming")
+                .get().addOnSuccessListener(documentSnapshot -> {
+                    int totalTime = 0;
+                    Map<String, Object> entry = documentSnapshot.getData();
+                    for (String s: entry.keySet()) {
+                        totalTime += (Integer) entry.get(s);
+                    }
+
+                    list.add(new TagModel("Gaming", totalTime));
+
+                });
+
+        db.collection("tags").document("Workout")
+                .get().addOnSuccessListener(documentSnapshot -> {
+                    int totalTime = 0;
+                    Map<String, Object> entry = documentSnapshot.getData();
+                    for (String s: entry.keySet()) {
+                        totalTime += (Integer) entry.get(s);
+                    }
+
+                    list.add(new TagModel("Workout", totalTime));
+
+                });
+
 
 //        FirebaseFirestore db = FirebaseFirestore.getInstance();
 //
