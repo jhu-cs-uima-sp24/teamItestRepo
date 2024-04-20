@@ -114,8 +114,10 @@ public class StatsDataFragment extends Fragment {
                 .get().addOnSuccessListener(documentSnapshot -> {
                     int totalTime = 0;
                     Map<String, Object> entry = documentSnapshot.getData();
-                    for (String s: entry.keySet()) {
-                        totalTime += (Integer) entry.get(s);
+                    if(entry != null) {
+                        for (String s : entry.keySet()) {
+                            totalTime += (Integer) entry.get(s);
+                        }
                     }
 
                     list.add(new TagModel("Break", totalTime));
@@ -126,8 +128,10 @@ public class StatsDataFragment extends Fragment {
                 .get().addOnSuccessListener(documentSnapshot -> {
                     int totalTime = 0;
                     Map<String, Object> entry = documentSnapshot.getData();
-                    for (String s: entry.keySet()) {
-                        totalTime += (Integer) entry.get(s);
+                    if(entry != null) {
+                        for (String s : entry.keySet()) {
+                            totalTime += (Integer) entry.get(s);
+                        }
                     }
 
                     list.add(new TagModel("Study", totalTime));
@@ -139,8 +143,10 @@ public class StatsDataFragment extends Fragment {
                 .get().addOnSuccessListener(documentSnapshot -> {
                     int totalTime = 0;
                     Map<String, Object> entry = documentSnapshot.getData();
-                    for (String s: entry.keySet()) {
-                        totalTime += (Integer) entry.get(s);
+                    if(entry != null) {
+                        for (String s : entry.keySet()) {
+                            totalTime += (Integer) entry.get(s);
+                        }
                     }
 
                     list.add(new TagModel("Gaming", totalTime));
@@ -151,10 +157,11 @@ public class StatsDataFragment extends Fragment {
                 .get().addOnSuccessListener(documentSnapshot -> {
                     int totalTime = 0;
                     Map<String, Object> entry = documentSnapshot.getData();
-                    for (String s: entry.keySet()) {
-                        totalTime += (Integer) entry.get(s);
+                    if(entry != null){
+                        for (String s: entry.keySet()) {
+                            totalTime += (Integer) entry.get(s);
+                        }
                     }
-
                     list.add(new TagModel("Workout", totalTime));
 
                 });
