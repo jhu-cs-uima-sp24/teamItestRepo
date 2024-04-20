@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,8 @@ public class StatsDataFragment extends Fragment {
     private RecyclerView recyclerView;
     private TagAdapter adapter;
     private List<TagModel> tags;
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public StatsDataFragment() {
 
@@ -107,79 +110,79 @@ public class StatsDataFragment extends Fragment {
 
     private List<TagModel> getTags() {
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         List<TagModel> list = new ArrayList<>();
+        list.add(new TagModel("Break", 500));
 
-        db.collection("tags").document("Break")
+        db.collection("tags").document("break")
                 .get().addOnSuccessListener(documentSnapshot -> {
+
                     int totalTime = 0;
                     Map<String, Object> entry = documentSnapshot.getData();
-                    if(entry != null) {
+                    if (entry != null) {
                         for (String s : entry.keySet()) {
-                            totalTime += (Integer) entry.get(s);
+                            Object value = entry.get(s);
+                            if (value instanceof Long) {
+                                totalTime += ((Long) value).intValue();
+                            } else if (value instanceof Double) {
+                                totalTime += ((Double) value).intValue();
+                            }
                         }
                     }
 
                     list.add(new TagModel("Break", totalTime));
 
+                }).addOnFailureListener(e -> {
+                    System.out.println("Error fetching document: " + e.getMessage());
                 });
+        Log.w("TAG", " list size: " + list.size());
 
-        db.collection("tags").document("Study")
+        db.collection("tags").document("study")
                 .get().addOnSuccessListener(documentSnapshot -> {
+                    Log.w("TAG", " got study success");
                     int totalTime = 0;
                     Map<String, Object> entry = documentSnapshot.getData();
-                    if(entry != null) {
+                    if (entry != null) {
                         for (String s : entry.keySet()) {
-                            totalTime += (Integer) entry.get(s);
+                            Object value = entry.get(s);
+                            if (value instanceof Long) {
+                                totalTime += ((Long) value).intValue();
+                            } else if (value instanceof Double) {
+                                totalTime += ((Double) value).intValue();
+                            }
                         }
                     }
-
+                    Log.w("TAG", " got study success 2");
                     list.add(new TagModel("Study", totalTime));
 
+                }).addOnFailureListener(e -> {
+                    Log.e("Error", "Error fetching document: " + e.getMessage());
                 });
 
+        Log.w("TAG", " list size: " + list.size());
 
-        db.collection("tags").document("Gaming")
+        db.collection("tags").document("workout")
                 .get().addOnSuccessListener(documentSnapshot -> {
                     int totalTime = 0;
                     Map<String, Object> entry = documentSnapshot.getData();
-                    if(entry != null) {
+                    if (entry != null) {
                         for (String s : entry.keySet()) {
-                            totalTime += (Integer) entry.get(s);
+                            Object value = entry.get(s);
+                            if (value instanceof Long) {
+                                totalTime += ((Long) value).intValue();
+                            } else if (value instanceof Double) {
+                                totalTime += ((Double) value).intValue();
+                            }
                         }
                     }
 
-                    list.add(new TagModel("Gaming", totalTime));
+                    list.add(new TagModel("Work", totalTime));
 
+                }).addOnFailureListener(e -> {
+                    System.out.println("Error fetching document: " + e.getMessage());
                 });
 
-        db.collection("tags").document("Workout")
-                .get().addOnSuccessListener(documentSnapshot -> {
-                    int totalTime = 0;
-                    Map<String, Object> entry = documentSnapshot.getData();
-                    if(entry != null){
-                        for (String s: entry.keySet()) {
-                            totalTime += (Integer) entry.get(s);
-                        }
-                    }
-                    list.add(new TagModel("Workout", totalTime));
+        Log.w("TAG", " list size: " + list.size());
 
-                });
-
-
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//
-//        db.collection("tags").document("user1")
-//                .get()
-//                .addOnCompleteListener(task -> {
-//                    if (task.isSuccessful()) {
-//                        DocumentSnapshot document = task.getResult();
-//                        Map<String, Long> entry = (Map<String, Long>) document.get("tags");
-//                        for (String s: entry.keySet()) {
-//                            list.add(new TagModel(s, entry.get(s).intValue()));
-//                        }
-//                    }
-//                });
 
         return list;
     }
