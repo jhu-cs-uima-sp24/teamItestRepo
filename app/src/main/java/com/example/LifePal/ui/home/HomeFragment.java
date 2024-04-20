@@ -7,10 +7,13 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
@@ -105,14 +108,6 @@ public class HomeFragment extends Fragment {
                     ViewGroup.LayoutParams lp2 = (ViewGroup.LayoutParams) completedList.getLayoutParams();
                     lp2.height = lp2.height * 2;
                     completedList.setLayoutParams(lp2);
-                  //  myview.findViewById(R.id.header).findViewById(R.id.imageButton2).setVisibility(View.VISIBLE);
-                    //show list of elements by moving header2 up
-//                    ViewGroup.LayoutParams params = myview.findViewById(R.id.completedList).getLayoutParams();
-//                    params.height = 6
-//                            + (150 * 6);
-//                    myview.setLayoutParams(params);
-//                    myview.findViewById(R.id.completedList).requestLayout();
-
                 }
 
             }
@@ -132,8 +127,6 @@ public class HomeFragment extends Fragment {
 
         return myview;
     }
-
-
 
 
 

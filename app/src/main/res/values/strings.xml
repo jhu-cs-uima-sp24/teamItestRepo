@@ -48,6 +48,15 @@
     <string name="name">Name!</string>
     <string name="press_deselct">Press the pet to choose another one!</string>
     <string name="pet_bar_holder">Pet bar holder</string>
+    <string name="profile_name">John Doe</string>
+    <string name="pet">Pet</string>
+    <string name="tags">Tags</string>
+    <string name="personal_information">Personal Information</string>
+    <string name="current_happniess_points_10_pt">Current Happniess Points: 10 pt</string>
+    <string name="pet_name_string">Jimmy</string>
+    <string name="current_tags">Current Tags</string>
+    <string name="current_goal">Current Goal</string>
+    <string name="user_name">Name</string>
 
 
 </resources>
