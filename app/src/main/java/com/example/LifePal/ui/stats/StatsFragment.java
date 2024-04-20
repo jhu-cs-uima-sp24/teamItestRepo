@@ -26,6 +26,8 @@ import com.example.LifePal.R;
 import com.example.LifePal.databinding.FragmentStatsBinding;
 import com.example.LifePal.ui.stats.StatsDataFragment;
 import com.example.LifePal.ui.stats.StatsPieChartFragment;
+import com.google.firebase.Firebase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
 
@@ -85,7 +87,24 @@ public class StatsFragment extends Fragment {
 
 //        Button button = getActivity().findViewById(R.id.dateButton);
 //        button.setOnClickListener(v -> showTimePickerDialog());
+
 //
+
+        Button button2 = (Button) root.findViewById(R.id.day_button);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                String currentDate = Calendar.DATE + "," + Calendar.MONTH + "," + Calendar.YEAR;
+                String time = Calendar.HOUR + ":" + Calendar.MINUTE + ":" + Calendar.SECOND;
+                String tagid = currentDate + " " + time;
+                db.collection("tags").document("study").update(tagid, 20);
+                db.collection("tags").document("workout").update(tagid, 30);
+                db.collection("tags").document("gaming").update(tagid, 40);
+                db.collection("tags").document("break").update(tagid, 10);
+            }
+        });
 
 
         return root;

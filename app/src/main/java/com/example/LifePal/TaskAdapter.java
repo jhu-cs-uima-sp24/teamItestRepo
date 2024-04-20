@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 
@@ -28,8 +29,14 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class TaskAdapter extends ArrayAdapter<Task> {
     int resource;
+
+    private FirebaseFirestore db;
 
     MainActivity myact;
 
@@ -40,6 +47,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         resource = res;
         myact = (MainActivity) ctx;
         inRoom = false;
+        db = FirebaseFirestore.getInstance();
     }
 
     private void button_color_mapping(Context context, Button button, String availText) {
@@ -91,6 +99,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         for (int i = 0; i < getCount(); i++) {
             Task task = getItem(i);
             if (task != null && task.getTaskName().equals(title)) {
+
                 return i;
             }
         }
@@ -139,11 +148,19 @@ public class TaskAdapter extends ArrayAdapter<Task> {
                             if (menuItem.getTitle().toString().equals("Delete Event")) {
 //                                Toast.makeText(context, "You Clicked " + menuItem.getTitle(), Toast.LENGTH_SHORT).show();
                                 if (MainActivity.taskAdapter.findTask(task.getTaskName()) != -1) {
-                                    MainActivity.tasks.remove(MainActivity.taskAdapter.findTask(task.getTaskName()));
-                                    MainActivity.taskAdapter.notifyDataSetChanged();
+                                    db.collection("tasks").document(task.getTaskName()).delete()
+                                            .addOnSuccessListener(aVoid -> {
+                                                MainActivity.tasks.remove(MainActivity.taskAdapter.findTask(task.getTaskName()));
+                                                MainActivity.taskAdapter.notifyDataSetChanged();
+                                            })
+                                            .addOnFailureListener(e -> Toast.makeText(context, "Failed to delete task", Toast.LENGTH_SHORT).show());
                                 } else if (MainActivity.completedTaskAdapter.findTask(task.getTaskName()) != -1) {
-                                    MainActivity.completedTasks.remove(MainActivity.completedTaskAdapter.findTask(task.getTaskName()));
-                                    MainActivity.completedTaskAdapter.notifyDataSetChanged();
+                                    db.collection("tasks").document(task.getTaskName()).delete()
+                                            .addOnSuccessListener(aVoid -> {
+                                                MainActivity.completedTasks.remove(MainActivity.completedTaskAdapter.findTask(task.getTaskName()));
+                                                MainActivity.completedTaskAdapter.notifyDataSetChanged();
+                                            })
+                                            .addOnFailureListener(e -> Toast.makeText(context, "Failed to delete task", Toast.LENGTH_SHORT).show());
                                 } else {
                                     Toast.makeText(context, "This shouldn't happen", Toast.LENGTH_SHORT).show();
                                 }
@@ -219,15 +236,28 @@ public class TaskAdapter extends ArrayAdapter<Task> {
                         if (position != -1) {
                             Task task = getItem(position);
                             if (task != null) {
-                                task.setStarted(true);
-                                myact.taskAdapter.notifyDataSetChanged();
-                                peditor.putString("title",title.getText().toString());
-                                peditor.putInt("seconds", finalSeconds);
-                                peditor.putString("description",description.getText().toString());
-                                peditor.apply();
-                                Intent intent;
-                                intent = new Intent(myact, StopwatchActivity.class);
-                                myact.startActivity(intent);
+                                db.collection("tasks").document(task.getTaskName()).update(
+                                        "started",true
+                                ).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                task.setStarted(true);
+                                                MainActivity.taskAdapter.notifyDataSetChanged();
+                                                peditor.putString("title",title.getText().toString());
+                                                peditor.putInt("seconds", finalSeconds);
+                                                peditor.putString("description",description.getText().toString());
+                                                peditor.apply();
+                                                Intent intent;
+                                                intent = new Intent(myact, StopwatchActivity.class);
+                                                myact.startActivity(intent);
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(context, "Failed to start task", Toast.LENGTH_LONG).show();
+                                            }
+                                        });
                             }
                         }
                     } else {
@@ -235,18 +265,28 @@ public class TaskAdapter extends ArrayAdapter<Task> {
                         if (position != -1) {
                             Task task = getItem(position);
                             if (task != null) {
-                                task.setStarted(true);
-                                Intent intent;
-                                peditor.putString("title",title.getText().toString());
-                                peditor.putInt("seconds", finalSeconds);
-                                peditor.putString("description",description.getText().toString());
-                                peditor.apply();
-                                intent = new Intent(myact, TimerActivity.class);
-                                myact.startActivity(intent);
-
-                                task.setStarted(true);
-                                myact.taskAdapter.notifyDataSetChanged();
-
+                                db.collection("tasks").document(task.getTaskName()).update(
+                                                "started",true
+                                        ).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                task.setStarted(true);
+                                                MainActivity.taskAdapter.notifyDataSetChanged();
+                                                Intent intent;
+                                                peditor.putString("title",title.getText().toString());
+                                                peditor.putInt("seconds", finalSeconds);
+                                                peditor.putString("description",description.getText().toString());
+                                                peditor.apply();
+                                                intent = new Intent(myact, TimerActivity.class);
+                                                myact.startActivity(intent);
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(context, "Failed to start task", Toast.LENGTH_LONG).show();
+                                            }
+                                        });
                             }
                         }
                     }

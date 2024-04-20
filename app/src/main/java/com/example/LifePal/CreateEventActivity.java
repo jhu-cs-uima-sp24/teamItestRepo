@@ -20,6 +20,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Firebase;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import com.example.LifePal.databinding.ActivityNewEventBinding;
 
 public class CreateEventActivity extends AppCompatActivity {
@@ -28,6 +32,7 @@ public class CreateEventActivity extends AppCompatActivity {
     private SharedPreferences myPrefs;
     private EditText titleEditText, descriptionEditText;
     Context cntx;
+    private FirebaseFirestore db;
 
     private NumberPicker hourPicker, minutePicker, secondPicker;
     private Button tagButton, createButton, startButton;
@@ -51,6 +56,8 @@ public class CreateEventActivity extends AppCompatActivity {
         descriptionEditText = root.findViewById(R.id.editTextDescription);
         timerSwitch = root.findViewById(R.id.timerSwitch);
         isStopwatch = false;
+
+        db = FirebaseFirestore.getInstance();
 
         hourPicker.setMinValue(0);
         hourPicker.setMaxValue(11);
@@ -110,17 +117,24 @@ public class CreateEventActivity extends AppCompatActivity {
                     String time_string = Integer.toString(time);
                     Task t = new Task(titleEditText.getText().toString(),descriptionEditText.getText().toString(),time_string,tagButton.getText().toString(), isStopwatch);
                     t.setStarted(true);
-                    MainActivity.tasks.add(t);
-                    MainActivity.taskAdapter.notifyDataSetChanged();
-                    if (isStopwatch) {
-                        Intent launch = new Intent(CreateEventActivity.this, StopwatchActivity.class);
-                        int indexOf = MainActivity.tasks.size();
-                        launch.putExtra("index", indexOf);
-                        startActivity(launch);
-                    } else {
-                        Intent launch = new Intent(CreateEventActivity.this, TimerActivity.class);
-                        startActivity(launch);
-                    }
+                    db.collection("tasks").document(t.getTaskName()).set(t).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            if (isStopwatch) {
+//                                MainActivity.tasks.add(t);
+//                                MainActivity.taskAdapter.notifyDataSetChanged();
+                                Intent launch = new Intent(CreateEventActivity.this, StopwatchActivity.class);
+                                int indexOf = MainActivity.tasks.size();
+                                launch.putExtra("index", indexOf);
+                                startActivity(launch);
+                            } else {
+//                                MainActivity.tasks.add(t);
+//                                MainActivity.taskAdapter.notifyDataSetChanged();
+                                Intent launch = new Intent(CreateEventActivity.this, TimerActivity.class);
+                                startActivity(launch);
+                            }
+                        }
+                    }).addOnFailureListener(e -> Toast.makeText(CreateEventActivity.this, "Failed to add task", Toast.LENGTH_LONG).show());
                 }
             }
         });
@@ -143,9 +157,15 @@ public class CreateEventActivity extends AppCompatActivity {
                 } else if (checkInput(isStopwatch)) {
                     int time = hour * 3600 + minute * 60 + second;
                     String time_string = Integer.toString(time);
-                    MainActivity.tasks.add(new Task(titleEditText.getText().toString(),descriptionEditText.getText().toString(), time_string,tagButton.getText().toString(),isStopwatch));
-                    MainActivity.taskAdapter.notifyDataSetChanged();
-                    finish();
+                    Task t = new Task(titleEditText.getText().toString(),descriptionEditText.getText().toString(), time_string,tagButton.getText().toString(),isStopwatch);
+                    db.collection("tasks").document(t.getTaskName()).set(t).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+//                            MainActivity.tasks.add(t);
+//                            MainActivity.taskAdapter.notifyDataSetChanged();
+                            finish();
+                        }
+                    }).addOnFailureListener(e -> Toast.makeText(CreateEventActivity.this, "Failed to add task", Toast.LENGTH_LONG).show());
                 }
             }
         });

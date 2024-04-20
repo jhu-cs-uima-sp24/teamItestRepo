@@ -20,11 +20,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.LifePal.databinding.ActivityEditEventBinding;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class EditEventActivity extends AppCompatActivity {
 
     private ActivityEditEventBinding binding;
     private SharedPreferences myPrefs;
+    private FirebaseFirestore db;
     private EditText titleEditText, descriptionEditText;
     Context cntx;
     private int pos;
@@ -41,6 +44,8 @@ public class EditEventActivity extends AppCompatActivity {
         cntx = getApplicationContext();
         myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
         int seconds = myPrefs.getInt("seconds",0);
+
+        db = FirebaseFirestore.getInstance();
 
         String titleString = myPrefs.getString("title","");
         String descriptionString = myPrefs.getString("description","");
@@ -149,13 +154,24 @@ public class EditEventActivity extends AppCompatActivity {
                     second = secondPicker.getValue();
                     int time = hour * 3600 + minute * 60 + second;
                     String time_string = Integer.toString(time);
-                    task.setTimeLeft(Integer.toString(time));
-                    task.setTimeSpent(Integer.toString(0));
-                    task.setTaskName(titleEditText.getText().toString());
-                    task.setDescription(descriptionEditText.getText().toString());
-                    task.setTag(tagButton.getText().toString());
-                    MainActivity.taskAdapter.notifyDataSetChanged();
-                    finish();
+                    db.collection("tasks").document(titleString)
+                            .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    task.setTimeLeft(Integer.toString(time));
+                                    task.setTimeSpent(Integer.toString(0));
+                                    task.setTaskName(titleEditText.getText().toString());
+                                    task.setDescription(descriptionEditText.getText().toString());
+                                    task.setTag(tagButton.getText().toString());
+                                    db.collection("tasks").document(task.getTaskName()).set(task).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            MainActivity.taskAdapter.notifyDataSetChanged();
+                                            finish();
+                                        }
+                                    }).addOnFailureListener(e -> Toast.makeText(cntx, "Failed to edit task", Toast.LENGTH_LONG).show());
+                                }
+                            }).addOnFailureListener(e -> Toast.makeText(cntx, "Failed to edit task", Toast.LENGTH_LONG).show());
                 }
             }
         });

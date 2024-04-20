@@ -14,6 +14,8 @@ public class Task {
     private String Tag;
 
     private boolean started,finished, isStopWatch;
+    public Task() {
+    }
 
     public Task(String TaskName, String description, String time_left, String Tag, boolean isStopWatch) {
         this.TaskName = TaskName;
