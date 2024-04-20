@@ -94,24 +94,8 @@ public class StatsDataFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.tagsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        tags = getTags(); // Implement this method to get your data
-        adapter = new TagAdapter(tags, screenHeight);
-        recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(0));
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        int spanCount = 2; // 2 columns
-        int spacing = 50;
-        boolean includeEdge = true;
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
-        return view;
-
-    }
-
-
-    private List<TagModel> getTags() {
 
         List<TagModel> list = new ArrayList<>();
-        list.add(new TagModel("Break", 500));
 
         db.collection("tags").document("break")
                 .get().addOnSuccessListener(documentSnapshot -> {
@@ -130,11 +114,11 @@ public class StatsDataFragment extends Fragment {
                     }
 
                     list.add(new TagModel("Break", totalTime));
+                    Log.w("TAGbreak", " list size: " + list.size());
 
                 }).addOnFailureListener(e -> {
                     System.out.println("Error fetching document: " + e.getMessage());
                 });
-        Log.w("TAG", " list size: " + list.size());
 
         db.collection("tags").document("study")
                 .get().addOnSuccessListener(documentSnapshot -> {
@@ -153,12 +137,12 @@ public class StatsDataFragment extends Fragment {
                     }
                     Log.w("TAG", " got study success 2");
                     list.add(new TagModel("Study", totalTime));
+                    Log.w("TAGstudy", " list size: " + list.size());
 
                 }).addOnFailureListener(e -> {
                     Log.e("Error", "Error fetching document: " + e.getMessage());
                 });
 
-        Log.w("TAG", " list size: " + list.size());
 
         db.collection("tags").document("workout")
                 .get().addOnSuccessListener(documentSnapshot -> {
@@ -176,14 +160,50 @@ public class StatsDataFragment extends Fragment {
                     }
 
                     list.add(new TagModel("Work", totalTime));
+                    Log.w("TAGworkout", " list size: " + list.size());
 
                 }).addOnFailureListener(e -> {
                     System.out.println("Error fetching document: " + e.getMessage());
                 });
 
-        Log.w("TAG", " list size: " + list.size());
+
+        db.collection("tags").document("gaming")
+                .get().addOnSuccessListener(documentSnapshot -> {
+
+                    for(int i = 0; i < 100000; i++);
+                    int totalTime = 0;
+                    Map<String, Object> entry = documentSnapshot.getData();
+                    if (entry != null) {
+                        for (String s : entry.keySet()) {
+                            Object value = entry.get(s);
+                            if (value instanceof Long) {
+                                totalTime += ((Long) value).intValue();
+                            } else if (value instanceof Double) {
+                                totalTime += ((Double) value).intValue();
+                            }
+                        }
+                    }
+
+                    list.add(new TagModel("Gaming", totalTime));
+
+                    tags = list;// Implement this method to get your data
+                    Log.w("Tag size outside", " list size: " + tags.size());
+                    adapter = new TagAdapter(tags, screenHeight);
+                    recyclerView.setAdapter(adapter);
+                    recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(0));
+                    recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+                    int spanCount = 2; // 2 columns
+                    int spacing = 100;
+                    boolean includeEdge = true;
+                    recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
+
+                }).addOnFailureListener(e -> {
+                    System.out.println("Error fetching document: " + e.getMessage());
+                });
 
 
-        return list;
+        return view;
+
     }
+
 }
