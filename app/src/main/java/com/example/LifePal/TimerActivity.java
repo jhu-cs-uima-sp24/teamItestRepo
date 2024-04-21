@@ -72,10 +72,12 @@ public class TimerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
-
-
-
         setContentView(R.layout.activity_timer);
+        progressBar = findViewById(R.id.progress_bar);
+
+
+
+
         cntx = getApplicationContext();
         myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
         username = myPrefs.getString("username","");
@@ -283,7 +285,8 @@ public class TimerActivity extends AppCompatActivity {
 
             // if running increment the seconds
             if (isRunning) {
-                //progressBar.setProgress(fullSecondArray[0]/fullSecond*100);
+                int progress = fullSecond - fullSecondArray[0];
+                progressBar.setProgress(progress);
                 String time = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, secs);
                 String amountPast = String.format(Locale.getDefault(), "%02d:%02d:%02d", secondPast / 3600, (secondPast % 3600) / 60, secondPast % 60);
 
