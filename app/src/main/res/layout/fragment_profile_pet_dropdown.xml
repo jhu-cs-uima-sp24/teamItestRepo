@@ -79,7 +79,7 @@
 
                     <TextView
                         android:id="@+id/current_happniess_pet_text_view"
-                        android:layout_width="191dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="16dp"
                         android:text="@string/current_happniess_points_10_pt"
                         android:textColor="@color/black"
