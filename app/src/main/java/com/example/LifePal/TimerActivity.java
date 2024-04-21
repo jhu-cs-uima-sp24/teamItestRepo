@@ -30,6 +30,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
 
@@ -231,11 +232,19 @@ public class TimerActivity extends AppCompatActivity {
                 String username = myPrefs.getString("username","");
                 String title = myPrefs.getString("title","");
 
+                Calendar currentTime = Calendar.getInstance();
+
                 db.collection("users").document(username).collection("tasks").document(title)
                         .update(
                                 "timeLeft",Integer.toString(0),
                                 "timeSpent",Integer.toString(secondPast),
-                                "finished",true
+                                "finished",true,
+                                "Year", Calendar.YEAR,
+                                "Month", Calendar.MONTH,
+                                "Day", Calendar.DATE,
+                                "Hour", Calendar.HOUR,
+                                "Minute", Calendar.MINUTE,
+                                "Second", Calendar.SECOND
                         ).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
