@@ -92,6 +92,9 @@ public class HomeFragment extends Fragment {
                     peditor.putString("pet_type", (String) entry.get("pet_type"));
                     peditor.putString("user_goal", (String) entry.get("user_goal"));
                     peditor.putInt("pet_id", Math.toIntExact((Long) entry.get("pet_id")));
+                    peditor.putInt("current_points", Math.toIntExact((Long) entry.get("current_points")));
+                    peditor.putInt("next_level", Math.toIntExact((Long) entry.get("next_level")));
+                    peditor.putInt("pet_level", Math.toIntExact((Long) entry.get("pet_level")));
                     peditor.apply();
                 });
 
