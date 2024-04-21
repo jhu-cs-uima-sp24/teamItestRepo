@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -22,11 +23,14 @@ import androidx.fragment.app.Fragment;
 import com.example.LifePal.MainActivity;
 
 import com.example.LifePal.R;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ProfileFragment extends Fragment {
 
 
     private MainActivity myact;
+
+    private FirebaseFirestore db;
     Context cntx;
 
     private Handler handler = new Handler();
@@ -40,6 +44,7 @@ public class ProfileFragment extends Fragment {
         cntx = getActivity().getApplicationContext();
         myact = (MainActivity) getActivity();
 
+        db = FirebaseFirestore.getInstance();
 
         ImageButton pet_profile_dropdown_button = myview.findViewById(R.id.pet_profile_dropdown_button);
         ImageButton pet_tags_dropdown_button = myview.findViewById(R.id.pet_tags_dropdown_button);
@@ -47,8 +52,14 @@ public class ProfileFragment extends Fragment {
         View pet_profile_dropdown = LayoutInflater.from(cntx).inflate(R.layout.fragment_profile_pet_dropdown, null, false);
         View pet_tags_dropdown = LayoutInflater.from(cntx).inflate(R.layout.fragment_tags_profile_dropdown, null, false);
         View pet_personal_information_dropdown = LayoutInflater.from(cntx).inflate(R.layout.fragment_profile_personal_information_dropdown, null, false);
-//        View pet_tags_dropdown = myview.findViewById(R.id.pet_tags_dropdown);
-//        View pet_personal_information_dropdown = myview.findViewById(R.id.pet_personal_information_dropdown);
+
+        TextView name = myview.findViewById(R.id.profile_title_text_view);
+        TextView pet_name = pet_profile_dropdown.findViewById(R.id.pet_name_text_view);
+        TextView pet_level = pet_profile_dropdown.findViewById(R.id.level_text_view);
+        TextView current_points = pet_profile_dropdown.findViewById(R.id.current_happniess_pet_text_view);
+        TextView next_level = pet_profile_dropdown.findViewById(R.id.points_till_next_level_text_view);
+
+        //db.collection("users").document()
 
 
         pet_profile_dropdown_button.setOnClickListener(new View.OnClickListener() {
