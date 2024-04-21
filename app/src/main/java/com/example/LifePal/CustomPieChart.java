@@ -87,7 +87,7 @@ public class CustomPieChart extends View {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-                db.collection("tags").document("break")
+        db.collection("tags").document("break")
                         .get().addOnSuccessListener(documentSnapshot -> {
 
                             int totalTime = 0;
@@ -224,26 +224,31 @@ public class CustomPieChart extends View {
                                 }
                             }
                             workoutPercentage = totalTime;
+                        }
 
 
-                            int total = breakPercentage + studyPercentage + workoutPercentage + gamingPercentage;
+                        int total = breakPercentage + studyPercentage + workoutPercentage + gamingPercentage;
+                        Log.w("TAG", "Total: " + total);
+                        Log.w("TAG", "Break: " + breakPercentage);
+                        Log.w("TAG", "Study: " + studyPercentage);
+                        Log.w("TAG", "Workout: " + workoutPercentage);
+                        Log.w("TAG", "Gaming: " + gamingPercentage);
 
 
-                            slicePercentages = new float[]{(float) breakPercentage * 100 /total, (float) studyPercentage * 100 /total, (float) workoutPercentage * 100/total, (float) gamingPercentage * 100 /total};
+                        slicePercentages = new float[]{(float) breakPercentage * 100 /total, (float) studyPercentage * 100 /total, (float) workoutPercentage * 100/total, (float) gamingPercentage * 100 /total};
 
 
-                            int width = getWidth();
-                            int height = getHeight();
-                            int size = Math.min(width, height);
-                            RectF rect = new RectF((float) (size) / 8, 0, (float) (7 * size) / 8, (float) (6 * size) / 8); // Use RectF for the pie chart bounds
+                        int width = getWidth();
+                        int height = getHeight();
+                        int size = Math.min(width, height);
+                        RectF rect = new RectF((float) (size) / 8, 0, (float) (7 * size) / 8, (float) (6 * size) / 8); // Use RectF for the pie chart bounds
 
-                            float startAngle = 0;
-                            for (int i = 0; i < slicePercentages.length; i++) {
-                                float sweepAngle = (slicePercentages[i] / 100) * 360; // Convert percentage to angle
-                                paint.setColor(colors[i]);
-                                canvas.drawArc(rect, startAngle, sweepAngle, true, paint);
-                                startAngle += sweepAngle;
-                            }
+                        float startAngle = 0;
+                        for (int i = 0; i < slicePercentages.length; i++) {
+                            float sweepAngle = (slicePercentages[i] / 100) * 360; // Convert percentage to angle
+                            paint.setColor(colors[i]);
+                            canvas.drawArc(rect, startAngle, sweepAngle, true, paint);
+                            startAngle += sweepAngle;
                         }
 
                     }
