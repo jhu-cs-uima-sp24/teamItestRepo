@@ -11,9 +11,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -233,30 +236,49 @@ public class StopwatchActivity extends AppCompatActivity {
     private void show_toast() {
         int points = (int) (60 * 10 / 15);
         int pet_user = myPrefs.getInt("pet_id", -1);
-        Toast toast = Toast.makeText(StopwatchActivity.this, "Current Session Points    +" + String.valueOf(points) + "pts", Toast.LENGTH_SHORT);
-        View toastView = toast.getView();
-        TextView toastMessage = (TextView) toastView.findViewById(android.R.id.message);
-        toastMessage.setTextSize(15);
-        toastMessage.setTypeface(Typeface.DEFAULT);
-        toastMessage.setTextColor(getResources().getColor(R.color.dark_gray));
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_layout, (ViewGroup) findViewById(R.id.custom_toast_container));
 
-        int paddingLeft = 16;
-        int paddingRight = 16;
-        toastMessage.setPadding(paddingLeft, 0, paddingRight, 0);
+        TextView text = (TextView) layout.findViewById(R.id.toast_text);
+        ImageView icon = (ImageView) layout.findViewById(R.id.toast_icon);
+        text.setText("Current Session Points +" + points + "pts");
+        Drawable drawable = ContextCompat.getDrawable(this, pet_user);
+        if (drawable != null) {
+            drawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(((BitmapDrawable) drawable).getBitmap(), 64, 64, true));
+            icon.setImageDrawable(drawable);
+        } else {
+            Log.e("ToastError", "Drawable resource for pet_user not found.");
+            icon.setVisibility(View.GONE);
+        }
 
-        Drawable drawable = ContextCompat.getDrawable(StopwatchActivity.this, pet_user);
-        int desiredWidth = 64;
-        int desiredHeight = 64;
-        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-        Drawable resizedDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, desiredWidth, desiredHeight, true));
-        int drawablePadding = 16;
-        resizedDrawable.setBounds(0, 0, desiredWidth, desiredHeight);
-
-        toastMessage.setCompoundDrawables(resizedDrawable, null, null, null);
-        toastMessage.setGravity(Gravity.CENTER);
-        toastMessage.setCompoundDrawablePadding(30);
-        toastView.setBackgroundResource(R.drawable.outlined_rounded_rect);
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
         toast.show();
+//        Toast toast = Toast.makeText(StopwatchActivity.this, "Current Session Points    +" + String.valueOf(points) + "pts", Toast.LENGTH_SHORT);
+//        View toastView = toast.getView();
+//        TextView toastMessage = (TextView) toastView.findViewById(android.R.id.message);
+//        toastMessage.setTextSize(15);
+//        toastMessage.setTypeface(Typeface.DEFAULT);
+//        toastMessage.setTextColor(getResources().getColor(R.color.dark_gray));
+//
+//        int paddingLeft = 16;
+//        int paddingRight = 16;
+//        toastMessage.setPadding(paddingLeft, 0, paddingRight, 0);
+//
+//        Drawable drawable = ContextCompat.getDrawable(StopwatchActivity.this, pet_user);
+//        int desiredWidth = 64;
+//        int desiredHeight = 64;
+//        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+//        Drawable resizedDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, desiredWidth, desiredHeight, true));
+//        int drawablePadding = 16;
+//        resizedDrawable.setBounds(0, 0, desiredWidth, desiredHeight);
+//
+//        toastMessage.setCompoundDrawables(resizedDrawable, null, null, null);
+//        toastMessage.setGravity(Gravity.CENTER);
+//        toastMessage.setCompoundDrawablePadding(30);
+//        toastView.setBackgroundResource(R.drawable.outlined_rounded_rect);
+//        toast.show();
     }
 
     private void readUserDataFromFirebase() {

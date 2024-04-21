@@ -27,6 +27,9 @@ import androidx.fragment.app.Fragment;
 import com.example.LifePal.MainActivity;
 
 import com.example.LifePal.R;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Map;
@@ -110,19 +113,26 @@ public class ProfileFragment extends Fragment {
             String next_level_string_builder = "Points until next level: " +
                     documentSnapshot.get("next_level").toString();
             next_level.setText(next_level_string_builder);
+           // Log.d("pet_id", documentSnapshot.getLong("pet_id").toString());
+           // Log.d("pet_id", String.valueOf(myPrefs.getInt("pet_id", 0)));
             pet_pic_dropdown_picture.setImageResource(documentSnapshot.getLong("pet_id").intValue());
             main_pet_pic.setImageResource(documentSnapshot.getLong("pet_id").intValue());
 
-                    // Print the document data
-//                    for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
-////                        pet_name.setText(queryDocumentSnapshots.getDocuments().get(i).getString("pet_name"));
-////                        goal.setText(queryDocumentSnapshots.getDocuments().get(i).getString("goal"));
-////                        pet_level.setText(queryDocumentSnapshots.getDocuments().get(i).getString("pet_level"));
-////                        current_points.setText(queryDocumentSnapshots.getDocuments().get(i).getString("current_points"));
-////                        next_level.setText(queryDocumentSnapshots.getDocuments().get(i).getString("next_level"));
-//
-//                    }
                 });
+
+        DocumentReference userDocRef = db.collection("users").document(username);
+
+        userDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(DocumentSnapshot documentSnapshot, com.google.firebase.firestore.FirebaseFirestoreException e) {
+                if (documentSnapshot != null && documentSnapshot.exists()) {
+                    Log.d("pet_id", documentSnapshot.getLong("pet_id").toString());
+                    Log.d("pet_id", String.valueOf(myPrefs.getInt("pet_id", 0)));
+                    pet_pic_dropdown_picture.setImageResource(documentSnapshot.getLong("pet_id").intValue());
+                    main_pet_pic.setImageResource(documentSnapshot.getLong("pet_id").intValue());
+                }
+            }
+        });
 
 
 
