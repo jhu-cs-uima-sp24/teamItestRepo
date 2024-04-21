@@ -46,7 +46,7 @@ public class ProfileFragment extends Fragment {
 
         myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
 
-        String username = myPrefs.getString("username","");
+        String username = myPrefs.getString("user_name","");
 
         ImageButton pet_profile_dropdown_button = myview.findViewById(R.id.pet_profile_dropdown_button);
         ImageButton pet_tags_dropdown_button = myview.findViewById(R.id.pet_tags_dropdown_button);
