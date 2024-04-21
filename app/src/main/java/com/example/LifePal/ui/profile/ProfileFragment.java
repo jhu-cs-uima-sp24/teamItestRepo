@@ -55,12 +55,22 @@ public class ProfileFragment extends Fragment {
 
         myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
 
-        String username = myPrefs.getString("user_name","");
+        String username = myPrefs.getString("username","");
+        String petname = myPrefs.getString("pet_name","");
+        int points = myPrefs.getInt("current_points", 0);
+        int next_level_points = myPrefs.getInt("next_level", 0);
 
+
+        int pet_user = myPrefs.getInt("pet_id", -1);
+        ImageView pet_pic = myview.findViewById(R.id.petProfile_picture);
         ImageButton pet_profile_dropdown_button = myview.findViewById(R.id.pet_profile_dropdown_button);
         ImageButton pet_tags_dropdown_button = myview.findViewById(R.id.pet_tags_dropdown_button);
         ImageButton pet_personal_information_dropdown_button = myview.findViewById(R.id.pet_personal_information_dropdown_button);
         View pet_profile_dropdown = LayoutInflater.from(cntx).inflate(R.layout.fragment_profile_pet_dropdown, null, false);
+        ImageView pet_pic_dropdown = pet_profile_dropdown.findViewById(R.id.profile_pet_dropdown_image);
+        EditText pet_name_dropdown = pet_profile_dropdown.findViewById(R.id.pet_name_text_view);
+        TextView pet_points_dropdown = pet_profile_dropdown.findViewById(R.id.current_happniess_pet_text_view);
+        TextView pet_points_next_level = pet_profile_dropdown.findViewById(R.id.points_till_next_level_text_view);
         View pet_tags_dropdown = LayoutInflater.from(cntx).inflate(R.layout.fragment_tags_profile_dropdown, null, false);
         View pet_personal_information_dropdown = LayoutInflater.from(cntx).inflate(R.layout.fragment_profile_personal_information_dropdown, null, false);
 
@@ -71,19 +81,38 @@ public class ProfileFragment extends Fragment {
         TextView next_level = pet_profile_dropdown.findViewById(R.id.points_till_next_level_text_view);
         EditText user_name = pet_personal_information_dropdown.findViewById(R.id.user_name_edit_text_view);
         EditText goal = pet_personal_information_dropdown.findViewById(R.id.current_goal_text_view);
+        ImageView pet_pic_dropdown_picture = pet_profile_dropdown.findViewById(R.id.profile_pet_dropdown_image);
+        ImageView main_pet_pic = myview.findViewById(R.id.petProfile_picture);
 
         //db.collection("users").document()
 
+        if (pet_user != -1 && !petname.equals("")){
+            pet_pic.setImageResource(pet_user);
+            pet_pic_dropdown.setImageResource(pet_user);
+            pet_name_dropdown.setText(petname);
+            String curr_happ = "Current Happniess Points: " + String.valueOf(points) + " pts";
+            pet_points_dropdown.setText(curr_happ);
+            String next_happ = String.valueOf(next_level_points - points) + " pts until the next evolution";
+            pet_points_next_level.setText(next_happ);
+        }
         TextView usernameText = myview.findViewById(R.id.profile_title_text_view);
         usernameText.setText(username);
         user_name.setText(username);
 
         db.collection("users").document(username).get().addOnSuccessListener(documentSnapshot -> {
             pet_name.setText(documentSnapshot.getString("pet_name"));
-            goal.setText(documentSnapshot.getString("goal"));
-            pet_level.setText(documentSnapshot.getString("pet_level"));
-            current_points.setText(documentSnapshot.getString("current_points"));
-            next_level.setText(documentSnapshot.getString("next_level"));
+            goal.setText(documentSnapshot.getString("user_goal"));
+            String pet_level_string_builder = "Pet Level: " + documentSnapshot.get("pet_level").toString();
+            pet_level.setText(pet_level_string_builder);
+            String current_point_string_builder = "Current Happiness Points: " +
+                    documentSnapshot.get("current_points").toString();
+            current_points.setText(current_point_string_builder);
+            String next_level_string_builder = "Points until next level: " +
+                    documentSnapshot.get("next_level").toString();
+            next_level.setText(next_level_string_builder);
+            pet_pic_dropdown_picture.setImageResource(documentSnapshot.getLong("pet_id").intValue());
+            main_pet_pic.setImageResource(documentSnapshot.getLong("pet_id").intValue());
+
                     // Print the document data
 //                    for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
 ////                        pet_name.setText(queryDocumentSnapshots.getDocuments().get(i).getString("pet_name"));

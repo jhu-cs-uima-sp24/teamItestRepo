@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        String name = myPrefs.getString("loginName", "Owner");
+        String name = myPrefs.getString("user_name", "Owner");
 
 //        Toast.makeText(context.getApplicationContext(), "Created!", Toast.LENGTH_SHORT).show();
 
@@ -92,11 +92,11 @@ public class MainActivity extends AppCompatActivity {
         pts_name = binding.petNamePts;
         pts_pts = binding.petPtsPts;
         pet_pts = binding.petPts;
+
         setSupportActionBar(toolbar);
         int pet_user = myPrefs.getInt("pet_id", -1);
         if (pet_user != -1) {
             pet_pts.setImageResource(pet_user);
-            Log.d("TAG", String.valueOf(pet_user));
         }
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
@@ -111,8 +111,9 @@ public class MainActivity extends AppCompatActivity {
                     toolbarText.setVisibility(View.INVISIBLE);
                     points.setVisibility(View.VISIBLE);
                     String name_pts = myPrefs.getString("pet_name", null);
+                    String pet_pts = Integer.toString(myPrefs.getInt("current_points", 0));
                     pts_name.setText("Current Pal: " + name_pts);
-                    pts_pts.setText("pts");
+                    pts_pts.setText(pet_pts+" pts");
                     break;
                 default:
                     toolbarText.setText("Analytics");

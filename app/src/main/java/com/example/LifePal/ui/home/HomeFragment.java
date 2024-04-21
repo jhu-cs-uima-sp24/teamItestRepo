@@ -69,6 +69,8 @@ public class HomeFragment extends Fragment {
 
         myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
 
+        SharedPreferences.Editor peditor = myPrefs.edit();
+
         db = FirebaseFirestore.getInstance();
 
 
@@ -81,6 +83,20 @@ public class HomeFragment extends Fragment {
         myact.completedTaskAdapter.notifyDataSetChanged();
 
         String username = myPrefs.getString("username","");
+
+        db.collection("users").document(username)
+                .get().addOnSuccessListener(documentSnapshot -> {
+                    Map<String, Object> entry = documentSnapshot.getData();
+                    peditor.putString("user_name", (String) entry.get("user_name"));
+                    peditor.putString("pet_name", (String) entry.get("pet_name"));
+                    peditor.putString("pet_type", (String) entry.get("pet_type"));
+                    peditor.putString("user_goal", (String) entry.get("user_goal"));
+                    peditor.putInt("pet_id", Math.toIntExact((Long) entry.get("pet_id")));
+                    peditor.putInt("current_points", Math.toIntExact((Long) entry.get("current_points")));
+                    peditor.putInt("next_level", Math.toIntExact((Long) entry.get("next_level")));
+                    peditor.putInt("pet_level", Math.toIntExact((Long) entry.get("pet_level")));
+                    peditor.apply();
+                });
 
         db.collection("users").document(username).collection("tasks").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override

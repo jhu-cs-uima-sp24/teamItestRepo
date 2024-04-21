@@ -63,10 +63,10 @@ public class GetStarted extends Fragment {
             @Override
             public void onClick(View v) {
                     // Replace the current fragment with the next fragment
-                Fragment fragment = new EnterName();
+                Fragment fragment = new GetStartedSignup();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.enter_name, fragment);
+                fragmentTransaction.replace(R.id.container_id, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 root.setVisibility(View.GONE);
@@ -83,6 +83,10 @@ public class GetStarted extends Fragment {
                 String password = passwordInput.getText().toString();
                 if (!name.isEmpty() && !password.isEmpty() && allUsernames.contains(name) && allEntry.get(name).equals(password)) {
                     Toast.makeText(getActivity(), "Login successful", Toast.LENGTH_SHORT).show();
+                    SharedPreferences myPrefs = getActivity().getApplicationContext().getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
+                    SharedPreferences.Editor peditor = myPrefs.edit();
+                    peditor.putString("username",name);
+                    peditor.apply();
                     // Intent to start MainActivity
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);

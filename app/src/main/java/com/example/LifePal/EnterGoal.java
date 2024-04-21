@@ -20,6 +20,10 @@ import android.widget.Toast;
 
 import com.example.LifePal.databinding.FragmentEnterGoalBinding;
 import com.example.LifePal.databinding.FragmentEnterNameBinding;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class EnterGoal extends Fragment {
@@ -77,9 +81,30 @@ public class EnterGoal extends Fragment {
                     goal = goal_edit.getText().toString();
                     peditor.putString("user_goal", goal);
                     peditor.apply();
-                    // Replace the current fragment with the next fragment
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    startActivity(intent);
+                    String name = sharedPrefs.getString("user_name","");
+                    String pet_name = sharedPrefs.getString("pet_name","");
+                    String pet_type = sharedPrefs.getString("pet_type", "");
+                    String user_goal = sharedPrefs.getString("user_goal", "");
+                    int pet_id = sharedPrefs.getInt("pet_id",-1);
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    String username = sharedPrefs.getString("username","");
+                    Map<String, Object> allEntry = new HashMap<>();
+                    allEntry.put("name",name);
+                    allEntry.put("pet_name",pet_name);
+                    allEntry.put("pet_type",pet_type);
+                    allEntry.put("pet_id",pet_id);
+                    allEntry.put("user_goal",user_goal);
+                    allEntry.put("current_points",0);
+                    allEntry.put("next_level",1000);
+                    allEntry.put("pet_level",0);
+                    db.collection("users").document(username)
+                            .set(allEntry)
+                            .addOnSuccessListener(aVoid -> {
+                                Intent intent = new Intent(getActivity(), MainActivity.class);
+                                startActivity(intent);
+                            })
+                            .addOnFailureListener(e -> Toast.makeText(getActivity(), "Signup failed", Toast.LENGTH_SHORT).show());
+
                 }
 
             }
