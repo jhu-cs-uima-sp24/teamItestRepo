@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.ProgressBar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +55,7 @@ public class TimerActivity extends AppCompatActivity {
 
     private boolean sessionFinished;
     private FirebaseFirestore db;
+    private ProgressBar progressBar;
 
     private int index;
     private int totalTimeSeconds;
@@ -290,6 +292,7 @@ public class TimerActivity extends AppCompatActivity {
 
             // if running increment the seconds
             if (isRunning) {
+                //progressBar.setProgress(fullSecondArray[0]/fullSecond*100);
                 String time = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, secs);
                 String amountPast = String.format(Locale.getDefault(), "%02d:%02d:%02d", secondPast / 3600, (secondPast % 3600) / 60, secondPast % 60);
 

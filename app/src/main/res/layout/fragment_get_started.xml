@@ -21,16 +21,20 @@
         android:contentDescription="@string/paw_print_design"
         android:src="@drawable/paws" />
 
+    <!-- Username Input -->
+
+    <!-- Password Input -->
+
     <ImageView
         android:id="@+id/logo"
         android:layout_width="200dp"
         android:layout_height="100dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/logo"
         android:layout_marginTop="80dp"
-        android:contentDescription="@string/logo"/>
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/logo"
+        android:scaleType="fitCenter"
+        android:src="@drawable/logo" />
 
     <TextView
         android:id="@+id/welcome_to"
@@ -44,20 +48,18 @@
         android:textAllCaps="false"
         android:textColor="@color/primary_pink"
         android:textSize="34sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
-    <!-- Username Input -->
     <EditText
         android:id="@+id/username_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
-        android:inputType="textEmailAddress"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="300dp"
-        android:padding="16dp"/>
+        android:hint="Username"
+        android:inputType="textEmailAddress"
+        android:padding="16dp" />
 
-    <!-- Password Input -->
     <EditText
         android:id="@+id/password_input"
         android:layout_width="match_parent"
@@ -71,21 +73,21 @@
     <!-- Login Button -->
     <Button
         android:id="@+id/login_button"
-        android:layout_width="match_parent"
+        android:layout_width="115dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="460dp"
-        android:text="@string/login"
-        android:padding="12dp"/>
+        android:padding="12dp"
+        android:text="@string/login" />
 
     <!-- Sign Up Button -->
     <Button
         android:id="@+id/sign_up_button"
-        android:layout_width="match_parent"
+        android:layout_width="115dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="530dp"
-        android:text="sign up"
-        android:padding="12dp"/>
+        android:padding="12dp"
+        android:text="sign up" />
 
 </FrameLayout>

@@ -110,16 +110,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.85" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="372dp"
+        android:layout_height="512dp"
+        android:background="@drawable/circular_shape"
+        android:indeterminate="false"
+        android:progressDrawable="@drawable/circular_progress_bar"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/my_card_view"
-        app:layout_constraintVertical_bias="0.163"
-        app:srcCompat="@drawable/clock" />
+        app:layout_constraintVertical_bias="0.15" />
+
 
     <TextView
         android:id="@+id/CurrentlyPaused"
@@ -127,11 +133,11 @@
         android:layout_height="wrap_content"
         android:text="Currently Paused"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/timerTextView"
+        app:layout_constraintBottom_toTopOf="@+id/timerTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.7" />
+        app:layout_constraintTop_toBottomOf="@+id/my_card_view"
+        app:layout_constraintVertical_bias="0.95" />
 
     <TextView
         android:id="@+id/timerDescription"
