@@ -4,8 +4,10 @@ import com.example.LifePal.ui.stats.TagAdapter;
 import com.example.LifePal.ui.stats.TagModel;
 import com.example.LifePal.ui.stats.VerticalSpaceItemDecoration;
 import com.google.firebase.Firebase;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 
 import android.content.Context;
@@ -88,8 +90,16 @@ public class CustomPieChart extends View {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("tags").document("break")
-                        .get().addOnSuccessListener(documentSnapshot -> {
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(DocumentSnapshot documentSnapshot,
+                                        FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("TAG1", "Listen failed.", e);
+                            return;
+                        }
 
+                        if (documentSnapshot != null && documentSnapshot.exists()) {
                             int totalTime = 0;
                             Map<String, Object> entry = documentSnapshot.getData();
                             if (entry != null) {
@@ -101,11 +111,11 @@ public class CustomPieChart extends View {
                                     int month = Integer.parseInt(s.substring(firstComma + 1, secondComma));
                                     int year = Integer.parseInt(s.substring(secondComma + 1, thirdComma));
 
-                                    Date thisDate = new Date(year, month, day);
+                                    Date thisDate = new Date(year - 1900, month - 1, day);
                                     Calendar thisDateCal = Calendar.getInstance();
                                     thisDateCal.setTime(thisDate);
 
-                                    if(isDateBetween(startDate2, endDate2, thisDateCal)){
+                                    if (isDateBetween(startDate2, endDate2, thisDateCal)) {
                                         Object value = entry.get(s);
                                         if (value instanceof Long) {
                                             totalTime += ((Long) value).intValue();
@@ -113,149 +123,177 @@ public class CustomPieChart extends View {
                                             totalTime += ((Double) value).intValue();
                                         }
                                     }
-                                    breakPercentage = totalTime;
                                 }
-
+                                breakPercentage = totalTime;
+                                Log.w("TAG1", "Break: " + breakPercentage);
                             }
+                        } else {
+                            Log.d("TAG1", "Current data: null");
+                        }
+                    }
+                });
 
-                        }).addOnFailureListener(e -> {
-                            System.out.println("Error fetching document: " + e.getMessage());
-                        });
+
 
         db.collection("tags").document("study")
-                .get().addOnSuccessListener(documentSnapshot -> {
-
-                    int totalTime = 0;
-                    Map<String, Object> entry = documentSnapshot.getData();
-                    if (entry != null) {
-                        for (String s : entry.keySet()) {
-                            int firstComma = s.indexOf(",");
-                            int secondComma = s.indexOf(",", firstComma + 1);
-                            int thirdComma = s.lastIndexOf(",");
-                            int day = Integer.parseInt(s.substring(0, firstComma));
-                            int month = Integer.parseInt(s.substring(firstComma + 1, secondComma));
-                            int year = Integer.parseInt(s.substring(secondComma + 1, thirdComma));
-
-                            Date thisDate = new Date(year, month, day);
-                            Calendar thisDateCal = Calendar.getInstance();
-                            thisDateCal.setTime(thisDate);
-
-                            if(isDateBetween(startDate2, endDate2, thisDateCal)){
-                                Object value = entry.get(s);
-                                if (value instanceof Long) {
-                                    totalTime += ((Long) value).intValue();
-                                } else if (value instanceof Double) {
-                                    totalTime += ((Double) value).intValue();
-                                }
-                            }
-                            studyPercentage = totalTime;
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(DocumentSnapshot documentSnapshot,
+                                        FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("TAG1", "Listen failed.", e);
+                            return;
                         }
 
-                    }
+                        if (documentSnapshot != null && documentSnapshot.exists()) {
+                            int totalTime = 0;
+                            Map<String, Object> entry = documentSnapshot.getData();
+                            if (entry != null) {
+                                for (String s : entry.keySet()) {
+                                    int firstComma = s.indexOf(",");
+                                    int secondComma = s.indexOf(",", firstComma + 1);
+                                    int thirdComma = s.lastIndexOf(",");
+                                    int day = Integer.parseInt(s.substring(0, firstComma));
+                                    int month = Integer.parseInt(s.substring(firstComma + 1, secondComma));
+                                    int year = Integer.parseInt(s.substring(secondComma + 1, thirdComma));
 
-                }).addOnFailureListener(e -> {
-                    System.out.println("Error fetching document: " + e.getMessage());
+                                    Date thisDate = new Date(year - 1900, month - 1, day);
+                                    Calendar thisDateCal = Calendar.getInstance();
+                                    thisDateCal.setTime(thisDate);
+
+                                    if (isDateBetween(startDate2, endDate2, thisDateCal)) {
+                                        Object value = entry.get(s);
+                                        if (value instanceof Long) {
+                                            totalTime += ((Long) value).intValue();
+                                        } else if (value instanceof Double) {
+                                            totalTime += ((Double) value).intValue();
+                                        }
+                                    }
+                                }
+                                studyPercentage = totalTime;
+                                Log.w("TAG1", "" +
+                                        "Study: " + studyPercentage);
+                            }
+                        } else {
+                            Log.d("TAG1", "Current data: null");
+                        }
+                    }
                 });
 
 
         db.collection("tags").document("gaming")
-                .get().addOnSuccessListener(documentSnapshot -> {
-
-                    int totalTime = 0;
-                    Map<String, Object> entry = documentSnapshot.getData();
-                    if (entry != null) {
-                        for (String s : entry.keySet()) {
-                            int firstComma = s.indexOf(",");
-                            int secondComma = s.indexOf(",", firstComma + 1);
-                            int thirdComma = s.lastIndexOf(",");
-                            int day = Integer.parseInt(s.substring(0, firstComma));
-                            int month = Integer.parseInt(s.substring(firstComma + 1, secondComma));
-                            int year = Integer.parseInt(s.substring(secondComma + 1, thirdComma));
-
-                            Date thisDate = new Date(year, month, day);
-                            Calendar thisDateCal = Calendar.getInstance();
-                            thisDateCal.setTime(thisDate);
-
-                            if(isDateBetween(startDate2, endDate2, thisDateCal)){
-                                Object value = entry.get(s);
-                                if (value instanceof Long) {
-                                    totalTime += ((Long) value).intValue();
-                                } else if (value instanceof Double) {
-                                    totalTime += ((Double) value).intValue();
-                                }
-                            }
-                            gamingPercentage = totalTime;
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(DocumentSnapshot documentSnapshot,
+                                        FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("TAG1", "Listen failed.", e);
+                            return;
                         }
 
+                        if (documentSnapshot != null && documentSnapshot.exists()) {
+                            int totalTime = 0;
+                            Map<String, Object> entry = documentSnapshot.getData();
+                            if (entry != null) {
+                                for (String s : entry.keySet()) {
+                                    int firstComma = s.indexOf(",");
+                                    int secondComma = s.indexOf(",", firstComma + 1);
+                                    int thirdComma = s.lastIndexOf(",");
+                                    int day = Integer.parseInt(s.substring(0, firstComma));
+                                    int month = Integer.parseInt(s.substring(firstComma + 1, secondComma));
+                                    int year = Integer.parseInt(s.substring(secondComma + 1, thirdComma));
+
+                                    Date thisDate = new Date(year - 1900, month - 1, day);
+                                    Calendar thisDateCal = Calendar.getInstance();
+                                    thisDateCal.setTime(thisDate);
+
+                                    if (isDateBetween(startDate2, endDate2, thisDateCal)) {
+                                        Object value = entry.get(s);
+                                        if (value instanceof Long) {
+                                            totalTime += ((Long) value).intValue();
+                                        } else if (value instanceof Double) {
+                                            totalTime += ((Double) value).intValue();
+                                        }
+                                    }
+                                }
+                                gamingPercentage = totalTime;
+                                Log.w("TAG1", "Gaming: " + gamingPercentage);
+                            }
+                        } else {
+                            Log.d("TAG1", "Current data: null");
+                        }
                     }
-
-                }).addOnFailureListener(e -> {
-                    System.out.println("Error fetching document: " + e.getMessage());
                 });
-
 
         db.collection("tags").document("workout")
-                .get().addOnSuccessListener(documentSnapshot -> {
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(DocumentSnapshot documentSnapshot,
+                                        FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("TAG1", "Listen failed.", e);
+                            return;
+                        }
 
+                        if (documentSnapshot != null && documentSnapshot.exists()) {
+                            int totalTime = 0;
+                            Map<String, Object> entry = documentSnapshot.getData();
+                            if (entry != null) {
+                                for (String s : entry.keySet()) {
+                                    int firstComma = s.indexOf(",");
+                                    int secondComma = s.indexOf(",", firstComma + 1);
+                                    int thirdComma = s.lastIndexOf(",");
+                                    int day = Integer.parseInt(s.substring(0, firstComma));
+                                    int month = Integer.parseInt(s.substring(firstComma + 1, secondComma));
+                                    int year = Integer.parseInt(s.substring(secondComma + 1, thirdComma));
 
-                    for(int i = 0; i < 100000; i++);
+                                    Date thisDate = new Date(year - 1900, month - 1, day);
+                                    Calendar thisDateCal = Calendar.getInstance();
+                                    thisDateCal.setTime(thisDate);
 
-                    int totalTime = 0;
-                    Map<String, Object> entry = documentSnapshot.getData();
-                    if (entry != null) {
-                        for (String s : entry.keySet()) {
-                            int firstComma = s.indexOf(",");
-                            int secondComma = s.indexOf(",", firstComma + 1);
-                            int thirdComma = s.lastIndexOf(",");
-                            int day = Integer.parseInt(s.substring(0, firstComma));
-                            int month = Integer.parseInt(s.substring(firstComma + 1, secondComma));
-                            int year = Integer.parseInt(s.substring(secondComma + 1, thirdComma));
-
-                            Date thisDate = new Date(year, month, day);
-                            Calendar thisDateCal = Calendar.getInstance();
-                            thisDateCal.setTime(thisDate);
-
-                            if(isDateBetween(startDate2, endDate2, thisDateCal)){
-                                Object value = entry.get(s);
-                                if (value instanceof Long) {
-                                    totalTime += ((Long) value).intValue();
-                                } else if (value instanceof Double) {
-                                    totalTime += ((Double) value).intValue();
+                                    if (isDateBetween(startDate2, endDate2, thisDateCal)) {
+                                        Object value = entry.get(s);
+                                        if (value instanceof Long) {
+                                            totalTime += ((Long) value).intValue();
+                                        } else if (value instanceof Double) {
+                                            totalTime += ((Double) value).intValue();
+                                        }
+                                    }
                                 }
+                                workoutPercentage = totalTime;
+                                Log.w("TAG1", "Break: " + workoutPercentage);
                             }
-                            workoutPercentage = totalTime;
+                        } else {
+                            Log.d("TAG1", "Current data: null");
                         }
-
-
-                        int total = breakPercentage + studyPercentage + workoutPercentage + gamingPercentage;
-                        Log.w("TAG", "Total: " + total);
-                        Log.w("TAG", "Break: " + breakPercentage);
-                        Log.w("TAG", "Study: " + studyPercentage);
-                        Log.w("TAG", "Workout: " + workoutPercentage);
-                        Log.w("TAG", "Gaming: " + gamingPercentage);
-
-
-                        slicePercentages = new float[]{(float) breakPercentage * 100 /total, (float) studyPercentage * 100 /total, (float) workoutPercentage * 100/total, (float) gamingPercentage * 100 /total};
-
-
-                        int width = getWidth();
-                        int height = getHeight();
-                        int size = Math.min(width, height);
-                        RectF rect = new RectF((float) (size) / 8, 0, (float) (7 * size) / 8, (float) (6 * size) / 8); // Use RectF for the pie chart bounds
-
-                        float startAngle = 0;
-                        for (int i = 0; i < slicePercentages.length; i++) {
-                            float sweepAngle = (slicePercentages[i] / 100) * 360; // Convert percentage to angle
-                            paint.setColor(colors[i]);
-                            canvas.drawArc(rect, startAngle, sweepAngle, true, paint);
-                            startAngle += sweepAngle;
-                        }
-
                     }
-
-                }).addOnFailureListener(e -> {
-                    System.out.println("Error fetching document: " + e.getMessage());
                 });
+
+
+        int total = breakPercentage + studyPercentage + workoutPercentage + gamingPercentage;
+        Log.w("TAG", "Total: " + total);
+        Log.w("TAG", "Break: " + breakPercentage);
+        Log.w("TAG", "Study: " + studyPercentage);
+        Log.w("TAG", "Workout: " + workoutPercentage);
+        Log.w("TAG", "Gaming: " + gamingPercentage);
+
+
+        slicePercentages = new float[]{(float) breakPercentage * 100 /total, (float) studyPercentage * 100 /total, (float) workoutPercentage * 100/total, (float) gamingPercentage * 100 /total};
+
+
+        int width = getWidth();
+        int height = getHeight();
+        int size = Math.min(width, height);
+        RectF rect = new RectF((float) (size) / 8, 0, (float) (7 * size) / 8, (float) (6 * size) / 8); // Use RectF for the pie chart bounds
+
+        float startAngle = 0;
+        for (int i = 0; i < slicePercentages.length; i++) {
+            float sweepAngle = (slicePercentages[i] / 100) * 360; // Convert percentage to angle
+            paint.setColor(colors[i]);
+            canvas.drawArc(rect, startAngle, sweepAngle, true, paint);
+            startAngle += sweepAngle;
+        }
+
 
 
         }
