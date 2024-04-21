@@ -100,8 +100,8 @@ public class TimerActivity extends AppCompatActivity {
 
             time = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, secs);
             //remove from shared preferences
-            SharedPreferences.Editor peditor = myPrefs.edit();
-            peditor.remove("seconds");
+//            SharedPreferences.Editor peditor = myPrefs.edit();
+//            peditor.remove("seconds");
 
 
 
@@ -148,7 +148,7 @@ public class TimerActivity extends AppCompatActivity {
                                 Log.d("increased points",Integer.toString(points));
                                 updateCurrentPointsInFirebase(points);
                                 Intent intent = new Intent(TimerActivity.this, MainActivity.class);
-                                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                 startActivity(intent);
                             }
                         }).addOnFailureListener(e -> Toast.makeText(cntx, "Failed to exit", Toast.LENGTH_LONG).show());
@@ -199,7 +199,7 @@ public class TimerActivity extends AppCompatActivity {
                                 Log.d("increased points",Integer.toString(points));
                                 updateCurrentPointsInFirebase(points);
                                 Intent intent = new Intent(TimerActivity.this, MainActivity.class);
-                                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                 startActivity(intent);
                             }
                         }).addOnFailureListener(e -> Toast.makeText(cntx, "Failed to exit", Toast.LENGTH_LONG).show());
@@ -319,7 +319,7 @@ public class TimerActivity extends AppCompatActivity {
 
                 }
 
-                if (secondPast % 30 == 0) {
+                if (secondPast>3&&(secondPast + 1) % 30 == 0) {
                     show_toast(10);
                 }
             }

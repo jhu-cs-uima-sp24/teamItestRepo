@@ -119,11 +119,11 @@ public class StopwatchActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 String title = myPrefs.getString("title","");
-                                Task currentTask = MainActivity.tasks.get(MainActivity.taskAdapter.findTask(title));
-                                currentTask.setTimeSpent(Integer.toString(fullSeconds));
-
-                                MainActivity.taskAdapter.notifyDataSetChanged();
-                                points += (int) (fullSeconds - prev_points * 10 / 15);
+//                                Task currentTask = MainActivity.tasks.get(MainActivity.taskAdapter.findTask(title));
+//                                currentTask.setTimeSpent(Integer.toString(fullSeconds));
+//
+//                                MainActivity.taskAdapter.notifyDataSetChanged();
+                                points += ((fullSeconds-1) / 30) * 10;
                                 updateCurrentPointsInFirebase(points);
                                 Intent intent = new Intent(StopwatchActivity.this, MainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -178,7 +178,7 @@ public class StopwatchActivity extends AppCompatActivity {
 //                                currentTask.setFinished(true);
 //                                MainActivity.taskAdapter.notifyDataSetChanged();
 //                                MainActivity.completedTaskAdapter.notifyDataSetChanged();
-                                points += (int) (fullSeconds - prev_points * 10 / 15);
+                                points += ((fullSeconds-1) / 30) * 10;
                                 updateCurrentPointsInFirebase(points);
 
                                 Intent intent = new Intent(StopwatchActivity.this, MainActivity.class);
@@ -224,8 +224,8 @@ public class StopwatchActivity extends AppCompatActivity {
 
                 fullSeconds++;
 
-                if (fullSeconds % 60 == 0) {
-                    show_toast();
+                if (fullSeconds>3&&(fullSeconds-1) % 30 == 0) {
+                    show_toast(10);
                 }
             }
             handler.postDelayed(this, 1000);
@@ -233,15 +233,15 @@ public class StopwatchActivity extends AppCompatActivity {
         });
 
     }
-    private void show_toast() {
-        int points = (int) (60 * 10 / 15);
-        int pet_user = myPrefs.getInt("pet_id", -1);
+    private void show_toast(int points) {
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.toast_layout, (ViewGroup) findViewById(R.id.custom_toast_container));
 
         TextView text = (TextView) layout.findViewById(R.id.toast_text);
         ImageView icon = (ImageView) layout.findViewById(R.id.toast_icon);
+
         text.setText("Current Session Points +" + points + "pts");
+        int pet_user = myPrefs.getInt("pet_id", -1);
         Drawable drawable = ContextCompat.getDrawable(this, pet_user);
         if (drawable != null) {
             drawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(((BitmapDrawable) drawable).getBitmap(), 64, 64, true));
@@ -255,30 +255,6 @@ public class StopwatchActivity extends AppCompatActivity {
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
         toast.show();
-//        Toast toast = Toast.makeText(StopwatchActivity.this, "Current Session Points    +" + String.valueOf(points) + "pts", Toast.LENGTH_SHORT);
-//        View toastView = toast.getView();
-//        TextView toastMessage = (TextView) toastView.findViewById(android.R.id.message);
-//        toastMessage.setTextSize(15);
-//        toastMessage.setTypeface(Typeface.DEFAULT);
-//        toastMessage.setTextColor(getResources().getColor(R.color.dark_gray));
-//
-//        int paddingLeft = 16;
-//        int paddingRight = 16;
-//        toastMessage.setPadding(paddingLeft, 0, paddingRight, 0);
-//
-//        Drawable drawable = ContextCompat.getDrawable(StopwatchActivity.this, pet_user);
-//        int desiredWidth = 64;
-//        int desiredHeight = 64;
-//        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-//        Drawable resizedDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, desiredWidth, desiredHeight, true));
-//        int drawablePadding = 16;
-//        resizedDrawable.setBounds(0, 0, desiredWidth, desiredHeight);
-//
-//        toastMessage.setCompoundDrawables(resizedDrawable, null, null, null);
-//        toastMessage.setGravity(Gravity.CENTER);
-//        toastMessage.setCompoundDrawablePadding(30);
-//        toastView.setBackgroundResource(R.drawable.outlined_rounded_rect);
-//        toast.show();
     }
 
     private void readUserDataFromFirebase() {
@@ -291,7 +267,7 @@ public class StopwatchActivity extends AppCompatActivity {
                             Map<String, Object> userData = documentSnapshot.getData();
                             if (userData != null) {
                                 if (userData.containsKey("current_points")) {
-                                    points = Math.toIntExact((Long) userData.get("pet_id"));
+                                    points = Math.toIntExact((Long) userData.get("current_points"));
                                 }
                             }
                         }
