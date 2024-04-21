@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -47,23 +48,35 @@ public class ProfileFragment extends Fragment {
         myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
 
         String username = myPrefs.getString("user_name","");
+        String petname = myPrefs.getString("pet_name","");
+        int points = myPrefs.getInt("current_points", 0);
+        int next_level_points = myPrefs.getInt("next_level", 0);
+
 
         int pet_user = myPrefs.getInt("pet_id", -1);
         ImageView pet_pic = myview.findViewById(R.id.petProfile_picture);
-        if (pet_user != -1){
-            pet_pic.setImageResource(pet_user);
-        }
-
-
         ImageButton pet_profile_dropdown_button = myview.findViewById(R.id.pet_profile_dropdown_button);
         ImageButton pet_tags_dropdown_button = myview.findViewById(R.id.pet_tags_dropdown_button);
         ImageButton pet_personal_information_dropdown_button = myview.findViewById(R.id.pet_personal_information_dropdown_button);
         View pet_profile_dropdown = LayoutInflater.from(cntx).inflate(R.layout.fragment_profile_pet_dropdown, null, false);
+        ImageView pet_pic_dropdown = pet_profile_dropdown.findViewById(R.id.profile_pet_dropdown_image);
+        EditText pet_name_dropdown = pet_profile_dropdown.findViewById(R.id.pet_name_text_view);
+        TextView pet_points_dropdown = pet_profile_dropdown.findViewById(R.id.current_happniess_pet_text_view);
+        TextView pet_points_next_level = pet_profile_dropdown.findViewById(R.id.points_till_next_level_text_view);
         View pet_tags_dropdown = LayoutInflater.from(cntx).inflate(R.layout.fragment_tags_profile_dropdown, null, false);
         View pet_personal_information_dropdown = LayoutInflater.from(cntx).inflate(R.layout.fragment_profile_personal_information_dropdown, null, false);
 //        View pet_tags_dropdown = myview.findViewById(R.id.pet_tags_dropdown);
 //        View pet_personal_information_dropdown = myview.findViewById(R.id.pet_personal_information_dropdown);
 
+        if (pet_user != -1 && !petname.equals("")){
+            pet_pic.setImageResource(pet_user);
+            pet_pic_dropdown.setImageResource(pet_user);
+            pet_name_dropdown.setText(petname);
+            String curr_happ = "Current Happniess Points: " + String.valueOf(points) + " pts";
+            pet_points_dropdown.setText(curr_happ);
+            String next_happ = String.valueOf(next_level_points - points) + " pts until the next evolution";
+            pet_points_next_level.setText(next_happ);
+        }
         TextView usernameText = myview.findViewById(R.id.profile_title_text_view);
         usernameText.setText(username);
 
