@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,8 @@ public class StatsDataFragment extends Fragment {
     private RecyclerView recyclerView;
     private TagAdapter adapter;
     private List<TagModel> tags;
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public StatsDataFragment() {
 
@@ -91,42 +94,116 @@ public class StatsDataFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.tagsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        tags = getTags(); // Implement this method to get your data
-        adapter = new TagAdapter(tags, screenHeight);
-        recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(0));
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        int spanCount = 2; // 2 columns
-        int spacing = 50;
-        boolean includeEdge = true;
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
+
+        List<TagModel> list = new ArrayList<>();
+
+        db.collection("tags").document("break")
+                .get().addOnSuccessListener(documentSnapshot -> {
+
+                    int totalTime = 0;
+                    Map<String, Object> entry = documentSnapshot.getData();
+                    if (entry != null) {
+                        for (String s : entry.keySet()) {
+                            Object value = entry.get(s);
+                            if (value instanceof Long) {
+                                totalTime += ((Long) value).intValue();
+                            } else if (value instanceof Double) {
+                                totalTime += ((Double) value).intValue();
+                            }
+                        }
+                    }
+
+                    list.add(new TagModel("Break", totalTime));
+                    Log.w("TAGbreak", " list size: " + list.size());
+
+                }).addOnFailureListener(e -> {
+                    System.out.println("Error fetching document: " + e.getMessage());
+                });
+
+        db.collection("tags").document("study")
+                .get().addOnSuccessListener(documentSnapshot -> {
+                    Log.w("TAG", " got study success");
+                    int totalTime = 0;
+                    Map<String, Object> entry = documentSnapshot.getData();
+                    if (entry != null) {
+                        for (String s : entry.keySet()) {
+                            Object value = entry.get(s);
+                            if (value instanceof Long) {
+                                totalTime += ((Long) value).intValue();
+                            } else if (value instanceof Double) {
+                                totalTime += ((Double) value).intValue();
+                            }
+                        }
+                    }
+                    Log.w("TAG", " got study success 2");
+                    list.add(new TagModel("Study", totalTime));
+                    Log.w("TAGstudy", " list size: " + list.size());
+
+                }).addOnFailureListener(e -> {
+                    Log.e("Error", "Error fetching document: " + e.getMessage());
+                });
+
+
+        db.collection("tags").document("workout")
+                .get().addOnSuccessListener(documentSnapshot -> {
+                    int totalTime = 0;
+                    Map<String, Object> entry = documentSnapshot.getData();
+                    if (entry != null) {
+                        for (String s : entry.keySet()) {
+                            Object value = entry.get(s);
+                            if (value instanceof Long) {
+                                totalTime += ((Long) value).intValue();
+                            } else if (value instanceof Double) {
+                                totalTime += ((Double) value).intValue();
+                            }
+                        }
+                    }
+
+                    list.add(new TagModel("Work", totalTime));
+                    Log.w("TAGworkout", " list size: " + list.size());
+
+                }).addOnFailureListener(e -> {
+                    System.out.println("Error fetching document: " + e.getMessage());
+                });
+
+
+        db.collection("tags").document("gaming")
+                .get().addOnSuccessListener(documentSnapshot -> {
+
+                    for(int i = 0; i < 100000; i++);
+                    int totalTime = 0;
+                    Map<String, Object> entry = documentSnapshot.getData();
+                    if (entry != null) {
+                        for (String s : entry.keySet()) {
+                            Object value = entry.get(s);
+                            if (value instanceof Long) {
+                                totalTime += ((Long) value).intValue();
+                            } else if (value instanceof Double) {
+                                totalTime += ((Double) value).intValue();
+                            }
+                        }
+                    }
+
+                    list.add(new TagModel("Gaming", totalTime));
+
+                    tags = list;// Implement this method to get your data
+                    Log.w("Tag size outside", " list size: " + tags.size());
+                    adapter = new TagAdapter(tags, screenHeight);
+                    recyclerView.setAdapter(adapter);
+                    recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(0));
+                    recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+                    int spanCount = 2; // 2 columns
+                    int spacing = 100;
+                    boolean includeEdge = true;
+                    recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
+
+                }).addOnFailureListener(e -> {
+                    System.out.println("Error fetching document: " + e.getMessage());
+                });
+
+
         return view;
 
     }
 
-
-    private List<TagModel> getTags() {
-        List<TagModel> list = new ArrayList<>();
-
-        list.add(new TagModel("Break", 100));
-        list.add(new TagModel("Study", 100));
-        list.add(new TagModel("Gaming", 100));
-        list.add(new TagModel("Workout", 100));
-
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//
-//        db.collection("tags").document("user1")
-//                .get()
-//                .addOnCompleteListener(task -> {
-//                    if (task.isSuccessful()) {
-//                        DocumentSnapshot document = task.getResult();
-//                        Map<String, Long> entry = (Map<String, Long>) document.get("tags");
-//                        for (String s: entry.keySet()) {
-//                            list.add(new TagModel(s, entry.get(s).intValue()));
-//                        }
-//                    }
-//                });
-
-        return list;
-    }
 }

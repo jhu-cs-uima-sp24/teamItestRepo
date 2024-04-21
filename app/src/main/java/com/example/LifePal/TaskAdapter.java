@@ -1,6 +1,8 @@
 package com.example.LifePal;
 
 
+import static android.provider.Settings.System.getString;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,6 +26,8 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.content.SharedPreferences;
+
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
@@ -39,6 +43,8 @@ public class TaskAdapter extends ArrayAdapter<Task> {
     private FirebaseFirestore db;
 
     MainActivity myact;
+    private SharedPreferences myPrefs;
+
 
     boolean inRoom;
     public TaskAdapter(Context ctx, int res, List<Task> taskList)
@@ -123,6 +129,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         Context context = myact.getApplicationContext();
         SharedPreferences myPrefs = context.getSharedPreferences(context.getResources().getString(R.string.storage), Context.MODE_PRIVATE);
         SharedPreferences.Editor peditor = myPrefs.edit();
+        String username = myPrefs.getString("username","");
         ImageButton editbutton = (android.widget.ImageButton) itemView.findViewById(R.id.imageButton3);
 
         ImageView taskIcon = (ImageView) itemView.findViewById(R.id.imageView);
@@ -148,14 +155,13 @@ public class TaskAdapter extends ArrayAdapter<Task> {
                             if (menuItem.getTitle().toString().equals("Delete Event")) {
 //                                Toast.makeText(context, "You Clicked " + menuItem.getTitle(), Toast.LENGTH_SHORT).show();
                                 if (MainActivity.taskAdapter.findTask(task.getTaskName()) != -1) {
-                                    db.collection("tasks").document(task.getTaskName()).delete()
+                                    db.collection("users").document(username).collection("tasks").document(task.getTaskName()).delete()
                                             .addOnSuccessListener(aVoid -> {
-                                                MainActivity.tasks.remove(MainActivity.taskAdapter.findTask(task.getTaskName()));
-                                                MainActivity.taskAdapter.notifyDataSetChanged();
+                                                return;
                                             })
                                             .addOnFailureListener(e -> Toast.makeText(context, "Failed to delete task", Toast.LENGTH_SHORT).show());
                                 } else if (MainActivity.completedTaskAdapter.findTask(task.getTaskName()) != -1) {
-                                    db.collection("tasks").document(task.getTaskName()).delete()
+                                    db.collection("users").document(username).collection("tasks").document(task.getTaskName()).delete()
                                             .addOnSuccessListener(aVoid -> {
                                                 MainActivity.completedTasks.remove(MainActivity.completedTaskAdapter.findTask(task.getTaskName()));
                                                 MainActivity.completedTaskAdapter.notifyDataSetChanged();
@@ -236,7 +242,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
                         if (position != -1) {
                             Task task = getItem(position);
                             if (task != null) {
-                                db.collection("tasks").document(task.getTaskName()).update(
+                                db.collection("users").document(username).collection("tasks").document(task.getTaskName()).update(
                                         "started",true
                                 ).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
@@ -265,7 +271,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
                         if (position != -1) {
                             Task task = getItem(position);
                             if (task != null) {
-                                db.collection("tasks").document(task.getTaskName()).update(
+                                db.collection("users").document(username).collection("tasks").document(task.getTaskName()).update(
                                                 "started",true
                                         ).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override

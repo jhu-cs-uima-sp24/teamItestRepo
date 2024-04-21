@@ -2,6 +2,7 @@ package com.example.LifePal.ui.profile;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,6 +34,7 @@ public class ProfileFragment extends Fragment {
     private FirebaseFirestore db;
     Context cntx;
 
+    private SharedPreferences myPrefs;
     private Handler handler = new Handler();
 
 
@@ -45,6 +47,10 @@ public class ProfileFragment extends Fragment {
         myact = (MainActivity) getActivity();
 
         db = FirebaseFirestore.getInstance();
+
+        myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
+
+        String username = myPrefs.getString("username","");
 
         ImageButton pet_profile_dropdown_button = myview.findViewById(R.id.pet_profile_dropdown_button);
         ImageButton pet_tags_dropdown_button = myview.findViewById(R.id.pet_tags_dropdown_button);
@@ -61,6 +67,8 @@ public class ProfileFragment extends Fragment {
 
         //db.collection("users").document()
 
+        TextView usernameText = myview.findViewById(R.id.profile_title_text_view);
+        usernameText.setText(username);
 
         pet_profile_dropdown_button.setOnClickListener(new View.OnClickListener() {
             PopupWindow popWindow;

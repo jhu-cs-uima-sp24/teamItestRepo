@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -38,17 +39,6 @@ public class StatsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-//        StatsViewModel dashboardViewModel =
-//                new ViewModelProvider(this).get(StatsViewModel.class);
-//
-//        binding = FragmentStatsBinding.inflate(inflater, container, false);
-//        View root = binding.getRoot();
-//
-//
-//
-//        final TextView textView = binding.textDashboard;
-//        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-//        return root;
 
         binding = FragmentStatsBinding.inflate(inflater, container, false);
         root = binding.getRoot();
@@ -96,7 +86,7 @@ public class StatsFragment extends Fragment {
             public void onClick(View v) {
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                String currentDate = Calendar.DATE + "," + Calendar.MONTH + "," + Calendar.YEAR;
+                String currentDate = Calendar.DATE + "," + Calendar.MONTH + "," + Calendar.YEAR+",";
                 String time = Calendar.HOUR + ":" + Calendar.MINUTE + ":" + Calendar.SECOND;
                 String tagid = currentDate + " " + time;
                 db.collection("tags").document("study").update(tagid, 20);
@@ -166,6 +156,12 @@ public class StatsFragment extends Fragment {
             Button thisButton = (Button) root.findViewById(R.id.button6);
             setDate(year, month, day);
             thisButton.setText("Date: " + (month + 1) + "/" + day + "/" + year);
+            SharedPreferences sharedPreferences = requireContext().getSharedPreferences("statsMode", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt("yearVal", year);
+            editor.putInt("monthVal", month);
+            editor.putInt("dayVal", day);
+            editor.apply();
         }
 
         public void setDate(int year, int month, int day) {
