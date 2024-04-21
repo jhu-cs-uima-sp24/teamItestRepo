@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,6 +46,7 @@ public class HomeFragment extends Fragment {
     private FirebaseFirestore db;
 
     private ListView completedList;
+    private SharedPreferences myPrefs;
     private MainActivity myact;
 
     public static final int MENU_ITEM_EDITVIEW = Menu.FIRST;
@@ -65,6 +67,8 @@ public class HomeFragment extends Fragment {
         cntx = getActivity().getApplicationContext();
         myact = (MainActivity) getActivity();
 
+        myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
+
         db = FirebaseFirestore.getInstance();
 
 
@@ -76,7 +80,9 @@ public class HomeFragment extends Fragment {
         completedList.setAdapter(myact.completedTaskAdapter);
         myact.completedTaskAdapter.notifyDataSetChanged();
 
-        db.collection("tasks").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        String username = myPrefs.getString("username","");
+
+        db.collection("users").document(username).collection("tasks").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
                 if (e != null) {

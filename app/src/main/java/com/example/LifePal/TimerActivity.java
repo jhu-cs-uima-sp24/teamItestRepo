@@ -55,6 +55,7 @@ public class TimerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timer);
         cntx = getApplicationContext();
         myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
+        String username = myPrefs.getString("username","");
         String titleString = myPrefs.getString("title","");
         descriptionView = findViewById(R.id.timerDescription);
         String description = myPrefs.getString("description","");
@@ -94,7 +95,7 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String title = myPrefs.getString("title","");
-                db.collection("tasks").document(title)
+                db.collection("users").document(username).collection("tasks").document(title)
                         .update(
                                 "timeLeft",Integer.toString(0),
                                 "timeSpent",Integer.toString(secondPast),
@@ -151,7 +152,7 @@ public class TimerActivity extends AppCompatActivity {
                 String title = myPrefs.getString("title","");
                 Task currentTask = MainActivity.tasks.get(MainActivity.taskAdapter.findTask(title));
                 int remaining_time = Integer.parseInt(currentTask.getTimeLeft())-secondPast;
-                db.collection("tasks").document(titleString)
+                db.collection("users").document(username).collection("tasks").document(titleString)
                         .update(
                                 "timeLeft",Integer.toString(remaining_time),
                                 "timeSpent",Integer.toString(secondPast)
@@ -197,9 +198,10 @@ public class TimerActivity extends AppCompatActivity {
                 sessionFinished = true;
 
                 myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
+                String username = myPrefs.getString("username","");
                 String title = myPrefs.getString("title","");
 
-                db.collection("tasks").document(title)
+                db.collection("users").document(username).collection("tasks").document(title)
                         .update(
                                 "timeLeft",Integer.toString(0),
                                 "timeSpent",Integer.toString(secondPast),

@@ -44,7 +44,7 @@ public class StopwatchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stopwatch);
         cntx = getApplicationContext();
         myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
-
+        String username = myPrefs.getString("username","");
         db = FirebaseFirestore.getInstance();
 
         // Binding UI components
@@ -94,7 +94,7 @@ public class StopwatchActivity extends AppCompatActivity {
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                db.collection("tasks").document(titleString)
+                db.collection("users").document(username).collection("tasks").document(titleString)
                         .update(
                                 "timeSpent",Integer.toString(fullSeconds)
                         ).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -142,7 +142,8 @@ public class StopwatchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // User confirmed to exit, navigate to MainActivity
                 String title = myPrefs.getString("title","");
-                db.collection("tasks").document(title)
+                String username = myPrefs.getString("username","");
+                db.collection("users").document(username).collection("tasks").document(title)
                         .update(
                                 "timeSpent",Integer.toString(fullSeconds),
                                 "finished",true

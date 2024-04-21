@@ -45,6 +45,8 @@ public class EditEventActivity extends AppCompatActivity {
         myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
         int seconds = myPrefs.getInt("seconds",0);
 
+        String username = myPrefs.getString("username","");
+
         db = FirebaseFirestore.getInstance();
 
         String titleString = myPrefs.getString("title","");
@@ -154,7 +156,7 @@ public class EditEventActivity extends AppCompatActivity {
                     second = secondPicker.getValue();
                     int time = hour * 3600 + minute * 60 + second;
                     String time_string = Integer.toString(time);
-                    db.collection("tasks").document(titleString)
+                    db.collection("users").document(username).collection("tasks").document(titleString)
                             .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
@@ -163,7 +165,7 @@ public class EditEventActivity extends AppCompatActivity {
                                     task.setTaskName(titleEditText.getText().toString());
                                     task.setDescription(descriptionEditText.getText().toString());
                                     task.setTag(tagButton.getText().toString());
-                                    db.collection("tasks").document(task.getTaskName()).set(task).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    db.collection("users").document(username).collection("tasks").document(task.getTaskName()).set(task).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             MainActivity.taskAdapter.notifyDataSetChanged();

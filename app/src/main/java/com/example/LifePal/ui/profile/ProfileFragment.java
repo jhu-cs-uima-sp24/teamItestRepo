@@ -2,6 +2,7 @@ package com.example.LifePal.ui.profile;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -29,6 +31,7 @@ public class ProfileFragment extends Fragment {
     private MainActivity myact;
     Context cntx;
 
+    private SharedPreferences myPrefs;
     private Handler handler = new Handler();
 
 
@@ -41,6 +44,10 @@ public class ProfileFragment extends Fragment {
         myact = (MainActivity) getActivity();
 
 
+        myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
+
+        String username = myPrefs.getString("username","");
+
         ImageButton pet_profile_dropdown_button = myview.findViewById(R.id.pet_profile_dropdown_button);
         ImageButton pet_tags_dropdown_button = myview.findViewById(R.id.pet_tags_dropdown_button);
         ImageButton pet_personal_information_dropdown_button = myview.findViewById(R.id.pet_personal_information_dropdown_button);
@@ -50,6 +57,8 @@ public class ProfileFragment extends Fragment {
 //        View pet_tags_dropdown = myview.findViewById(R.id.pet_tags_dropdown);
 //        View pet_personal_information_dropdown = myview.findViewById(R.id.pet_personal_information_dropdown);
 
+        TextView usernameText = myview.findViewById(R.id.profile_title_text_view);
+        usernameText.setText(username);
 
         pet_profile_dropdown_button.setOnClickListener(new View.OnClickListener() {
             PopupWindow popWindow;

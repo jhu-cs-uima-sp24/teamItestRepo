@@ -115,9 +115,10 @@ public class CreateEventActivity extends AppCompatActivity {
                     peditor.apply();
                     int time = hour * 3600 + minute * 60 + second;
                     String time_string = Integer.toString(time);
+                    String username = myPrefs.getString("username","");
                     Task t = new Task(titleEditText.getText().toString(),descriptionEditText.getText().toString(),time_string,tagButton.getText().toString(), isStopwatch);
                     t.setStarted(true);
-                    db.collection("tasks").document(t.getTaskName()).set(t).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    db.collection("users").document(username).collection("tasks").document(t.getTaskName()).set(t).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             if (isStopwatch) {
@@ -157,8 +158,9 @@ public class CreateEventActivity extends AppCompatActivity {
                 } else if (checkInput(isStopwatch)) {
                     int time = hour * 3600 + minute * 60 + second;
                     String time_string = Integer.toString(time);
+                    String username = myPrefs.getString("username","");
                     Task t = new Task(titleEditText.getText().toString(),descriptionEditText.getText().toString(), time_string,tagButton.getText().toString(),isStopwatch);
-                    db.collection("tasks").document(t.getTaskName()).set(t).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    db.collection("users").document(username).collection("tasks").document(t.getTaskName()).set(t).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
 //                            MainActivity.tasks.add(t);
