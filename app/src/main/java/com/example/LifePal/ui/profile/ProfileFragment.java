@@ -6,12 +6,15 @@ import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -25,6 +28,8 @@ import com.example.LifePal.MainActivity;
 
 import com.example.LifePal.R;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Map;
 
 public class ProfileFragment extends Fragment {
 
@@ -50,7 +55,7 @@ public class ProfileFragment extends Fragment {
 
         myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
 
-        String username = myPrefs.getString("username","");
+        String username = myPrefs.getString("user_name","");
 
         ImageButton pet_profile_dropdown_button = myview.findViewById(R.id.pet_profile_dropdown_button);
         ImageButton pet_tags_dropdown_button = myview.findViewById(R.id.pet_tags_dropdown_button);
@@ -60,15 +65,89 @@ public class ProfileFragment extends Fragment {
         View pet_personal_information_dropdown = LayoutInflater.from(cntx).inflate(R.layout.fragment_profile_personal_information_dropdown, null, false);
 
         TextView name = myview.findViewById(R.id.profile_title_text_view);
-        TextView pet_name = pet_profile_dropdown.findViewById(R.id.pet_name_text_view);
+        EditText pet_name = pet_profile_dropdown.findViewById(R.id.pet_name_text_view);
         TextView pet_level = pet_profile_dropdown.findViewById(R.id.level_text_view);
         TextView current_points = pet_profile_dropdown.findViewById(R.id.current_happniess_pet_text_view);
         TextView next_level = pet_profile_dropdown.findViewById(R.id.points_till_next_level_text_view);
+        EditText user_name = pet_personal_information_dropdown.findViewById(R.id.user_name_edit_text_view);
+        EditText goal = pet_personal_information_dropdown.findViewById(R.id.current_goal_text_view);
 
         //db.collection("users").document()
 
         TextView usernameText = myview.findViewById(R.id.profile_title_text_view);
         usernameText.setText(username);
+        user_name.setText(username);
+
+        db.collection("users").document(username).get().addOnSuccessListener(documentSnapshot -> {
+            pet_name.setText(documentSnapshot.getString("pet_name"));
+            goal.setText(documentSnapshot.getString("goal"));
+            pet_level.setText(documentSnapshot.getString("pet_level"));
+            current_points.setText(documentSnapshot.getString("current_points"));
+            next_level.setText(documentSnapshot.getString("next_level"));
+                    // Print the document data
+//                    for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
+////                        pet_name.setText(queryDocumentSnapshots.getDocuments().get(i).getString("pet_name"));
+////                        goal.setText(queryDocumentSnapshots.getDocuments().get(i).getString("goal"));
+////                        pet_level.setText(queryDocumentSnapshots.getDocuments().get(i).getString("pet_level"));
+////                        current_points.setText(queryDocumentSnapshots.getDocuments().get(i).getString("current_points"));
+////                        next_level.setText(queryDocumentSnapshots.getDocuments().get(i).getString("next_level"));
+//
+//                    }
+                });
+
+
+
+        pet_name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                updateFirestore("pet_name", s.toString());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // do nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // do nothing
+            }
+        });
+
+        user_name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                updateFirestore("username", s.toString());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // do nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // do nothing
+            }
+        });
+
+        goal.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                updateFirestore("goal", s.toString());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // do nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // do nothing
+            }
+        });
+
 
         pet_profile_dropdown_button.setOnClickListener(new View.OnClickListener() {
             PopupWindow popWindow;
@@ -130,6 +209,11 @@ public class ProfileFragment extends Fragment {
         });
 
         return myview;
+    }
+
+
+    private void updateFirestore(String field, String value){
+        db.collection("users").document(myPrefs.getString("username","")).update(field, value);
     }
 
 
