@@ -30,6 +30,7 @@ import com.example.LifePal.R;
 import com.example.LifePal.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -83,20 +84,56 @@ public class HomeFragment extends Fragment {
         myact.completedTaskAdapter.notifyDataSetChanged();
 
         String username = myPrefs.getString("username","");
+//
+//        db.collection("users").document(username)
+//                .addSnapshotListener(new EventListener() {
+//                    @Override
+//                    public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
+//
+//                    }
+////                    Map<String, Object> entry = documentSnapshot.getData();
+////                    peditor.putString("user_name", (String) entry.get("user_name"));
+////                    peditor.putString("pet_name", (String) entry.get("pet_name"));
+////                    peditor.putString("pet_type", (String) entry.get("pet_type"));
+////                    peditor.putString("user_goal", (String) entry.get("user_goal"));
+////                    peditor.putInt("pet_id", Math.toIntExact((Long) entry.get("pet_id")));
+////                    peditor.putInt("current_points", Math.toIntExact((Long) entry.get("current_points")));
+////                    peditor.putInt("next_level", Math.toIntExact((Long) entry.get("next_level")));
+////                    peditor.putInt("pet_level", Math.toIntExact((Long) entry.get("pet_level")));
+////                    peditor.apply();
+//                });
 
-        db.collection("users").document(username)
-                .get().addOnSuccessListener(documentSnapshot -> {
-                    Map<String, Object> entry = documentSnapshot.getData();
-                    peditor.putString("user_name", (String) entry.get("user_name"));
-                    peditor.putString("pet_name", (String) entry.get("pet_name"));
-                    peditor.putString("pet_type", (String) entry.get("pet_type"));
-                    peditor.putString("user_goal", (String) entry.get("user_goal"));
-                    peditor.putInt("pet_id", Math.toIntExact((Long) entry.get("pet_id")));
-                    peditor.putInt("current_points", Math.toIntExact((Long) entry.get("current_points")));
-                    peditor.putInt("next_level", Math.toIntExact((Long) entry.get("next_level")));
-                    peditor.putInt("pet_level", Math.toIntExact((Long) entry.get("pet_level")));
-                    peditor.apply();
-                });
+//        DocumentReference userDocRef = db.collection("users").document(username);
+//
+//        userDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+//            @Override
+//            public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
+//                if (e != null) {
+//                    Log.w(TAG, "Listen failed.", e);
+//                    return;
+//                }
+//
+//                if (documentSnapshot != null && documentSnapshot.exists()) {
+//                    Log.d(TAG, "Current data: " + documentSnapshot.getData());
+//
+//                    Map<String, Object> entry = documentSnapshot.getData();
+//                    if (entry != null) {
+//                        SharedPreferences.Editor peditor = myPrefs.edit();
+//                        peditor.putString("user_name", (String) entry.get("user_name"));
+//                        peditor.putString("pet_name", (String) entry.get("pet_name"));
+//                        peditor.putString("pet_type", (String) entry.get("pet_type"));
+//                        peditor.putString("user_goal", (String) entry.get("user_goal"));
+//                        peditor.putInt("pet_id", Math.toIntExact((Long) entry.get("pet_id")));
+//                        peditor.putInt("current_points", Math.toIntExact((Long) entry.get("current_points")));
+//                        peditor.putInt("next_level", Math.toIntExact((Long) entry.get("next_level")));
+//                        peditor.putInt("pet_level", Math.toIntExact((Long) entry.get("pet_level")));
+//                        peditor.apply();
+//                    }
+//                } else {
+//                    Log.d(TAG, "Current data: null");
+//                }
+//            }
+//        });
 
         db.collection("users").document(username).collection("tasks").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override

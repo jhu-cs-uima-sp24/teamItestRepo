@@ -220,7 +220,8 @@ public class TaskAdapter extends ArrayAdapter<Task> {
             blockTimeString = "Time Spent: ";
             seconds = Integer.parseInt(task.getTimeSpent());
         } else {
-            blockTimeString = "Time Left: ";
+            //TODO:Figure this out
+            blockTimeString = "Time Spent: ";
             seconds = Integer.parseInt(task.getTimeLeft());
         }
         blockTimeString += timeString;

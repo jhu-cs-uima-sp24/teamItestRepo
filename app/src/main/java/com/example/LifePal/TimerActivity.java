@@ -11,9 +11,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,6 +71,8 @@ public class TimerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
 
+
+
         setContentView(R.layout.activity_timer);
         cntx = getApplicationContext();
         myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
@@ -80,6 +85,7 @@ public class TimerActivity extends AppCompatActivity {
         String time;
         timePast = "Time Past: ";
         int fullSecond;
+
         fullSecond = myPrefs.getInt("seconds",0);
 
             hours = fullSecond / 3600;
@@ -106,8 +112,8 @@ public class TimerActivity extends AppCompatActivity {
         title = findViewById(R.id.title);
         title.setText(titleString);
         currentlyPause = findViewById(R.id.CurrentlyPaused);
-
-
+//        show_toast(1);
+//        points = myPrefs.getInt("current_points",0);
 
         backHome.setVisibility(View.INVISIBLE);
         backHome.setOnClickListener(new View.OnClickListener() {
@@ -123,19 +129,20 @@ public class TimerActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
-                                String title = myPrefs.getString("title","");
-                                Task currentTask = MainActivity.tasks.get(MainActivity.taskAdapter.findTask(title));
-                                Task newTask = new Task(currentTask.getTaskName(),currentTask.getDescription(),Integer.toString(secondPast),currentTask.getTag(), currentTask.getIsStopWatch());
-
-                                newTask.setFinished(true);
-                                MainActivity.completedTasks.add(newTask);
-                                MainActivity.tasks.remove(MainActivity.taskAdapter.findTask(title));
-                                MainActivity.taskAdapter.notifyDataSetChanged();
-                                MainActivity.completedTaskAdapter.notifyDataSetChanged();
-                                points += (int) (accumalated_points * 10 / 15);
+//                                String title = myPrefs.getString("title","");
+//                                Task currentTask = MainActivity.tasks.get(MainActivity.taskAdapter.findTask(title));
+//                                Task newTask = new Task(currentTask.getTaskName(),currentTask.getDescription(),Integer.toString(secondPast),currentTask.getTag(), currentTask.getIsStopWatch());
+//
+//                                newTask.setFinished(true);
+//                                MainActivity.completedTasks.add(newTask);
+//                                MainActivity.tasks.remove(MainActivity.taskAdapter.findTask(title));
+//                                MainActivity.taskAdapter.notifyDataSetChanged();
+//                                MainActivity.completedTaskAdapter.notifyDataSetChanged();
+                                points += (secondPast / 30) * 10;
+                                Log.d("increased points",Integer.toString(points));
                                 updateCurrentPointsInFirebase(points);
                                 Intent intent = new Intent(TimerActivity.this, MainActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                 startActivity(intent);
                             }
                         }).addOnFailureListener(e -> Toast.makeText(cntx, "Failed to exit", Toast.LENGTH_LONG).show());
@@ -179,13 +186,14 @@ public class TimerActivity extends AppCompatActivity {
                         ).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                currentTask.setTimeLeft(Integer.toString(remaining_time));
-                                currentTask.setTimeSpent(Integer.toString(secondPast));
-                                MainActivity.taskAdapter.notifyDataSetChanged();
-                                points += (int) (accumalated_points * 10 / 15);
+//                                currentTask.setTimeLeft(Integer.toString(remaining_time));
+//                                currentTask.setTimeSpent(Integer.toString(secondPast));
+//                                MainActivity.taskAdapter.notifyDataSetChanged();
+                                points += (secondPast / 30) * 10;
+                                Log.d("increased points",Integer.toString(points));
                                 updateCurrentPointsInFirebase(points);
                                 Intent intent = new Intent(TimerActivity.this, MainActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                 startActivity(intent);
                             }
                         }).addOnFailureListener(e -> Toast.makeText(cntx, "Failed to exit", Toast.LENGTH_LONG).show());
@@ -233,10 +241,11 @@ public class TimerActivity extends AppCompatActivity {
                             public void onSuccess(Void aVoid) {
 //                                MainActivity.taskAdapter.notifyDataSetChanged();
 //                                MainActivity.completedTaskAdapter.notifyDataSetChanged();
-                                points += (int) (accumalated_points * 10 / 15);
+                                points += (secondPast / 30) * 10;
+                                Log.d("increased points",Integer.toString(points));
                                 updateCurrentPointsInFirebase(points);
                                 Intent intent = new Intent(TimerActivity.this, MainActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                 startActivity(intent);
                             }
                         }).addOnFailureListener(e -> Toast.makeText(cntx, "Failed to exit", Toast.LENGTH_LONG).show());
@@ -293,15 +302,22 @@ public class TimerActivity extends AppCompatActivity {
                     currentlyPause.setText("Session Complete");
 
                 }
-            }
-            accumalated_points +=  (double) 1.0 / totalTimeSeconds;
-            if (totalTimeSeconds >= 60) {
-                progress = (double) (totalTimeSeconds - fullSecondArray[0]) / totalTimeSeconds;
 
-                if (Math.abs(progress - 0.25) < 0.001 || Math.abs(progress - 0.5) < 0.001 || Math.abs(progress - 0.75) < 0.001) {
-                    show_toast();
+                if (secondPast % 30 == 0) {
+                    show_toast(10);
                 }
             }
+//            accumalated_points +=  (double) 1.0 / totalTimeSeconds;
+
+
+
+//            if (totalTimeSeconds >= 60) {
+////                progress = (double) (totalTimeSeconds - fullSecondArray[0]) / totalTimeSeconds;
+//
+//                if (Math.abs(progress - 0.25) < 0.001 || Math.abs(progress - 0.5) < 0.001 || Math.abs(progress - 0.75) < 0.001) {
+//                    show_toast();
+//                }
+//            }
             handler.postDelayed(this, 1000);
 
         }
@@ -309,38 +325,60 @@ public class TimerActivity extends AppCompatActivity {
 
     }
 
-    private void show_toast() {
-        int toast_points = (int) (totalTimeSeconds * progress * 10 / 15);
-        Log.d("tag", String.valueOf(totalTimeSeconds));
-        Log.d("tag", String.valueOf(progress));
+    private void show_toast(int points) {
+////        int toast_points = (int) (totalTimeSeconds * progress * 10 / 15);
+//        Log.d("tag", String.valueOf(totalTimeSeconds));
+//        Log.d("tag", String.valueOf(progress));
+//        int pet_user = myPrefs.getInt("pet_id", -1);
+//        Toast toast = Toast.makeText(TimerActivity.this, "Current Session Points    +" + String.valueOf(points) + "pts", Toast.LENGTH_SHORT);
+//        View toastView = toast.getView();
+//        TextView toastMessage = (TextView) toastView.findViewById(android.R.id.message);
+//        toastMessage.setTextSize(15);
+//        toastMessage.setTypeface(Typeface.DEFAULT);
+//        toastMessage.setTextColor(getResources().getColor(R.color.dark_gray));
+//
+//        int paddingLeft = 16;
+//        int paddingRight = 16;
+//        toastMessage.setPadding(paddingLeft, 0, paddingRight, 0);
+//
+//        Drawable drawable = ContextCompat.getDrawable(TimerActivity.this, pet_user);
+//        int desiredWidth = 64;
+//        int desiredHeight = 64;
+//        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+//        Drawable resizedDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, desiredWidth, desiredHeight, true));
+//        int drawablePadding = 16;
+//        resizedDrawable.setBounds(0, 0, desiredWidth, desiredHeight);
+//
+//        toastMessage.setCompoundDrawables(resizedDrawable, null, null, null);
+//        toastMessage.setGravity(Gravity.CENTER);
+//        toastMessage.setCompoundDrawablePadding(30);
+//        toastView.setBackgroundResource(R.drawable.outlined_rounded_rect);
+//        toast.show();
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_layout, (ViewGroup) findViewById(R.id.custom_toast_container));
+
+        TextView text = (TextView) layout.findViewById(R.id.toast_text);
+        ImageView icon = (ImageView) layout.findViewById(R.id.toast_icon);
+
+        text.setText("Current Session Points +" + points + "pts");
         int pet_user = myPrefs.getInt("pet_id", -1);
-        Toast toast = Toast.makeText(TimerActivity.this, "Current Session Points    +" + String.valueOf(toast_points) + "pts", Toast.LENGTH_SHORT);
-        View toastView = toast.getView();
-        TextView toastMessage = (TextView) toastView.findViewById(android.R.id.message);
-        toastMessage.setTextSize(15);
-        toastMessage.setTypeface(Typeface.DEFAULT);
-        toastMessage.setTextColor(getResources().getColor(R.color.dark_gray));
+        Drawable drawable = ContextCompat.getDrawable(this, pet_user);
+        if (drawable != null) {
+            drawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(((BitmapDrawable) drawable).getBitmap(), 64, 64, true));
+            icon.setImageDrawable(drawable);
+        } else {
+            Log.e("ToastError", "Drawable resource for pet_user not found.");
+            icon.setVisibility(View.GONE);
+        }
 
-        int paddingLeft = 16;
-        int paddingRight = 16;
-        toastMessage.setPadding(paddingLeft, 0, paddingRight, 0);
-
-        Drawable drawable = ContextCompat.getDrawable(TimerActivity.this, pet_user);
-        int desiredWidth = 64;
-        int desiredHeight = 64;
-        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-        Drawable resizedDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, desiredWidth, desiredHeight, true));
-        int drawablePadding = 16;
-        resizedDrawable.setBounds(0, 0, desiredWidth, desiredHeight);
-
-        toastMessage.setCompoundDrawables(resizedDrawable, null, null, null);
-        toastMessage.setGravity(Gravity.CENTER);
-        toastMessage.setCompoundDrawablePadding(30);
-        toastView.setBackgroundResource(R.drawable.outlined_rounded_rect);
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
         toast.show();
     }
 
     private void readUserDataFromFirebase() {
+
         db.collection("users").document(username)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -350,7 +388,8 @@ public class TimerActivity extends AppCompatActivity {
                             Map<String, Object> userData = documentSnapshot.getData();
                             if (userData != null) {
                                 if (userData.containsKey("current_points")) {
-                                    points = Math.toIntExact((Long) userData.get("pet_id"));
+                                    points = Math.toIntExact((Long) userData.get("current_points"));
+                                    Log.d("read points", Integer.toString(points));
                                 }
                             }
                         }
@@ -365,6 +404,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void updateCurrentPointsInFirebase(int newCurrentPoints) {
+        Log.d("updated points",Integer.toString(newCurrentPoints));
         db.collection("users").document(username)
                 .update("current_points", newCurrentPoints)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -1,5 +1,7 @@
 package com.example.LifePal;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,8 +21,14 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.LifePal.databinding.ActivityMainBinding;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -86,12 +94,54 @@ public class MainActivity extends AppCompatActivity {
 
 //        Toast.makeText(context.getApplicationContext(), "Created!", Toast.LENGTH_SHORT).show();
 
+
+
         toolbar = binding.toolbar;
         toolbarText = binding.toolbarTitle;
         points = binding.ptBar;
         pts_name = binding.petNamePts;
         pts_pts = binding.petPtsPts;
         pet_pts = binding.petPts;
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String username = myPrefs.getString("username","");
+
+        DocumentReference userDocRef = db.collection("users").document(username);
+
+        userDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+
+                if (documentSnapshot != null && documentSnapshot.exists()) {
+                    Log.d(TAG, "Current data: " + documentSnapshot.getData());
+
+                    Map<String, Object> entry = documentSnapshot.getData();
+                    if (entry != null) {
+                        SharedPreferences.Editor peditor = myPrefs.edit();
+                        peditor.putString("user_name", (String) entry.get("user_name"));
+                        peditor.putString("pet_name", (String) entry.get("pet_name"));
+                        peditor.putString("pet_type", (String) entry.get("pet_type"));
+                        peditor.putString("user_goal", (String) entry.get("user_goal"));
+                        peditor.putInt("pet_id", Math.toIntExact((Long) entry.get("pet_id")));
+                        peditor.putInt("current_points", Math.toIntExact((Long) entry.get("current_points")));
+                        peditor.putInt("next_level", Math.toIntExact((Long) entry.get("next_level")));
+                        peditor.putInt("pet_level", Math.toIntExact((Long) entry.get("pet_level")));
+                        peditor.apply();
+                        String name_pts = myPrefs.getString("pet_name", null);
+                        String pet_pts = Integer.toString(myPrefs.getInt("current_points", 0));
+                        pts_name.setText("Current Pal: " + name_pts);
+                        pts_pts.setText(pet_pts+" pts");
+
+                    }
+                } else {
+                    Log.d(TAG, "Current data: null");
+                }
+            }
+        });
 
         setSupportActionBar(toolbar);
         int pet_user = myPrefs.getInt("pet_id", -1);
