@@ -8,6 +8,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 
 import android.content.Context;
@@ -88,6 +89,47 @@ public class CustomPieChart extends View {
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+        db.collection("your_collection_name")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent( QuerySnapshot snapshots,
+                                         FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(TAG, "Listen failed.", e);
+                            return;
+                        }
+
+                        for (DocumentSnapshot doc : snapshots.getDocuments()) {
+                            if (doc.exists()) {
+                                int day = doc.getLong("day").intValue();
+
+
+                            } else {
+                                Log.d(TAG, "Current data: null");
+                            }
+                        }
+                    }
+                });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         db.collection("tags").document("break")
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {

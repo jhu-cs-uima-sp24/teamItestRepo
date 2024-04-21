@@ -129,7 +129,13 @@ public class TimerActivity extends AppCompatActivity {
                         .update(
                                 "timeLeft",Integer.toString(0),
                                 "timeSpent",Integer.toString(secondPast),
-                                "finished",true
+                                "finished",true,
+                                "Year", Calendar.YEAR,
+                                "Month", Calendar.MONTH,
+                                "Day", Calendar.DATE,
+                                "Hour", Calendar.HOUR,
+                                "Minute", Calendar.MINUTE,
+                                "Second", Calendar.SECOND
                         ).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
