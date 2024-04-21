@@ -57,6 +57,8 @@
     <string name="current_tags">Current Tags</string>
     <string name="current_goal">Current Goal</string>
     <string name="user_name">Name</string>
+    <string name="current_session_points">Current Session Points</string>
+    <string name="toast_holder">toast holder</string>
 
 
 </resources>

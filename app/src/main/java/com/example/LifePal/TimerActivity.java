@@ -3,22 +3,32 @@ package com.example.LifePal;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Locale;
+import java.util.Map;
 
 public class TimerActivity extends AppCompatActivity {
 
@@ -42,20 +52,27 @@ public class TimerActivity extends AppCompatActivity {
     private FirebaseFirestore db;
 
     private int index;
+    private int totalTimeSeconds;
+    private double progress;
+    private int points;
+    private double accumalated_points = 0;
 
     private Context cntx;
     private SharedPreferences myPrefs;
     private String timePast;
+    private String username;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
+
         setContentView(R.layout.activity_timer);
         cntx = getApplicationContext();
         myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
-        String username = myPrefs.getString("username","");
+        username = myPrefs.getString("username","");
+        readUserDataFromFirebase();
         String titleString = myPrefs.getString("title","");
         descriptionView = findViewById(R.id.timerDescription);
         String description = myPrefs.getString("description","");
@@ -68,6 +85,8 @@ public class TimerActivity extends AppCompatActivity {
             hours = fullSecond / 3600;
             minutes = (fullSecond % 3600) / 60;
             secs = fullSecond % 60;
+            totalTimeSeconds = hours * 3600 + minutes * 60 + secs;
+
             time = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, secs);
             //remove from shared preferences
             SharedPreferences.Editor peditor = myPrefs.edit();
@@ -113,7 +132,8 @@ public class TimerActivity extends AppCompatActivity {
                                 MainActivity.tasks.remove(MainActivity.taskAdapter.findTask(title));
                                 MainActivity.taskAdapter.notifyDataSetChanged();
                                 MainActivity.completedTaskAdapter.notifyDataSetChanged();
-
+                                points += (int) (accumalated_points * 10 / 15);
+                                updateCurrentPointsInFirebase(points);
                                 Intent intent = new Intent(TimerActivity.this, MainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                 startActivity(intent);
@@ -162,6 +182,8 @@ public class TimerActivity extends AppCompatActivity {
                                 currentTask.setTimeLeft(Integer.toString(remaining_time));
                                 currentTask.setTimeSpent(Integer.toString(secondPast));
                                 MainActivity.taskAdapter.notifyDataSetChanged();
+                                points += (int) (accumalated_points * 10 / 15);
+                                updateCurrentPointsInFirebase(points);
                                 Intent intent = new Intent(TimerActivity.this, MainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                 startActivity(intent);
@@ -211,6 +233,8 @@ public class TimerActivity extends AppCompatActivity {
                             public void onSuccess(Void aVoid) {
 //                                MainActivity.taskAdapter.notifyDataSetChanged();
 //                                MainActivity.completedTaskAdapter.notifyDataSetChanged();
+                                points += (int) (accumalated_points * 10 / 15);
+                                updateCurrentPointsInFirebase(points);
                                 Intent intent = new Intent(TimerActivity.this, MainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                 startActivity(intent);
@@ -244,6 +268,8 @@ public class TimerActivity extends AppCompatActivity {
             minutes = (fullSecondArray[0] % 3600) / 60;
             secs = fullSecondArray[0] % 60;
 
+
+
             // if running increment the seconds
             if (isRunning) {
                 String time = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, secs);
@@ -268,13 +294,91 @@ public class TimerActivity extends AppCompatActivity {
 
                 }
             }
+            accumalated_points +=  (double) 1.0 / totalTimeSeconds;
+            if (totalTimeSeconds >= 60) {
+                progress = (double) (totalTimeSeconds - fullSecondArray[0]) / totalTimeSeconds;
+
+                if (Math.abs(progress - 0.25) < 0.001 || Math.abs(progress - 0.5) < 0.001 || Math.abs(progress - 0.75) < 0.001) {
+                    show_toast();
+                }
+            }
             handler.postDelayed(this, 1000);
+
         }
         });
 
     }
 
+    private void show_toast() {
+        int toast_points = (int) (totalTimeSeconds * progress * 10 / 15);
+        Log.d("tag", String.valueOf(totalTimeSeconds));
+        Log.d("tag", String.valueOf(progress));
+        int pet_user = myPrefs.getInt("pet_id", -1);
+        Toast toast = Toast.makeText(TimerActivity.this, "Current Session Points    +" + String.valueOf(toast_points) + "pts", Toast.LENGTH_SHORT);
+        View toastView = toast.getView();
+        TextView toastMessage = (TextView) toastView.findViewById(android.R.id.message);
+        toastMessage.setTextSize(15);
+        toastMessage.setTypeface(Typeface.DEFAULT);
+        toastMessage.setTextColor(getResources().getColor(R.color.dark_gray));
 
+        int paddingLeft = 16;
+        int paddingRight = 16;
+        toastMessage.setPadding(paddingLeft, 0, paddingRight, 0);
 
+        Drawable drawable = ContextCompat.getDrawable(TimerActivity.this, pet_user);
+        int desiredWidth = 64;
+        int desiredHeight = 64;
+        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+        Drawable resizedDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, desiredWidth, desiredHeight, true));
+        int drawablePadding = 16;
+        resizedDrawable.setBounds(0, 0, desiredWidth, desiredHeight);
+
+        toastMessage.setCompoundDrawables(resizedDrawable, null, null, null);
+        toastMessage.setGravity(Gravity.CENTER);
+        toastMessage.setCompoundDrawablePadding(30);
+        toastView.setBackgroundResource(R.drawable.outlined_rounded_rect);
+        toast.show();
+    }
+
+    private void readUserDataFromFirebase() {
+        db.collection("users").document(username)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            Map<String, Object> userData = documentSnapshot.getData();
+                            if (userData != null) {
+                                if (userData.containsKey("current_points")) {
+                                    points = Math.toIntExact((Long) userData.get("pet_id"));
+                                }
+                            }
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle errors
+                    }
+                });
+    }
+
+    private void updateCurrentPointsInFirebase(int newCurrentPoints) {
+        db.collection("users").document(username)
+                .update("current_points", newCurrentPoints)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Current points updated successfully
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Failed to update current points
+                    }
+                });
+    }
 
 }

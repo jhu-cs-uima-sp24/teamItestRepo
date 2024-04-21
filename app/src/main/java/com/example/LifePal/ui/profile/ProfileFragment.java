@@ -48,6 +48,13 @@ public class ProfileFragment extends Fragment {
 
         String username = myPrefs.getString("user_name","");
 
+        int pet_user = myPrefs.getInt("pet_id", -1);
+        ImageView pet_pic = myview.findViewById(R.id.petProfile_picture);
+        if (pet_user != -1){
+            pet_pic.setImageResource(pet_user);
+        }
+
+
         ImageButton pet_profile_dropdown_button = myview.findViewById(R.id.pet_profile_dropdown_button);
         ImageButton pet_tags_dropdown_button = myview.findViewById(R.id.pet_tags_dropdown_button);
         ImageButton pet_personal_information_dropdown_button = myview.findViewById(R.id.pet_personal_information_dropdown_button);

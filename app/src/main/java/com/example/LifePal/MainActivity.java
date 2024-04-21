@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
         int pet_user = myPrefs.getInt("pet_id", -1);
         if (pet_user != -1) {
             pet_pts.setImageResource(pet_user);
-            Log.d("TAG", String.valueOf(pet_user));
         }
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
