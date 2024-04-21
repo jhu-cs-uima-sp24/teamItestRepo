@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.ProgressBar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
 
@@ -53,6 +55,7 @@ public class TimerActivity extends AppCompatActivity {
 
     private boolean sessionFinished;
     private FirebaseFirestore db;
+    private ProgressBar progressBar;
 
     private int index;
     private int totalTimeSeconds;
@@ -70,10 +73,12 @@ public class TimerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
-
-
-
         setContentView(R.layout.activity_timer);
+        progressBar = findViewById(R.id.progress_bar);
+
+
+
+
         cntx = getApplicationContext();
         myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
         username = myPrefs.getString("username","");
@@ -232,11 +237,19 @@ public class TimerActivity extends AppCompatActivity {
                 String username = myPrefs.getString("username","");
                 String title = myPrefs.getString("title","");
 
+                Calendar currentTime = Calendar.getInstance();
+
                 db.collection("users").document(username).collection("tasks").document(title)
                         .update(
                                 "timeLeft",Integer.toString(0),
                                 "timeSpent",Integer.toString(secondPast),
-                                "finished",true
+                                "finished",true,
+                                "Year", Calendar.YEAR,
+                                "Month", Calendar.MONTH,
+                                "Day", Calendar.DATE,
+                                "Hour", Calendar.HOUR,
+                                "Minute", Calendar.MINUTE,
+                                "Second", Calendar.SECOND
                         ).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -282,6 +295,8 @@ public class TimerActivity extends AppCompatActivity {
 
             // if running increment the seconds
             if (isRunning) {
+                int progress = fullSecond - fullSecondArray[0];
+                progressBar.setProgress(progress);
                 String time = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, secs);
                 String amountPast = String.format(Locale.getDefault(), "%02d:%02d:%02d", secondPast / 3600, (secondPast % 3600) / 60, secondPast % 60);
 
