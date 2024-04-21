@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView pts_pts;
     private ImageView pet_pts;
 
+    private int pet_id = 2131230854;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,8 +128,20 @@ public class MainActivity extends AppCompatActivity {
                         peditor.putString("pet_name", (String) entry.get("pet_name"));
                         peditor.putString("pet_type", (String) entry.get("pet_type"));
                         peditor.putString("user_goal", (String) entry.get("user_goal"));
-                        peditor.putInt("pet_id", Math.toIntExact((Long) entry.get("pet_id")));
                         peditor.putInt("current_points", Math.toIntExact((Long) entry.get("current_points")));
+                        peditor.putInt("pet_id", pet_id + 1);
+
+                        if(Math.toIntExact((Long) entry.get("current_points")) >= 1000 &&  Math.toIntExact((Long) entry.get("current_points")) < 2000) {
+                            db.collection("users").document(username).update("pet_id", pet_id + 1);
+                            pet_pts.setImageResource(pet_id + 1);
+                        } else if (Math.toIntExact((Long) entry.get("current_points")) >= 2000 && Math.toIntExact((Long) entry.get("current_points")) < 3000) {
+                            db.collection("users").document(username).update("pet_id", pet_id + 2);
+                            pet_pts.setImageResource(pet_id + 2);
+                        } else {
+                            db.collection("users").document(username).update("pet_id", pet_id );
+                            pet_pts.setImageResource(pet_id);
+                        }
+                      //  peditor.putInt("pet_id", Math.toIntExact((Long) entry.get("pet_id")));
                         peditor.putInt("next_level", Math.toIntExact((Long) entry.get("next_level")));
                         peditor.putInt("pet_level", Math.toIntExact((Long) entry.get("pet_level")));
                         peditor.apply();

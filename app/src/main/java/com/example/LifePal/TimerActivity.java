@@ -149,6 +149,7 @@ public class TimerActivity extends AppCompatActivity {
 //                                MainActivity.tasks.remove(MainActivity.taskAdapter.findTask(title));
 //                                MainActivity.taskAdapter.notifyDataSetChanged();
 //                                MainActivity.completedTaskAdapter.notifyDataSetChanged();
+                                Log.d("seconds past", Integer.toString(secondPast));
                                 points += (secondPast / 30) * 10;
                                 Log.d("increased points",Integer.toString(points));
                                 updateCurrentPointsInFirebase(points);
@@ -410,7 +411,7 @@ public class TimerActivity extends AppCompatActivity {
                             if (userData != null) {
                                 if (userData.containsKey("current_points")) {
                                     points = Math.toIntExact((Long) userData.get("current_points"));
-                                    Log.d("read points", Integer.toString(points));
+                                    //Log.d("read points", Integer.toString(points));
                                 }
                             }
                         }
