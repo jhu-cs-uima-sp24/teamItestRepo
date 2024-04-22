@@ -77,9 +77,17 @@ public class GetStartedSignup extends Fragment {
                         SharedPreferences myPrefs = getActivity().getApplicationContext().getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
 
                         //TODO:Clearing sharedpreferences when signing up a new user?
-//                                    myPrefs.edit().clear().apply();
+//                        myPrefs.edit().clear().apply();
 
                         SharedPreferences.Editor peditor = myPrefs.edit();
+
+                        peditor.remove("user_name");
+                        peditor.remove("pet_name");
+                        peditor.remove("pet_type");
+                        peditor.remove("user_goal");
+                        peditor.remove("pet_id");
+                        peditor.apply();
+
                         peditor.putString("username",username);
                         peditor.putString("password", password);
                         peditor.apply();

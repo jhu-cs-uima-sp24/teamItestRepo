@@ -112,6 +112,7 @@ public class StopwatchActivity extends AppCompatActivity {
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                pauseStopwatch();
                 db.collection("users").document(username).collection("tasks").document(titleString)
                         .update(
                                 "timeSpent",Integer.toString(fullSeconds)
@@ -160,6 +161,7 @@ public class StopwatchActivity extends AppCompatActivity {
         positiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pauseStopwatch();
                 // User confirmed to exit, navigate to MainActivity
                 String title = myPrefs.getString("title","");
                 String username = myPrefs.getString("username","");

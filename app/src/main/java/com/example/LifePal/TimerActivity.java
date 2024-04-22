@@ -127,6 +127,7 @@ public class TimerActivity extends AppCompatActivity {
             Calendar currentTime = Calendar.getInstance();
             @Override
             public void onClick(View view) {
+                pauseTimer();
                 String title = myPrefs.getString("title","");
                 db.collection("users").document(username).collection("tasks").document(title)
                         .update(
@@ -191,6 +192,7 @@ public class TimerActivity extends AppCompatActivity {
         returnEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { // user quits to main, task doesn't end
+                pauseTimer();
                 String title = myPrefs.getString("title","");
                 Task currentTask = MainActivity.tasks.get(MainActivity.taskAdapter.findTask(title));
                 int remaining_time = Integer.parseInt(currentTask.getTimeLeft())-secondPast;
@@ -241,6 +243,7 @@ public class TimerActivity extends AppCompatActivity {
             public void onClick(View v) { // user ends event, event is put in to do list
                 // User confirmed to exit, navigate to MainActivity
                 sessionFinished = true;
+                pauseTimer();
 
                 myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
                 String username = myPrefs.getString("username","");
@@ -330,7 +333,7 @@ public class TimerActivity extends AppCompatActivity {
 
                 }
 
-                if (secondPast>3&&(secondPast + 1) % 30 == 0) {
+                if (secondPast>3&&(secondPast - 1) % 30 == 0) {
                     show_toast(10);
                 }
             }
