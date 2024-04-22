@@ -70,6 +70,7 @@
                         style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="336dp"
                         android:layout_height="17dp"
+                        android:indeterminateDrawable="@color/task_blue"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.529"

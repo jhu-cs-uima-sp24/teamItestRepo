@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -90,6 +91,7 @@ public class ProfileFragment extends Fragment {
         EditText goal = pet_personal_information_dropdown.findViewById(R.id.current_goal_text_view);
         ImageView pet_pic_dropdown_picture = pet_profile_dropdown.findViewById(R.id.profile_pet_dropdown_image);
         ImageView main_pet_pic = myview.findViewById(R.id.petProfile_picture);
+        //ProgressBar pet_happiness = myview.findViewById(R.id.progressBar);
 
         Button logout_button = myview.findViewById(R.id.logout_button);
 
@@ -155,6 +157,8 @@ public class ProfileFragment extends Fragment {
 
             }
         });
+
+        //pet_happiness.setProgress(points);
 
         pet_name.addTextChangedListener(new TextWatcher() {
             @Override
