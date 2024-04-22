@@ -15,6 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     public Random randy = new Random();
     private Toolbar toolbar;
     private TextView toolbarText;
-    private RelativeLayout points;
+    private ConstraintLayout points;
     private TextView pts_name;
     private TextView pts_pts;
     private ImageView pet_pts;
