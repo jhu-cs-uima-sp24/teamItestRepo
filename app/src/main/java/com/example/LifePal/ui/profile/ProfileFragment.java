@@ -23,9 +23,13 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.example.LifePal.GetStarted;
 import com.example.LifePal.MainActivity;
 
+import com.example.LifePal.PetName;
 import com.example.LifePal.R;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -87,6 +91,8 @@ public class ProfileFragment extends Fragment {
         ImageView pet_pic_dropdown_picture = pet_profile_dropdown.findViewById(R.id.profile_pet_dropdown_image);
         ImageView main_pet_pic = myview.findViewById(R.id.petProfile_picture);
 
+        Button logout_button = myview.findViewById(R.id.logout_button);
+
         //db.collection("users").document()
 
         if (pet_user != -1 && !petname.equals("")){
@@ -134,7 +140,21 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        logout_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor peditor = myPrefs.edit();
+                peditor.clear();
+                peditor.apply();
+                Fragment fragment = new GetStarted();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.get_started, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
 
+            }
+        });
 
         pet_name.addTextChangedListener(new TextWatcher() {
             @Override

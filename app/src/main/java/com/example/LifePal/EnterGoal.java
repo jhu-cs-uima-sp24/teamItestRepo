@@ -85,6 +85,7 @@ public class EnterGoal extends Fragment {
                     String pet_name = sharedPrefs.getString("pet_name","");
                     String pet_type = sharedPrefs.getString("pet_type", "");
                     String user_goal = sharedPrefs.getString("user_goal", "");
+                    String password = sharedPrefs.getString("password", "");
                     int pet_id = sharedPrefs.getInt("pet_id",-1);
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                     String username = sharedPrefs.getString("username","");
@@ -97,13 +98,36 @@ public class EnterGoal extends Fragment {
                     allEntry.put("current_points",0);
                     allEntry.put("next_level",1000);
                     allEntry.put("pet_level",0);
-                    db.collection("users").document(username)
-                            .set(allEntry)
-                            .addOnSuccessListener(aVoid -> {
-                                Intent intent = new Intent(getActivity(), MainActivity.class);
-                                startActivity(intent);
+                    Map<String, Object> newUser = new HashMap<>(allEntry);
+                    newUser.put(username, password);
+                    db.collection("allUsersLogins").document("credentials")
+                            .update(newUser)
+                            .addOnSuccessListener(atVoid -> {
+                                Toast.makeText(getActivity(), "Signup successful", Toast.LENGTH_SHORT).show();
+                                SharedPreferences myPrefs = getActivity().getApplicationContext().getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
+
+                                //TODO:Clearing sharedpreferences when signing up a new user?
+//                                    myPrefs.edit().clear().apply();
+
+
+                                db.collection("users").document(username)
+                                        .set(allEntry)
+                                        .addOnSuccessListener(aVoid -> {
+                                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                                            startActivity(intent);
+                                        })
+                                        .addOnFailureListener(e -> Toast.makeText(getActivity(), "Signup failed", Toast.LENGTH_SHORT).show());
+
+                                Fragment fragment = new EnterName();
+                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.enter_name, fragment);
+                                fragmentTransaction.addToBackStack(null);
+                                fragmentTransaction.commit();
+                                root.setVisibility(View.GONE);
                             })
                             .addOnFailureListener(e -> Toast.makeText(getActivity(), "Signup failed", Toast.LENGTH_SHORT).show());
+
 
                 }
 
