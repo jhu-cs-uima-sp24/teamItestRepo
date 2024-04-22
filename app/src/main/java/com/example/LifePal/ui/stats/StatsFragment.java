@@ -89,10 +89,10 @@ public class StatsFragment extends Fragment {
                 String currentDate = Calendar.DATE + "," + Calendar.MONTH + "," + Calendar.YEAR+",";
                 String time = Calendar.HOUR + ":" + Calendar.MINUTE + ":" + Calendar.SECOND;
                 String tagid = currentDate + " " + time;
-                db.collection("tags").document("study").update(tagid, 20);
-                db.collection("tags").document("workout").update(tagid, 30);
-                db.collection("tags").document("gaming").update(tagid, 40);
-                db.collection("tags").document("break").update(tagid, 10);
+//                db.collection("tags").document("study").update(tagid, 20);
+//                db.collection("tags").document("workout").update(tagid, 30);
+//                db.collection("tags").document("gaming").update(tagid, 40);
+//                db.collection("tags").document("break").update(tagid, 10);
             }
         });
 

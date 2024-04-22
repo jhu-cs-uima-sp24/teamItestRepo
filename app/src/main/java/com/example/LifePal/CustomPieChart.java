@@ -34,10 +34,10 @@ public class CustomPieChart extends View {
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private float[] slicePercentages = {60, 20, 10, 10};
     // Example percentages
-    int breakPercentage = 60;
-    int studyPercentage = 20;
-    int workoutPercentage = 10;
-    int gamingPercentage = 10;
+    int breakPercentage = 0;
+    int studyPercentage = 0;
+    int workoutPercentage = 0;
+    int gamingPercentage = 0;
     private int[] colors = {0xFFFCB2DA, 0xFFBCF1D1, 0xFFC0D6F9, 0xFFF8DE9C}; // Red, Green, Blue, Yellow
     //#FCB2DA
 
@@ -89,9 +89,11 @@ public class CustomPieChart extends View {
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        SharedPreferences sharedPreferences1 = getContext().getSharedPreferences("t", Context.MODE_PRIVATE);
+        String user = sharedPreferences1.getString("user_name", "default");
 
 
-        db.collection("your_collection_name")
+        db.collection("users").document(user).collection("tasks")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent( QuerySnapshot snapshots,
@@ -102,16 +104,41 @@ public class CustomPieChart extends View {
                         }
 
                         for (DocumentSnapshot doc : snapshots.getDocuments()) {
+
                             if (doc.exists()) {
-                                int day = doc.getLong("day").intValue();
+                                int totalTime = 0;
+                                int day = doc.getLong("Day").intValue();
+                                int month = doc.getLong("Month").intValue();
+                                int year = doc.getLong("Year").intValue();
+                                int hour = doc.getLong("Hour").intValue();
+                                int minute = doc.getLong("Minute").intValue();
+                                int second = doc.getLong("Second").intValue();
 
+                                Date thisDate = new Date(year - 1900, month - 1, day);
+                                Calendar thisDateCal = Calendar.getInstance();
+                                thisDateCal.setTime(thisDate);
 
-                            } else {
-                                Log.d(TAG, "Current data: null");
+                                if (isDateBetween(startDate2, endDate2, thisDateCal)) {
+
+                                    String tag = doc.getString("tag");
+                                    if (tag.equals("break")) {
+                                        breakPercentage += doc.getLong("timSpent").intValue();
+                                    } else if (tag.equals("study")) {
+                                        studyPercentage += doc.getLong("timSpent").intValue();
+                                    } else if (tag.equals("workout")) {
+                                        workoutPercentage += doc.getLong("timSpent").intValue();
+                                    } else if (tag.equals("gaming")) {
+                                        gamingPercentage += doc.getLong("timSpent").intValue();
+                                    }
+
+                                } else {
+                                    Log.d(TAG, "Current data: null");
+                                }
                             }
                         }
                     }
                 });
+
 
 
 
