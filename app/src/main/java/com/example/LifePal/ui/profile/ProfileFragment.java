@@ -166,6 +166,8 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        //pet_happiness.setProgress(points);
+
         pet_name.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
@@ -228,9 +230,9 @@ public class ProfileFragment extends Fragment {
                     ObjectAnimator.ofFloat(v, "rotation", 180f, 0f).start();
                     popWindow.dismiss();
                     //update bottom constraint
-                    ImageView image = (ImageView) pet_profile_dropdown.findViewById(R.id.profile_pet_dropdown_image);
+               //     ImageView image = (ImageView) pet_profile_dropdown.findViewById(R.id.profile_pet_dropdown_image);
                    // ImageLoader imagLoader = new ImageLoader(getApplicationContext());
-                    image.setImageResource(R.drawable.goat_level0);
+                    // image.setImageResource(R.drawable.goat_level0);
 
                 }
                 else{
