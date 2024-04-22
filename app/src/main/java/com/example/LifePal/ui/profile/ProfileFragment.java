@@ -2,6 +2,7 @@ package com.example.LifePal.ui.profile;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.LifePal.GetStarted;
 import com.example.LifePal.MainActivity;
 
+import com.example.LifePal.OpeningActivity;
 import com.example.LifePal.PetName;
 import com.example.LifePal.R;
 import com.google.firebase.firestore.DocumentReference;
@@ -146,12 +148,14 @@ public class ProfileFragment extends Fragment {
                 SharedPreferences.Editor peditor = myPrefs.edit();
                 peditor.clear();
                 peditor.apply();
-                Fragment fragment = new GetStarted();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.get_started, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+//                Fragment fragment = new GetStarted();
+//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.get_started, fragment);
+//                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
+                Intent intent = new Intent(getActivity(), OpeningActivity.class);
+                startActivity(intent);
 
             }
         });

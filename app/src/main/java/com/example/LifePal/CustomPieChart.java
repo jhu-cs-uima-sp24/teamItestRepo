@@ -117,12 +117,12 @@ public class CustomPieChart extends View {
 
                                 Log.w("TAG FOUNDS DOCUMENT", "Found document exists");
                                 int totalTime = 0;
-                                int day = doc.getLong("Day").intValue();
-                                int month = doc.getLong("Month").intValue();
-                                int year = doc.getLong("Year").intValue();
-                                int hour = doc.getLong("Hour").intValue();
-                                int minute = doc.getLong("Minute").intValue();
-                                int second = doc.getLong("Second").intValue();
+                                int day = doc.getLong("day").intValue();
+                                int month = doc.getLong("month").intValue();
+                                int year = doc.getLong("year").intValue();
+                                int hour = doc.getLong("hour").intValue();
+                                int minute = doc.getLong("minute").intValue();
+                                int second = doc.getLong("second").intValue();
 
 
                                 Calendar thisDateCal = Calendar.getInstance();
