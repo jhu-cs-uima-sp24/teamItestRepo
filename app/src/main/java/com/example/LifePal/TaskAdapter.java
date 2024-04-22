@@ -90,13 +90,20 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         hoursLeft = timeLeft / 3600;
         minutesLeft = (timeLeft%3600) / 60;
         secondsLeft = timeLeft - hoursLeft*3600 - minutesLeft*60;
-
+        String secondsLeftString = Integer.toString(secondsLeft);
+        String secondsSpentString = Integer.toString(secondsSpent);
+        if(secondsLeft < 10){
+            secondsLeftString = "0" + secondsLeftString;
+        }
+        if(secondsSpent < 10){
+            secondsSpentString = "0" + secondsSpentString;
+        }
         if (task.getIsStopWatch()) {
-            return Integer.toString(hoursSpent) + ":" + Integer.toString(minutesSpent) + ":" + Integer.toString(secondsSpent);
+            return Integer.toString(hoursSpent) + ":" + Integer.toString(minutesSpent) + ":" + secondsSpentString;
         } else if (task.getFinished()) {
-            return Integer.toString(hoursSpent) + ":" + Integer.toString(minutesSpent) + ":" + Integer.toString(secondsSpent);
+            return Integer.toString(hoursSpent) + ":" + Integer.toString(minutesSpent) + ":" + secondsSpentString;
         } else {
-            return Integer.toString(hoursLeft) + ":" + Integer.toString(minutesLeft) + ":" + Integer.toString(secondsLeft);
+            return Integer.toString(hoursLeft) + ":" + Integer.toString(minutesLeft) + ":" + secondsLeftString;
         }
 
     }
