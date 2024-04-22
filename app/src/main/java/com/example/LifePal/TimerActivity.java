@@ -301,8 +301,10 @@ public class TimerActivity extends AppCompatActivity {
 
             // if running increment the seconds
             if (isRunning) {
-                int progress = fullSecond - fullSecondArray[0];
-                progressBar.setProgress(progress);
+                float progress = fullSecond - fullSecondArray[0];  // This calculates the elapsed time
+                Log.d("progress", String.valueOf(progress));  // Correctly log the float value
+                float percentage = (progress / (float) fullSecond) * 100;
+                progressBar.setProgress((int) percentage);
                 String time = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, secs);
                 String amountPast = String.format(Locale.getDefault(), "%02d:%02d:%02d", secondPast / 3600, (secondPast % 3600) / 60, secondPast % 60);
 
