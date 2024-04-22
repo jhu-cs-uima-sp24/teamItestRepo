@@ -38,7 +38,7 @@ public class CustomPieChart extends View {
     int studyPercentage = 0;
     int workoutPercentage = 0;
     int gamingPercentage = 0;
-    private int[] colors = {0xFFFCB2DA, 0xFFBCF1D1, 0xFFC0D6F9, 0xFFF8DE9C, 0xD3D3D3}; // Red, Green, Blue, Yellow
+    private int[] colors = {0xFFFCB2DA, 0xFFBCF1D1, 0xFFC0D6F9, 0xFFF8DE9C, 0xFFD3D3D3}; // Red, Green, Blue, Yellow
     //#FCB2DA
 
     public CustomPieChart(Context context) {
