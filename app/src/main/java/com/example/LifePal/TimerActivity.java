@@ -110,17 +110,19 @@ public class TimerActivity extends AppCompatActivity {
         timerTextView = findViewById(R.id.timerTextView);
         timerTextView.setText(time);
         startPauseButton = findViewById(R.id.timerstartPauseButton);
-        startPauseButton.setImageResource(R.drawable.resumebutton);
+        startPauseButton.setImageResource(R.drawable.pausebutton);
         endEventButton = findViewById(R.id.timerEnd);
         returnEvent = findViewById(R.id.timerReturn);
         backHome = findViewById(R.id.backMainButton);
         title = findViewById(R.id.title);
         title.setText(titleString);
         currentlyPause = findViewById(R.id.CurrentlyPaused);
+        currentlyPause.setVisibility(View.INVISIBLE);
 //        show_toast(1);
 //        points = myPrefs.getInt("current_points",0);
 
         backHome.setVisibility(View.INVISIBLE);
+        isRunning = true;
         backHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
