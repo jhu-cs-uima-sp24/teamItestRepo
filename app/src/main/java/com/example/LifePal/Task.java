@@ -35,12 +35,13 @@ public class Task {
         this.started = false;
         this.finished = false;
         this.isStopWatch = isStopWatch;
-        this.Year = Calendar.YEAR;
-        this.Month = Calendar.MONTH;
-        this.Day = Calendar.DATE;
-        this.Hour = Calendar.HOUR;
-        this.Minute = Calendar.MINUTE;
-        this.Second = Calendar.SECOND;
+        Calendar calendar = Calendar.getInstance();
+        this.Year = calendar.get(Calendar.YEAR);
+        this.Month = calendar.get(Calendar.MONTH);
+        this.Day = calendar.get(Calendar.MONTH);
+        this.Hour = calendar.get(Calendar.HOUR_OF_DAY);
+        this.Minute = calendar.get(Calendar.MINUTE);
+        this.Second = calendar.get(Calendar.SECOND);
 
     }
 
