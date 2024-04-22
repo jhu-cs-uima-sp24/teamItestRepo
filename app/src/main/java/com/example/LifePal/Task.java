@@ -16,14 +16,15 @@ public class Task {
 
     private boolean started,finished, isStopWatch;
 
-    private Integer Year;
-    private Integer Month;
-    private Integer Day;
-    private Integer Hour;
-    private Integer Minute;
-    private Integer Second;
+    private int Year;
+    private int Month;
+    private int Day;
+    private int Hour;
+    private int Minute;
+    private int Second;
 
     public Task() {
+//
     }
 
     public Task(String TaskName, String description, String time_left, String Tag, boolean isStopWatch) {
