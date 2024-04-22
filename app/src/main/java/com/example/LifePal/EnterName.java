@@ -92,22 +92,7 @@ public class EnterName extends Fragment {
 
             }
         });
-        backButtonName = binding.backButton;
-        backButtonName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                name = name_edit.getText().toString();
-                peditor.putString("user_name", name);
-                peditor.apply();
-                Fragment fragment = new GetStarted();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.enter_name, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-                root.setVisibility(View.GONE);
-            }
-        });
+
 
         return root;
     }

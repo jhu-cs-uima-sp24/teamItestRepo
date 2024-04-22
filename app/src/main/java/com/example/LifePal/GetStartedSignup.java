@@ -82,6 +82,16 @@ public class GetStartedSignup extends Fragment {
                         SharedPreferences.Editor peditor = myPrefs.edit();
                         peditor.remove("password");
                         peditor.apply();
+
+                        Fragment fragment = new EnterName();
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.enter_name, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                        root.setVisibility(View.GONE);
+
+
                     } else {
                         Toast.makeText(getActivity(), "Username already exists", Toast.LENGTH_SHORT).show();
                     }
