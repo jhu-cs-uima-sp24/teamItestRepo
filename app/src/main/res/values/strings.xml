@@ -61,6 +61,7 @@
     <string name="toast_holder">toast holder</string>
     <string name="login_loginxml">Login</string>
     <string name="sign_up_loginxml">Sign Up</string>
+    <string name="log_out">Log out</string>
 
 
 </resources>

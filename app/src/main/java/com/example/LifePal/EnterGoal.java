@@ -109,14 +109,6 @@ public class EnterGoal extends Fragment {
                                 //TODO:Clearing sharedpreferences when signing up a new user?
 //                                    myPrefs.edit().clear().apply();
 
-                                SharedPreferences.Editor peditor = myPrefs.edit();
-                                peditor.putString("username",username);
-                                peditor.remove("user_name");
-                                peditor.remove("pet_name");
-                                peditor.remove("pet_type");
-                                peditor.remove("pet_id");
-                                peditor.remove("user_goal");
-                                peditor.apply();
 
                                 db.collection("users").document(username)
                                         .set(allEntry)

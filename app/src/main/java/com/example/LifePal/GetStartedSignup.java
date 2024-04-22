@@ -80,7 +80,8 @@ public class GetStartedSignup extends Fragment {
 //                                    myPrefs.edit().clear().apply();
 
                         SharedPreferences.Editor peditor = myPrefs.edit();
-                        peditor.remove("password");
+                        peditor.putString("username",username);
+                        peditor.putString("password", password);
                         peditor.apply();
 
                         Fragment fragment = new EnterName();
