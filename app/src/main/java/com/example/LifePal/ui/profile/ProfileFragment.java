@@ -67,6 +67,7 @@ public class ProfileFragment extends Fragment {
         myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
 
         String username = myPrefs.getString("username","");
+        String usernameReal = myPrefs.getString("user_name","");
         String petname = myPrefs.getString("pet_name","");
         int points = myPrefs.getInt("current_points", 0);
         int next_level_points = myPrefs.getInt("next_level", 0);
@@ -112,8 +113,8 @@ public class ProfileFragment extends Fragment {
             pet_points_next_level.setText(next_happ);
         }
         TextView usernameText = myview.findViewById(R.id.profile_title_text_view);
-        usernameText.setText(username);
-        user_name.setText(username);
+        usernameText.setText(usernameReal);
+        user_name.setText(usernameReal);
 
         db.collection("users").document(username).get().addOnSuccessListener(documentSnapshot -> {
             pet_name.setText(documentSnapshot.getString("pet_name"));
