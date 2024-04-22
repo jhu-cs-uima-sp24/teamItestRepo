@@ -185,12 +185,12 @@ public class TaskAdapter extends ArrayAdapter<Task> {
                                 peditor.putString("tag",task.getTag());
                                 peditor.putBoolean("isStopwatch",task.getIsStopWatch());
                                 peditor.putInt("position",position);
-                                peditor.putInt("Year",task.getYear());
-                                peditor.putInt("Month",task.getMonth());
-                                peditor.putInt("Day",task.getDay());
-                                peditor.putInt("Hour",task.getHour());
-                                peditor.putInt("Minute",task.getMinute());
-                                peditor.putInt("Second",task.getSecond());
+//                                peditor.putInt("Year",task.getYear());
+//                                peditor.putInt("Month",task.getMonth());
+//                                peditor.putInt("Day",task.getDay());
+//                                peditor.putInt("Hour",task.getHour());
+//                                peditor.putInt("Minute",task.getMinute());
+//                                peditor.putInt("Second",task.getSecond());
                                 peditor.apply();
                                 myact.startActivity(launch);
                             }
