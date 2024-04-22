@@ -62,15 +62,18 @@ public class CustomPieChart extends View {
         String mode = sharedPreferences.getString("mode", "day");
 
         Date startDate = new Date(
-                sharedPreferences.getInt("yearVal", 0) - 1900, // Adjusting year as Date constructor expects year from 1900
-                sharedPreferences.getInt("monthVal", 0) - 1, // Adjusting month as Date constructor expects 0-11
-                sharedPreferences.getInt("dayVal", 0)
+                sharedPreferences.getInt("Year", 0), // Adjusting year as Date constructor expects year from 1900
+                sharedPreferences.getInt("Month", 0), // Adjusting month as Date constructor expects 0-11
+                sharedPreferences.getInt("Day", 0)
         );
 
         // Initialize a Calendar object from startDate
-        Calendar endDate2 = Calendar.getInstance();
         Calendar startDate2 = Calendar.getInstance();
+        Calendar endDate2 = Calendar.getInstance();
+        startDate2.setTime(startDate);
         endDate2.setTime(startDate);
+
+
 
         // Determine endDate based on the mode
         switch (mode) {
@@ -89,8 +92,8 @@ public class CustomPieChart extends View {
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        SharedPreferences sharedPreferences1 = getContext().getSharedPreferences("t", Context.MODE_PRIVATE);
-        String user = sharedPreferences1.getString("user_name", "default");
+        SharedPreferences sharedPreferences1 = getContext().getSharedPreferences(getContext().getString(R.string.storage), Context.MODE_PRIVATE);
+        String user = sharedPreferences1.getString("username", "default");
 
 
         db.collection("users").document(user).collection("tasks")
@@ -103,9 +106,16 @@ public class CustomPieChart extends View {
                             return;
                         }
 
+                        Log.w("PATH", "Path: " + "users/" + user + "/tasks");
+                        Log.w("TAG FOUND EVENT", "Found event" + snapshots.size() + snapshots.getMetadata());
+
                         for (DocumentSnapshot doc : snapshots.getDocuments()) {
+                            Log.w("TAG FOUNDS DOCUMENT", "Found document");
+
 
                             if (doc.exists()) {
+
+                                Log.w("TAG FOUNDS DOCUMENT", "Found document exists");
                                 int totalTime = 0;
                                 int day = doc.getLong("Day").intValue();
                                 int month = doc.getLong("Month").intValue();
@@ -114,9 +124,13 @@ public class CustomPieChart extends View {
                                 int minute = doc.getLong("Minute").intValue();
                                 int second = doc.getLong("Second").intValue();
 
-                                Date thisDate = new Date(year - 1900, month - 1, day);
+
                                 Calendar thisDateCal = Calendar.getInstance();
-                                thisDateCal.setTime(thisDate);
+                                thisDateCal.setTime(new Date(year, month, day, hour, minute, second));
+
+                                Log.w("TAG Date", "This date: " + thisDateCal.getTime().toString());
+                                Log.w("TAG Date", "Start date: " + startDate2.getTime().toString());
+                                Log.w("TAG Date", "End date: " + endDate2.getTime().toString());
 
                                 if (isDateBetween(startDate2, endDate2, thisDateCal)) {
 
@@ -152,6 +166,8 @@ public class CustomPieChart extends View {
                             slicePercentages = new float[]{(float) breakPercentage * 100 / total, (float) studyPercentage * 100 / total, (float) workoutPercentage * 100 / total, (float) gamingPercentage * 100 / total, 0};
                         }
                         else{
+
+                            Log.w("TAG", "Total is 0");
                             slicePercentages = new float[]{0, 0, 0, 0, 100};
                         }
 
@@ -164,6 +180,7 @@ public class CustomPieChart extends View {
                         float startAngle = 0;
                         for (int i = 0; i < slicePercentages.length; i++) {
                             float sweepAngle = (slicePercentages[i] / 100) * 360; // Convert percentage to angle
+                            Log.w("TAG", "Start angle: " + startAngle + " Sweep angle: " + sweepAngle + " Color: " + colors[i] + " Percentage: " + slicePercentages[i]);
                             paint.setColor(colors[i]);
                             canvas.drawArc(rect, startAngle, sweepAngle, true, paint);
                             startAngle += sweepAngle;
