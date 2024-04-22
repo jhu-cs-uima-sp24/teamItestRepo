@@ -96,7 +96,6 @@ public class ProfileFragment extends Fragment {
         EditText goal = pet_personal_information_dropdown.findViewById(R.id.current_goal_text_view);
         ImageView pet_pic_dropdown_picture = pet_profile_dropdown.findViewById(R.id.profile_pet_dropdown_image);
         ImageView main_pet_pic = myview.findViewById(R.id.petProfile_picture);
-        //ProgressBar pet_happiness = myview.findViewById(R.id.progressBar);
 
         Button logout_button = myview.findViewById(R.id.logout_button);
 
@@ -231,9 +230,9 @@ public class ProfileFragment extends Fragment {
                     ObjectAnimator.ofFloat(v, "rotation", 180f, 0f).start();
                     popWindow.dismiss();
                     //update bottom constraint
-                    ImageView image = (ImageView) pet_profile_dropdown.findViewById(R.id.profile_pet_dropdown_image);
+               //     ImageView image = (ImageView) pet_profile_dropdown.findViewById(R.id.profile_pet_dropdown_image);
                    // ImageLoader imagLoader = new ImageLoader(getApplicationContext());
-                    image.setImageResource(R.drawable.goat_level0);
+                    // image.setImageResource(R.drawable.goat_level0);
 
                 }
                 else{
