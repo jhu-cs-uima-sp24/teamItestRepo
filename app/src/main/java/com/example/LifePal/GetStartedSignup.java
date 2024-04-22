@@ -71,34 +71,14 @@ public class GetStartedSignup extends Fragment {
                     if (!allUsernames.contains(username)) {
                         Map<String, Object> newUser = new HashMap<>(allEntry);
                         newUser.put(username, password);
-                        db.collection("allUsersLogins").document("credentials")
-                                .update(newUser)
-                                .addOnSuccessListener(aVoid -> {
-                                    Toast.makeText(getActivity(), "Signup successful", Toast.LENGTH_SHORT).show();
-                                    SharedPreferences myPrefs = getActivity().getApplicationContext().getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
+                        SharedPreferences myPrefs = getActivity().getApplicationContext().getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
 
-                                    //TODO:Clearing sharedpreferences when signing up a new user?
+                        //TODO:Clearing sharedpreferences when signing up a new user?
 //                                    myPrefs.edit().clear().apply();
 
-                                    SharedPreferences.Editor peditor = myPrefs.edit();
-                                    peditor.putString("username",username);
-                                    peditor.remove("user_name");
-                                    peditor.remove("pet_name");
-                                    peditor.remove("pet_type");
-                                    peditor.remove("pet_id");
-                                    peditor.remove("user_goal");
-                                    peditor.apply();
-
-
-                                    Fragment fragment = new EnterName();
-                                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                    fragmentTransaction.replace(R.id.enter_name, fragment);
-                                    fragmentTransaction.addToBackStack(null);
-                                    fragmentTransaction.commit();
-                                    root.setVisibility(View.GONE);
-                                })
-                                .addOnFailureListener(e -> Toast.makeText(getActivity(), "Signup failed", Toast.LENGTH_SHORT).show());
+                        SharedPreferences.Editor peditor = myPrefs.edit();
+                        peditor.remove("password");
+                        peditor.apply();
                     } else {
                         Toast.makeText(getActivity(), "Username already exists", Toast.LENGTH_SHORT).show();
                     }
