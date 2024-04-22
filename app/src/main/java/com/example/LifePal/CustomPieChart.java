@@ -305,9 +305,6 @@ public class CustomPieChart extends View {
 
     private void drawPieChart(Canvas canvas) {
 
-
-
-
         int total = breakPercentage + studyPercentage + workoutPercentage + gamingPercentage;
         Log.w("TAG", "Total: " + total);
         Log.w("TAG", "Break: " + breakPercentage);
@@ -343,21 +340,6 @@ public class CustomPieChart extends View {
             canvas.drawArc(rect, startAngle, sweepAngle, true, paint);
             startAngle += sweepAngle;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //
