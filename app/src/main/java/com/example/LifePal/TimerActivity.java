@@ -110,17 +110,19 @@ public class TimerActivity extends AppCompatActivity {
         timerTextView = findViewById(R.id.timerTextView);
         timerTextView.setText(time);
         startPauseButton = findViewById(R.id.timerstartPauseButton);
-        startPauseButton.setImageResource(R.drawable.resumebutton);
+        startPauseButton.setImageResource(R.drawable.pausebutton);
         endEventButton = findViewById(R.id.timerEnd);
         returnEvent = findViewById(R.id.timerReturn);
         backHome = findViewById(R.id.backMainButton);
         title = findViewById(R.id.title);
         title.setText(titleString);
         currentlyPause = findViewById(R.id.CurrentlyPaused);
+        currentlyPause.setVisibility(View.INVISIBLE);
 //        show_toast(1);
 //        points = myPrefs.getInt("current_points",0);
 
         backHome.setVisibility(View.INVISIBLE);
+        isRunning = true;
         backHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -301,8 +303,10 @@ public class TimerActivity extends AppCompatActivity {
 
             // if running increment the seconds
             if (isRunning) {
-                int progress = fullSecond - fullSecondArray[0];
-                progressBar.setProgress(progress);
+                float progress = fullSecond - fullSecondArray[0];  // This calculates the elapsed time
+                Log.d("progress", String.valueOf(progress));  // Correctly log the float value
+                float percentage = (progress / (float) fullSecond) * 100;
+                progressBar.setProgress((int) percentage);
                 String time = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, secs);
                 String amountPast = String.format(Locale.getDefault(), "%02d:%02d:%02d", secondPast / 3600, (secondPast % 3600) / 60, secondPast % 60);
 

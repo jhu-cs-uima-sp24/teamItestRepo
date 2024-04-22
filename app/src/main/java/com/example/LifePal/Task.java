@@ -1,5 +1,6 @@
 package com.example.LifePal;
 import java.lang.String;
+import java.util.Calendar;
 
 
 public class Task {
@@ -14,6 +15,14 @@ public class Task {
     private String Tag;
 
     private boolean started,finished, isStopWatch;
+
+    private Integer Year;
+    private Integer Month;
+    private Integer Day;
+    private Integer Hour;
+    private Integer Minute;
+    private Integer Second;
+
     public Task() {
     }
 
@@ -26,6 +35,37 @@ public class Task {
         this.started = false;
         this.finished = false;
         this.isStopWatch = isStopWatch;
+        this.Year = Calendar.YEAR;
+        this.Month = Calendar.MONTH;
+        this.Day = Calendar.DATE;
+        this.Hour = Calendar.HOUR;
+        this.Minute = Calendar.MINUTE;
+        this.Second = Calendar.SECOND;
+
+    }
+
+    public Integer getYear() {
+        return Year;
+    }
+
+    public Integer getMonth() {
+        return Month;
+    }
+
+    public Integer getDay() {
+        return Day;
+    }
+
+    public Integer getHour() {
+        return Hour;
+    }
+
+    public Integer getMinute() {
+        return Minute;
+    }
+
+    public Integer getSecond() {
+        return Second;
     }
 
     public String getTaskName() {
