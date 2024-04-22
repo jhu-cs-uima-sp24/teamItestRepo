@@ -38,33 +38,145 @@ public class CustomPieChart extends View {
     int studyPercentage = 0;
     int workoutPercentage = 0;
     int gamingPercentage = 0;
-    private int[] colors = {0xFFFCB2DA, 0xFFBCF1D1, 0xFFC0D6F9, 0xFFF8DE9C, 0x000000}; // Red, Green, Blue, Yellow
+    private int[] colors = {0xFFFCB2DA, 0xFFBCF1D1, 0xFFC0D6F9, 0xFFF8DE9C, 0xFFF8DE9C}; // Red, Green, Blue, Yellow
     //#FCB2DA
 
     public CustomPieChart(Context context) {
         super(context);
-    }
-
-    public CustomPieChart(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        drawPieChart(canvas);
-    }
-
-    private void drawPieChart(Canvas canvas) {
 
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("statsMode", Context.MODE_PRIVATE);
         String mode = sharedPreferences.getString("mode", "day");
 
         Date startDate = new Date(
-                sharedPreferences.getInt("Year", 0), // Adjusting year as Date constructor expects year from 1900
-                sharedPreferences.getInt("Month", 0), // Adjusting month as Date constructor expects 0-11
-                sharedPreferences.getInt("Day", 0)
+                sharedPreferences.getInt("yearVal", 0), // Adjusting year as Date constructor expects year from 1900
+                sharedPreferences.getInt("monthVal", 0), // Adjusting month as Date constructor expects 0-11
+                sharedPreferences.getInt("dayVal", 0)
+        );
+
+        // Initialize a Calendar object from startDate
+        Calendar startDate2 = Calendar.getInstance();
+        Calendar endDate2 = Calendar.getInstance();
+        startDate2.setTime(startDate);
+        endDate2.setTime(startDate);
+
+
+
+        // Determine endDate based on the mode
+        switch (mode) {
+            case "day":
+                endDate2.add(Calendar.DAY_OF_MONTH, 1); // Add one day
+                break;
+            case "week":
+                endDate2.add(Calendar.WEEK_OF_YEAR, 1); // Add one week
+                break;
+            case "month":
+                endDate2.add(Calendar.MONTH, 1); // Add one month
+                break;
+            default:
+                break;
+        }
+
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        SharedPreferences sharedPreferences1 = getContext().getSharedPreferences(getContext().getString(R.string.storage), Context.MODE_PRIVATE);
+        String user = sharedPreferences1.getString("username", "default");
+
+
+        db.collection("users").document(user).collection("tasks")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent( QuerySnapshot snapshots,
+                                         FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(TAG, "Listen failed.", e);
+                            return;
+                        }
+
+                        Log.w("PATH", "Path: " + "users/" + user + "/tasks");
+                        Log.w("TAG FOUND EVENT", "Found event" + snapshots.size() + snapshots.getMetadata());
+
+                        for (DocumentSnapshot doc : snapshots.getDocuments()) {
+                            Log.w("TAG FOUNDS DOCUMENT", "Found document");
+
+
+                            if (doc.exists()) {
+
+                                Log.w("TAG FOUNDS DOCUMENT", "Found document exists");
+                                int totalTime = 0;
+                                int day = doc.getLong("Day").intValue();
+                                int month = doc.getLong("Month").intValue();
+                                int year = doc.getLong("Year").intValue();
+                                int hour = doc.getLong("Hour").intValue();
+                                int minute = doc.getLong("Minute").intValue();
+                                int second = doc.getLong("Second").intValue();
+
+
+                                Calendar thisDateCal = Calendar.getInstance();
+                                thisDateCal.setTime(new Date(year, month, day, hour, minute, second));
+
+                                Log.w("TAG Date", "This date: " + thisDateCal.getTime().toString());
+                                Log.w("TAG Date", "Start date: " + startDate2.getTime().toString());
+                                Log.w("TAG Date", "End date: " + endDate2.getTime().toString());
+
+                                if (isDateBetween(startDate2, endDate2, thisDateCal)) {
+
+                                    String tag = doc.getString("tag");
+                                    if (tag.equals("Break")) {
+                                        breakPercentage += Integer.parseInt(doc.getString("timeSpent"));
+                                    } else if (tag.equals("Study")) {
+                                        studyPercentage += Integer.parseInt(doc.getString("timeSpent"));
+                                    } else if (tag.equals("Workout")) {
+                                        workoutPercentage += Integer.parseInt(doc.getString("timeSpent"));
+                                    } else if (tag.equals("Gaming")) {
+                                        gamingPercentage += Integer.parseInt(doc.getString("timeSpent"));
+                                    }
+
+                                } else {
+                                    Log.d(TAG, "Current data: null");
+                                }
+                            }
+
+
+
+                            post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    invalidate();  // Request a redraw
+                                }
+                            });
+
+
+                        }
+
+//                        for (int i = 0; i < 1000000000; i++) {
+//
+//                        }
+
+
+
+
+
+
+
+
+
+
+                    }
+
+                });
+
+
+    }
+
+    public CustomPieChart(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("statsMode", Context.MODE_PRIVATE);
+        String mode = sharedPreferences.getString("mode", "day");
+
+        Date startDate = new Date(
+                sharedPreferences.getInt("yearVal", 0), // Adjusting year as Date constructor expects year from 1900
+                sharedPreferences.getInt("monthVal", 0), // Adjusting month as Date constructor expects 0-11
+                sharedPreferences.getInt("dayVal", 0)
         );
 
         // Initialize a Calendar object from startDate
@@ -135,14 +247,14 @@ public class CustomPieChart extends View {
                                 if (isDateBetween(startDate2, endDate2, thisDateCal)) {
 
                                     String tag = doc.getString("tag");
-                                    if (tag.equals("break")) {
-                                        breakPercentage += doc.getLong("timSpent").intValue();
-                                    } else if (tag.equals("study")) {
-                                        studyPercentage += doc.getLong("timSpent").intValue();
-                                    } else if (tag.equals("workout")) {
-                                        workoutPercentage += doc.getLong("timSpent").intValue();
-                                    } else if (tag.equals("gaming")) {
-                                        gamingPercentage += doc.getLong("timSpent").intValue();
+                                    if (tag.equals("Break")) {
+                                        breakPercentage += Integer.parseInt(doc.getString("timeSpent"));
+                                    } else if (tag.equals("Study")) {
+                                        studyPercentage += Integer.parseInt(doc.getString("timeSpent"));
+                                    } else if (tag.equals("Workout")) {
+                                        workoutPercentage += Integer.parseInt(doc.getString("timeSpent"));
+                                    } else if (tag.equals("Gaming")) {
+                                        gamingPercentage += Integer.parseInt(doc.getString("timeSpent"));
                                     }
 
                                 } else {
@@ -151,11 +263,50 @@ public class CustomPieChart extends View {
                             }
 
 
+
+                            post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    invalidate();  // Request a redraw
+                                }
+                            });
+
+
                         }
+
+//                        for (int i = 0; i < 1000000000; i++) {
+//
+//                        }
+
+
+
+
+
+
+
+
 
 
                     }
+
                 });
+
+
+
+    }
+
+
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        drawPieChart(canvas);
+    }
+
+    private void drawPieChart(Canvas canvas) {
+
+
+
 
         int total = breakPercentage + studyPercentage + workoutPercentage + gamingPercentage;
         Log.w("TAG", "Total: " + total);
@@ -168,6 +319,7 @@ public class CustomPieChart extends View {
         if(total != 0) {
 
             slicePercentages = new float[]{(float) breakPercentage * 100 / total, (float) studyPercentage * 100 / total, (float) workoutPercentage * 100 / total, (float) gamingPercentage * 100 / total, 0};
+            Log.w("TAG", "break: " + breakPercentage * 100 / total + " study: " + studyPercentage * 100 / total + " workout: " + workoutPercentage * 100 / total + " gaming: " + gamingPercentage * 100 / total);
         }
         else{
 
@@ -181,6 +333,8 @@ public class CustomPieChart extends View {
         int size = Math.min(width, height);
         RectF rect = new RectF((float) (size) / 8, 0, (float) (7 * size) / 8, (float) (6 * size) / 8); // Use RectF for the pie chart bounds
 
+
+
         float startAngle = 0;
         for (int i = 0; i < slicePercentages.length; i++) {
             float sweepAngle = (slicePercentages[i] / 100) * 360; // Convert percentage to angle
@@ -189,9 +343,6 @@ public class CustomPieChart extends View {
             canvas.drawArc(rect, startAngle, sweepAngle, true, paint);
             startAngle += sweepAngle;
         }
-
-
-
 
 
 
