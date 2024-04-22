@@ -124,6 +124,7 @@ public class TimerActivity extends AppCompatActivity {
         backHome.setVisibility(View.INVISIBLE);
         isRunning = true;
         backHome.setOnClickListener(new View.OnClickListener() {
+            Calendar currentTime = Calendar.getInstance();
             @Override
             public void onClick(View view) {
                 String title = myPrefs.getString("title","");
@@ -132,12 +133,12 @@ public class TimerActivity extends AppCompatActivity {
                                 "timeLeft",Integer.toString(0),
                                 "timeSpent",Integer.toString(secondPast),
                                 "finished",true,
-                                "Year", Calendar.YEAR,
-                                "Month", Calendar.MONTH,
-                                "Day", Calendar.DATE,
-                                "Hour", Calendar.HOUR,
-                                "Minute", Calendar.MINUTE,
-                                "Second", Calendar.SECOND
+                                "Year", currentTime.get(Calendar.YEAR),
+                                "Month", currentTime.get(Calendar.MONTH),
+                                "Day", currentTime.get(Calendar.DATE),
+                                "Hour", currentTime.get(Calendar.HOUR),
+                                "Minute", currentTime.get(Calendar.MINUTE),
+                                "Second", currentTime.get(Calendar.SECOND)
                         ).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -252,12 +253,12 @@ public class TimerActivity extends AppCompatActivity {
                                 "timeLeft",Integer.toString(0),
                                 "timeSpent",Integer.toString(secondPast),
                                 "finished",true,
-                                "Year", Calendar.YEAR,
-                                "Month", Calendar.MONTH,
-                                "Day", Calendar.DATE,
-                                "Hour", Calendar.HOUR,
-                                "Minute", Calendar.MINUTE,
-                                "Second", Calendar.SECOND
+                                "Year", currentTime.get(Calendar.YEAR),
+                                "Month", currentTime.get(Calendar.MONTH),
+                                "Day", currentTime.get(Calendar.DATE),
+                                "Hour", currentTime.get(Calendar.HOUR),
+                                "Minute", currentTime.get(Calendar.MINUTE),
+                                "Second", currentTime.get(Calendar.SECOND)
                         ).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
