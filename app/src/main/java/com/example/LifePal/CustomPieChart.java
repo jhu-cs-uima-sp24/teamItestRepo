@@ -153,40 +153,43 @@ public class CustomPieChart extends View {
 
                         }
 
-                        int total = breakPercentage + studyPercentage + workoutPercentage + gamingPercentage;
-                        Log.w("TAG", "Total: " + total);
-                        Log.w("TAG", "Break: " + breakPercentage);
-                        Log.w("TAG", "Study: " + studyPercentage);
-                        Log.w("TAG", "Workout: " + workoutPercentage);
-                        Log.w("TAG", "Gaming: " + gamingPercentage);
 
-
-                        if(total != 0) {
-
-                            slicePercentages = new float[]{(float) breakPercentage * 100 / total, (float) studyPercentage * 100 / total, (float) workoutPercentage * 100 / total, (float) gamingPercentage * 100 / total, 0};
-                        }
-                        else{
-
-                            Log.w("TAG", "Total is 0");
-                            slicePercentages = new float[]{0, 0, 0, 0, 100};
-                        }
-
-
-                        int width = getWidth();
-                        int height = getHeight();
-                        int size = Math.min(width, height);
-                        RectF rect = new RectF((float) (size) / 8, 0, (float) (7 * size) / 8, (float) (6 * size) / 8); // Use RectF for the pie chart bounds
-
-                        float startAngle = 0;
-                        for (int i = 0; i < slicePercentages.length; i++) {
-                            float sweepAngle = (slicePercentages[i] / 100) * 360; // Convert percentage to angle
-                            Log.w("TAG", "Start angle: " + startAngle + " Sweep angle: " + sweepAngle + " Color: " + colors[i] + " Percentage: " + slicePercentages[i]);
-                            paint.setColor(colors[i]);
-                            canvas.drawArc(rect, startAngle, sweepAngle, true, paint);
-                            startAngle += sweepAngle;
-                        }
                     }
                 });
+
+        int total = breakPercentage + studyPercentage + workoutPercentage + gamingPercentage;
+        Log.w("TAG", "Total: " + total);
+        Log.w("TAG", "Break: " + breakPercentage);
+        Log.w("TAG", "Study: " + studyPercentage);
+        Log.w("TAG", "Workout: " + workoutPercentage);
+        Log.w("TAG", "Gaming: " + gamingPercentage);
+
+
+        if(total != 0) {
+
+            slicePercentages = new float[]{(float) breakPercentage * 100 / total, (float) studyPercentage * 100 / total, (float) workoutPercentage * 100 / total, (float) gamingPercentage * 100 / total, 0};
+        }
+        else{
+
+            Log.w("TAG", "Total is 0");
+            slicePercentages = new float[]{0, 0, 0, 0, 100};
+        }
+
+
+        int width = getWidth();
+        int height = getHeight();
+        int size = Math.min(width, height);
+        RectF rect = new RectF((float) (size) / 8, 0, (float) (7 * size) / 8, (float) (6 * size) / 8); // Use RectF for the pie chart bounds
+
+        float startAngle = 0;
+        for (int i = 0; i < slicePercentages.length; i++) {
+            float sweepAngle = (slicePercentages[i] / 100) * 360; // Convert percentage to angle
+            Log.w("TAG", "Start angle: " + startAngle + " Sweep angle: " + sweepAngle + " Color: " + colors[i] + " Percentage: " + slicePercentages[i]);
+            paint.setColor(colors[i]);
+            canvas.drawArc(rect, startAngle, sweepAngle, true, paint);
+            startAngle += sweepAngle;
+        }
+
 
 
 
