@@ -55,13 +55,20 @@ public class StatsFragment extends Fragment {
                     .commit();
         }
 
-        final Calendar c = Calendar.getInstance();
 
         Button button = (Button) root.findViewById(R.id.button6);
-        button.setText("Date: " + (c.get(Calendar.MONTH) + 1) + "/" + c.get(Calendar.DAY_OF_MONTH) + "/" + c.get(Calendar.YEAR));
+
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("statsMode", Context.MODE_PRIVATE);
+        Calendar calendar = Calendar.getInstance();
+        int yy = sharedPreferences.getInt("yearVal", calendar.get(Calendar.YEAR));
+        int mm = sharedPreferences.getInt("monthVal", calendar.get(Calendar.MONTH));
+        int dd = sharedPreferences.getInt("dayVal", calendar.get(Calendar.DAY_OF_MONTH));
+
+
+        button.setText("Date: " + (mm + 1) + "/" + dd + "/" + yy);
 
         DatePickerFragment currentFragment = new DatePickerFragment();
-        currentFragment.setDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+        currentFragment.setDate(yy, mm, dd);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,13 +81,6 @@ public class StatsFragment extends Fragment {
         });
 
 
-        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("statsMode", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Calendar calendar = Calendar.getInstance();
-        editor.putInt("yearVal", calendar.get(Calendar.YEAR));
-        editor.putInt("monthVal", calendar.get(Calendar.MONTH));
-        editor.putInt("dayVal", calendar.get(Calendar.DAY_OF_MONTH));
-        editor.apply();
 
 
 //        Button button = getActivity().findViewById(R.id.dateButton);
@@ -101,6 +101,9 @@ public class StatsFragment extends Fragment {
 //                db.collection("tags").document("workout").update(tagid, 30);
 //                db.collection("tags").document("gaming").update(tagid, 40);
 //                db.collection("tags").document("break").update(tagid, 10);
+
+
+
             }
         });
 
@@ -170,6 +173,10 @@ public class StatsFragment extends Fragment {
             editor.putInt("monthVal", month);
             editor.putInt("dayVal", day);
             editor.apply();
+
+            startActivity(requireActivity().getIntent());
+            requireActivity().finish();
+
         }
 
         public void setDate(int year, int month, int day) {

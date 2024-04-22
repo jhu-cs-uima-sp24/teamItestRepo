@@ -14,6 +14,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -28,6 +29,19 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
+
+        SharedPreferences sharedPreferences = getSharedPreferences("statsMode", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Calendar calendar = Calendar.getInstance();
+        editor.putInt("yearVal", calendar.get(Calendar.YEAR));
+        editor.putInt("monthVal", calendar.get(Calendar.MONTH));
+        editor.putInt("dayVal", calendar.get(Calendar.DAY_OF_MONTH));
+        editor.apply();
+
+
+
 
         cntx = getApplicationContext();
 
