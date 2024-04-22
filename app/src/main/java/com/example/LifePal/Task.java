@@ -16,14 +16,15 @@ public class Task {
 
     private boolean started,finished, isStopWatch;
 
-    private Integer Year;
-    private Integer Month;
-    private Integer Day;
-    private Integer Hour;
-    private Integer Minute;
-    private Integer Second;
+    private int Year;
+    private int Month;
+    private int Day;
+    private int Hour;
+    private int Minute;
+    private int Second;
 
     public Task() {
+//
     }
 
     public Task(String TaskName, String description, String time_left, String Tag, boolean isStopWatch) {
@@ -38,7 +39,7 @@ public class Task {
         Calendar calendar = Calendar.getInstance();
         this.Year = calendar.get(Calendar.YEAR);
         this.Month = calendar.get(Calendar.MONTH);
-        this.Day = calendar.get(Calendar.MONTH);
+        this.Day = calendar.get(Calendar.DAY_OF_MONTH);
         this.Hour = calendar.get(Calendar.HOUR_OF_DAY);
         this.Minute = calendar.get(Calendar.MINUTE);
         this.Second = calendar.get(Calendar.SECOND);

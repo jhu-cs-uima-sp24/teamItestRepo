@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -27,8 +28,9 @@ public class GetStarted extends Fragment {
 
     private FragmentGetStartedBinding binding;
     private SharedPreferences sharedPrefs;
-    private Button loginButton, signUpButton;
+    private Button loginButton, signUpButton, loginbuttonstart;
     private EditText usernameInput, passwordInput;
+    private ImageView block;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -41,6 +43,20 @@ public class GetStarted extends Fragment {
         signUpButton = binding.signUpButton;
         usernameInput = binding.usernameInput;
         passwordInput = binding.passwordInput;
+        loginbuttonstart = binding.loginButtonStart;
+
+
+        loginbuttonstart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                usernameInput.setVisibility(View.VISIBLE);
+                passwordInput.setVisibility(View.VISIBLE);
+                loginbuttonstart.setVisibility(View.GONE);
+                loginButton.setVisibility(View.VISIBLE);
+                signUpButton.setVisibility(View.GONE);
+            }
+        });
+
 
 
 
@@ -76,9 +92,9 @@ public class GetStarted extends Fragment {
 
         loginButton.setOnClickListener(new View.OnClickListener() {
 
-
             @Override
             public void onClick(View v) {
+                Log.d("tag", "onClick");
                 String name = usernameInput.getText().toString();
                 String password = passwordInput.getText().toString();
                 if (!name.isEmpty() && !password.isEmpty() && allUsernames.contains(name) && allEntry.get(name).equals(password)) {
@@ -87,13 +103,16 @@ public class GetStarted extends Fragment {
                     SharedPreferences.Editor peditor = myPrefs.edit();
                     peditor.putString("username",name);
                     peditor.apply();
+                    Log.d("tag", "valid");
                     // Intent to start MainActivity
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
                 } else if (!name.isEmpty() && !password.isEmpty()) {
                     Toast.makeText(getActivity(), "Invalid username or password", Toast.LENGTH_SHORT).show();
+                    Log.d("tag", "invalid");
                 } else {
                     Toast.makeText(getActivity(), "Please enter email and password", Toast.LENGTH_SHORT).show();
+                    Log.d("tag", "empty");
                 }
             }
         });

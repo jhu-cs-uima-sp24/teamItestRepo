@@ -2,6 +2,7 @@ package com.example.LifePal.ui.profile;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.LifePal.GetStarted;
 import com.example.LifePal.MainActivity;
 
+import com.example.LifePal.OpeningActivity;
 import com.example.LifePal.PetName;
 import com.example.LifePal.R;
 import com.google.firebase.firestore.DocumentReference;
@@ -49,6 +51,7 @@ public class ProfileFragment extends Fragment {
 
     private SharedPreferences myPrefs;
     private Handler handler = new Handler();
+    private ProgressBar petProgress;
 
 
     @Override
@@ -64,6 +67,7 @@ public class ProfileFragment extends Fragment {
         myPrefs = cntx.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
 
         String username = myPrefs.getString("username","");
+        String usernameReal = myPrefs.getString("user_name","");
         String petname = myPrefs.getString("pet_name","");
         int points = myPrefs.getInt("current_points", 0);
         int next_level_points = myPrefs.getInt("next_level", 0);
@@ -84,6 +88,7 @@ public class ProfileFragment extends Fragment {
 
         TextView name = myview.findViewById(R.id.profile_title_text_view);
         EditText pet_name = pet_profile_dropdown.findViewById(R.id.pet_name_text_view);
+        petProgress = pet_profile_dropdown.findViewById(R.id.PetProgressBar);
         TextView pet_level = pet_profile_dropdown.findViewById(R.id.level_text_view);
         TextView current_points = pet_profile_dropdown.findViewById(R.id.current_happniess_pet_text_view);
         TextView next_level = pet_profile_dropdown.findViewById(R.id.points_till_next_level_text_view);
@@ -103,6 +108,8 @@ public class ProfileFragment extends Fragment {
             pet_name_dropdown.setText(petname);
             String curr_happ = "Current Happniess Points: " + String.valueOf(points) + " pts";
             pet_points_dropdown.setText(curr_happ);
+            float percentage = ((float)points/(float)next_level_points) * 100;
+            petProgress.setProgress((int) percentage);
             String next_happ = String.valueOf(next_level_points - points) + " pts until the next evolution";
             pet_points_next_level.setText(next_happ);
         }
@@ -148,12 +155,14 @@ public class ProfileFragment extends Fragment {
                 SharedPreferences.Editor peditor = myPrefs.edit();
                 peditor.clear();
                 peditor.apply();
-                Fragment fragment = new GetStarted();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.get_started, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+//                Fragment fragment = new GetStarted();
+//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.get_started, fragment);
+//                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
+                Intent intent = new Intent(getActivity(), OpeningActivity.class);
+                startActivity(intent);
 
             }
         });

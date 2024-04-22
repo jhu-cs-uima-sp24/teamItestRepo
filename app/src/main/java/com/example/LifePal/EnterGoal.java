@@ -98,7 +98,7 @@ public class EnterGoal extends Fragment {
                     allEntry.put("current_points",0);
                     allEntry.put("next_level",1000);
                     allEntry.put("pet_level",0);
-                    Map<String, Object> newUser = new HashMap<>(allEntry);
+                    Map<String, Object> newUser = new HashMap<>();
                     newUser.put(username, password);
                     db.collection("allUsersLogins").document("credentials")
                             .update(newUser)

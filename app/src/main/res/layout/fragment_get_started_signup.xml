@@ -1,92 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GetStarted">
+
 
     <ImageView
         android:id="@+id/top_paw_prints"
         android:layout_width="125dp"
         android:layout_height="200dp"
         android:contentDescription="@string/paw_print_design"
-        android:layout_gravity="top|start"
-        android:src="@drawable/paws"/>
+        android:src="@drawable/paws"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/bottom_paw_prints"
         android:layout_width="125dp"
         android:layout_height="200dp"
-        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="4dp"
         android:contentDescription="@string/paw_print_design"
-        android:src="@drawable/paws" />
-
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="200dp"
-        android:layout_height="100dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/logo"
-        android:layout_marginTop="80dp"
-        android:contentDescription="@string/logo"/>
+        android:src="@drawable/paws"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/welcome_to"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="120dp"
         android:fontFamily="@font/roboto"
         android:text="@string/welcome_to"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/primary_pink"
         android:textSize="34sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/logo"
+        android:scaleType="fitCenter"
+        android:src="@drawable/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcome_to" />
 
     <!-- Username Input -->
-    <EditText
-        android:id="@+id/username_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Username"
-        android:inputType="textEmailAddress"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="300dp"
-        android:padding="16dp"/>
 
     <!-- Password Input -->
     <EditText
+        android:id="@+id/username_input"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/outlined_rounded_rect"
+        android:hint="Username"
+        android:inputType="textEmailAddress"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo" />
+
+    <!-- Password Confirmation Input -->
+    <EditText
         android:id="@+id/password_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/outlined_rounded_rect"
         android:hint="Password"
         android:inputType="textPassword"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="380dp"
-        android:padding="16dp"/>
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username_input" />
 
     <!-- Sign Up Button -->
-
     <EditText
         android:id="@+id/password_input_confirmation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="460dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/outlined_rounded_rect"
         android:hint="Confirm Password"
         android:inputType="textPassword"
-        android:padding="16dp" />
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password_input" />
 
     <Button
         android:id="@+id/sign_up_button"
         android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="530dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/rounded_rect"
         android:padding="12dp"
-        android:text="sign up" />
+        android:text="Sign Up"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password_input_confirmation" />
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

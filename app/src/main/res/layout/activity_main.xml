@@ -79,16 +79,17 @@
 
                 <TextView
                     android:id="@+id/pet_name_pts"
-                    android:layout_width="106dp"
+                    android:layout_width="150dp"
                     android:layout_height="37dp"
                     android:paddingStart="40dp"
                     android:text=""
-                    android:textSize="14sp"
+                    android:textSize="11sp"
                     app:layout_constraintBottom_toBottomOf="@+id/rect_pts"
                     app:layout_constraintEnd_toStartOf="@+id/pet_pts_pts"
+                    app:layout_constraintHorizontal_bias="0.204"
                     app:layout_constraintStart_toEndOf="@+id/pet_pts"
                     app:layout_constraintTop_toTopOf="@+id/rect_pts"
-                    app:layout_constraintVertical_bias="0.483" />
+                    app:layout_constraintVertical_bias="0.506" />
 
                 <TextView
                     android:id="@+id/pet_pts_pts"
@@ -97,13 +98,13 @@
                     android:paddingStart="40dp"
                     android:paddingEnd="10dp"
                     android:text=""
-                    android:textSize="14sp"
+                    android:textSize="11dp"
                     app:layout_constraintBottom_toBottomOf="@+id/rect_pts"
                     app:layout_constraintEnd_toEndOf="@+id/rect_pts"
-                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintHorizontal_bias="0.308"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.516" />
+                    app:layout_constraintVertical_bias="0.657" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </RelativeLayout>
 
