@@ -29,7 +29,7 @@ public class GetStartedSignup extends Fragment {
     private FragmentGetStartedSignupBinding binding;
     private SharedPreferences sharedPrefs;
     private Button loginButton, signUpButton;
-    private EditText usernameInput, passwordInput;
+    private EditText usernameInput, passwordInput, passwordInputConfirmation;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -41,6 +41,7 @@ public class GetStartedSignup extends Fragment {
         signUpButton = binding.signUpButton;
         usernameInput = binding.usernameInput;
         passwordInput = binding.passwordInput;
+        passwordInputConfirmation = binding.passwordInputConfirmation;
 
 
 
@@ -66,9 +67,11 @@ public class GetStartedSignup extends Fragment {
 
                 String username = usernameInput.getText().toString();
                 String password = passwordInput.getText().toString();
-
-                if (!username.isEmpty() && !password.isEmpty()) {
-                    if (!allUsernames.contains(username)) {
+                String password_confirmation = passwordInputConfirmation.getText().toString();
+                if (!username.isEmpty() && !password.isEmpty() && !password_confirmation.isEmpty()) {
+                    if (!password.equals(password_confirmation)) {
+                        Toast.makeText(getActivity(), "Password confirmation needs to be the same with password!", Toast.LENGTH_SHORT).show();
+                    }else if (!allUsernames.contains(username)) {
                         Map<String, Object> newUser = new HashMap<>(allEntry);
                         newUser.put(username, password);
                         SharedPreferences myPrefs = getActivity().getApplicationContext().getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
