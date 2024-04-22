@@ -15,6 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     public Random randy = new Random();
     private Toolbar toolbar;
     private TextView toolbarText;
-    private RelativeLayout points;
+    private ConstraintLayout points;
     private TextView pts_name;
     private TextView pts_pts;
     private ImageView pet_pts;
@@ -80,8 +81,13 @@ public class MainActivity extends AppCompatActivity {
 //        completedTasks.add(new Task("More HW", "Finish the More homework", 10, "Study"));
 //        completedTasks.add(new Task("Even More HW", "Finish the Even homework", 10, "Study"));
         current = null;
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+        toolbar = binding.toolbar;
+        toolbarText = binding.toolbarTitle;
+
+
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().hide();
         setContentView(binding.getRoot());
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -98,8 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        toolbar = binding.toolbar;
-        toolbarText = binding.toolbarTitle;
+
         points = binding.ptBar;
         pts_name = binding.petNamePts;
         pts_pts = binding.petPtsPts;
@@ -156,13 +161,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        setSupportActionBar(toolbar);
         int pet_user = myPrefs.getInt("pet_id", -1);
         if (pet_user != -1) {
             pet_pts.setImageResource(pet_user);
         }
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+//        getSupportActionBar().setDisplayShowTitleEnabled(false);
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             // Update Toolbar title based on the current fragment
             switch (destination.getId()) {

@@ -9,15 +9,19 @@
 
     <EditText
         android:id="@+id/username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:paddingStart="16dp"
         android:inputType="textEmailAddress"
+        android:background="@drawable/outlined_rounded_rect"
         android:hint="Username" />
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:paddingStart="16dp"
+        android:background="@drawable/outlined_rounded_rect"
         android:inputType="textPassword"
         android:hint="Password" />
 
@@ -25,13 +29,15 @@
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login" />
+        android:background="@drawable/rounded_rect"
+        android:text="@string/login_loginxml" />
 
     <Button
         android:id="@+id/signUpButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign Up"
+        android:text="@string/sign_up_loginxml"
+        android:background="@drawable/rounded_rect"
         android:layout_marginTop="16dp"/>
 
 </LinearLayout>

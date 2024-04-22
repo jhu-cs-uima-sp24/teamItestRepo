@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -46,56 +47,64 @@
                 android:textStyle="bold"
                 />
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/pt_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_toEndOf="@id/toolbar_image"
+                android:layout_centerVertical="true"
                 android:layout_marginStart="8dp"
-                android:layout_centerVertical="true">
+                android:layout_toEndOf="@id/toolbar_image">
 
                 <ImageView
                     android:id="@+id/rect_pts"
                     android:layout_width="225dp"
                     android:layout_height="50dp"
-                    android:background="@drawable/outlined_rounded_rect"
-                    android:layout_centerVertical="true"
                     android:layout_marginEnd="5dp"
+                    android:background="@drawable/outlined_rounded_rect"
                     android:contentDescription="@string/pet_bar_holder" />
 
                 <ImageView
                     android:id="@+id/pet_pts"
-                    android:contentDescription="@string/selected_image"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="start"
-                    android:scaleType="fitCenter"
+                    android:layout_width="38dp"
+                    android:layout_height="32dp"
                     android:adjustViewBounds="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignStart="@id/rect_pts" />
+                    android:contentDescription="@string/selected_image"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintBottom_toBottomOf="@+id/rect_pts"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.085"
+                    app:layout_constraintStart_toStartOf="@+id/rect_pts"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.333" />
 
                 <TextView
                     android:id="@+id/pet_name_pts"
-                    android:layout_width="160dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="106dp"
+                    android:layout_height="37dp"
+                    android:paddingStart="40dp"
                     android:text=""
-                    android:layout_centerVertical="true"
-                    android:layout_alignStart="@id/pet_pts"
                     android:textSize="14sp"
-                    android:paddingStart="40dp" />
+                    app:layout_constraintBottom_toBottomOf="@+id/rect_pts"
+                    app:layout_constraintEnd_toStartOf="@+id/pet_pts_pts"
+                    app:layout_constraintStart_toEndOf="@+id/pet_pts"
+                    app:layout_constraintTop_toTopOf="@+id/rect_pts"
+                    app:layout_constraintVertical_bias="0.483" />
+
                 <TextView
                     android:id="@+id/pet_pts_pts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
-                    android:layout_alignEnd="@id/rect_pts"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="end"
+                    android:paddingStart="40dp"
                     android:paddingEnd="10dp"
+                    android:text=""
                     android:textSize="14sp"
-                    android:paddingStart="40dp" />
-            </RelativeLayout>
+                    app:layout_constraintBottom_toBottomOf="@+id/rect_pts"
+                    app:layout_constraintEnd_toEndOf="@+id/rect_pts"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.516" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
