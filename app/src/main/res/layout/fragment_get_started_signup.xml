@@ -68,12 +68,21 @@
         android:layout_marginTop="380dp"
         android:padding="16dp"/>
 
-    <!-- Login Button -->
-
     <!-- Sign Up Button -->
+
+    <EditText
+        android:id="@+id/password_input_confirmation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="460dp"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        android:padding="16dp" />
+
     <Button
         android:id="@+id/sign_up_button"
-        android:layout_width="match_parent"
+        android:layout_width="115dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="530dp"
