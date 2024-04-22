@@ -38,7 +38,7 @@ public class CustomPieChart extends View {
     int studyPercentage = 0;
     int workoutPercentage = 0;
     int gamingPercentage = 0;
-    private int[] colors = {0xFFFCB2DA, 0xFFBCF1D1, 0xFFC0D6F9, 0xFFF8DE9C, 0xFFF8DE9C}; // Red, Green, Blue, Yellow
+    private int[] colors = {0xFFFCB2DA, 0xFFBCF1D1, 0xFFC0D6F9, 0xFFF8DE9C, 0xD3D3D3}; // Red, Green, Blue, Yellow
     //#FCB2DA
 
     public CustomPieChart(Context context) {
@@ -318,7 +318,7 @@ public class CustomPieChart extends View {
 
         if(total != 0) {
 
-            slicePercentages = new float[]{(float) breakPercentage * 100 / total, (float) studyPercentage * 100 / total, (float) workoutPercentage * 100 / total, (float) gamingPercentage * 100 / total, 0};
+            slicePercentages = new float[]{(float) breakPercentage * 100 / total, (float) studyPercentage * 100 / total, (float) gamingPercentage * 100 / total, (float) workoutPercentage * 100 / total, 0};
             Log.w("TAG", "break: " + breakPercentage * 100 / total + " study: " + studyPercentage * 100 / total + " workout: " + workoutPercentage * 100 / total + " gaming: " + gamingPercentage * 100 / total);
         }
         else{
