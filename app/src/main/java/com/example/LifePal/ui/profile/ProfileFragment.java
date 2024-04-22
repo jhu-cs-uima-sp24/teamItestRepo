@@ -113,8 +113,8 @@ public class ProfileFragment extends Fragment {
             pet_points_next_level.setText(next_happ);
         }
         TextView usernameText = myview.findViewById(R.id.profile_title_text_view);
-        usernameText.setText(usernameReal);
-        user_name.setText(usernameReal);
+        usernameText.setText(username);
+        user_name.setText(username);
 
         db.collection("users").document(username).get().addOnSuccessListener(documentSnapshot -> {
             pet_name.setText(documentSnapshot.getString("pet_name"));
