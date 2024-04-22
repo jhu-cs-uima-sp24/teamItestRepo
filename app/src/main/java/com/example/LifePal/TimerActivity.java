@@ -135,7 +135,7 @@ public class TimerActivity extends AppCompatActivity {
                                 "finished",true,
                                 "year", currentTime.get(Calendar.YEAR),
                                 "month", currentTime.get(Calendar.MONTH),
-                                "day", currentTime.get(Calendar.DATE),
+                                "day", currentTime.get(Calendar.DAY_OF_MONTH),
                                 "hour", currentTime.get(Calendar.HOUR),
                                 "minute", currentTime.get(Calendar.MINUTE),
                                 "second", currentTime.get(Calendar.SECOND)
@@ -255,7 +255,7 @@ public class TimerActivity extends AppCompatActivity {
                                 "finished",true,
                                 "year", currentTime.get(Calendar.YEAR),
                                 "month", currentTime.get(Calendar.MONTH),
-                                "day", currentTime.get(Calendar.DATE),
+                                "day", currentTime.get(Calendar.DAY_OF_MONTH),
                                 "hour", currentTime.get(Calendar.HOUR),
                                 "minute", currentTime.get(Calendar.MINUTE),
                                 "second", currentTime.get(Calendar.SECOND)

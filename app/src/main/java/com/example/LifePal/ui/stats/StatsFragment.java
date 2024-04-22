@@ -74,6 +74,14 @@ public class StatsFragment extends Fragment {
         });
 
 
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("statsMode", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Calendar calendar = Calendar.getInstance();
+        editor.putInt("yearVal", calendar.get(Calendar.YEAR));
+        editor.putInt("monthVal", calendar.get(Calendar.MONTH));
+        editor.putInt("dayVal", calendar.get(Calendar.DAY_OF_MONTH));
+        editor.apply();
+
 
 //        Button button = getActivity().findViewById(R.id.dateButton);
 //        button.setOnClickListener(v -> showTimePickerDialog());
