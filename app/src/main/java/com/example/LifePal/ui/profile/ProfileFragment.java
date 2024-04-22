@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -48,6 +49,7 @@ public class ProfileFragment extends Fragment {
 
     private SharedPreferences myPrefs;
     private Handler handler = new Handler();
+    private ProgressBar petProgress;
 
 
     @Override
@@ -83,6 +85,7 @@ public class ProfileFragment extends Fragment {
 
         TextView name = myview.findViewById(R.id.profile_title_text_view);
         EditText pet_name = pet_profile_dropdown.findViewById(R.id.pet_name_text_view);
+        petProgress = pet_profile_dropdown.findViewById(R.id.PetProgressBar);
         TextView pet_level = pet_profile_dropdown.findViewById(R.id.level_text_view);
         TextView current_points = pet_profile_dropdown.findViewById(R.id.current_happniess_pet_text_view);
         TextView next_level = pet_profile_dropdown.findViewById(R.id.points_till_next_level_text_view);
@@ -101,6 +104,8 @@ public class ProfileFragment extends Fragment {
             pet_name_dropdown.setText(petname);
             String curr_happ = "Current Happniess Points: " + String.valueOf(points) + " pts";
             pet_points_dropdown.setText(curr_happ);
+            float percentage = ((float)points/(float)next_level_points) * 100;
+            petProgress.setProgress((int) percentage);
             String next_happ = String.valueOf(next_level_points - points) + " pts until the next evolution";
             pet_points_next_level.setText(next_happ);
         }
