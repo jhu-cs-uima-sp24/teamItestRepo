@@ -3,6 +3,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -27,18 +28,19 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.w("LoginActivity", "onCreate: " + "called");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
 
-
-        SharedPreferences sharedPreferences = getSharedPreferences("statsMode", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Calendar calendar = Calendar.getInstance();
-        editor.putInt("yearVal", calendar.get(Calendar.YEAR));
-        editor.putInt("monthVal", calendar.get(Calendar.MONTH));
-        editor.putInt("dayVal", calendar.get(Calendar.DAY_OF_MONTH));
-        editor.apply();
+//        SharedPreferences sharedPreferences = getSharedPreferences("statsMode", Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        Calendar calendar = Calendar.getInstance();
+//        editor.putInt("yearVal", calendar.get(Calendar.YEAR));
+//        editor.putInt("monthVal", calendar.get(Calendar.MONTH));
+//        editor.putInt("dayVal", calendar.get(Calendar.DAY_OF_MONTH));
+//        Log.w("LoginActivity", "onCreate: " + calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH) + " " + calendar.get(Calendar.DAY_OF_MONTH));
+//        editor.apply();
 
 
 
@@ -68,6 +70,14 @@ public class LoginActivity extends AppCompatActivity {
                                 if (document != null && document.exists()) {
                                     String storedPassword = document.getString(name);
                                     if (password.equals(storedPassword)) {
+//                                        SharedPreferences sharedPreferences = getSharedPreferences("statsMode", Context.MODE_PRIVATE);
+//                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+//                                        Calendar calendar = Calendar.getInstance();
+//                                        editor.putInt("yearVal", calendar.get(Calendar.YEAR));
+//                                        editor.putInt("monthVal", calendar.get(Calendar.MONTH));
+//                                        editor.putInt("dayVal", calendar.get(Calendar.DAY_OF_MONTH));
+//                                        Log.w("LoginActivity", "onCreate: " + calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH) + " " + calendar.get(Calendar.DAY_OF_MONTH));
+//                                        editor.apply();
                                         Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                                         peditor.putString("username", name);
                                         peditor.apply();

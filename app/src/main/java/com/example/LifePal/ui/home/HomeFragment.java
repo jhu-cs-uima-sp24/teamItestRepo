@@ -38,6 +38,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,6 +75,18 @@ public class HomeFragment extends Fragment {
 
         db = FirebaseFirestore.getInstance();
 
+
+
+
+
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("statsMode", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Calendar calendar = Calendar.getInstance();
+        editor.putInt("yearVal", calendar.get(Calendar.YEAR));
+        editor.putInt("monthVal", calendar.get(Calendar.MONTH));
+        editor.putInt("dayVal", calendar.get(Calendar.DAY_OF_MONTH));
+        Log.w("LoginActivity", "onCreate: " + calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH) + " " + calendar.get(Calendar.DAY_OF_MONTH));
+        editor.apply();
 
 
         myList = (ListView) myview.findViewById(R.id.toDoList);

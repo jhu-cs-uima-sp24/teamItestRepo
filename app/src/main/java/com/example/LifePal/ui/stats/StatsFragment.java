@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -183,7 +184,10 @@ public class StatsFragment extends Fragment {
                 ft.setReorderingAllowed(false);
             }
             ft.detach(this).attach(this).commit();
-            startActivity(requireActivity().getIntent());
+            Intent restartIntent = requireActivity().getIntent();
+            String str = "stats";
+            restartIntent.putExtra(str, "stats");
+            startActivity(restartIntent);
             requireActivity().finish();
         }
 

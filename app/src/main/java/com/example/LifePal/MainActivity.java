@@ -11,11 +11,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.LifePal.ui.stats.StatsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -55,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
         Bundle extras = getIntent().getExtras();
         Context context = getApplicationContext();
         SharedPreferences myPrefs = context.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
@@ -64,39 +69,31 @@ public class MainActivity extends AppCompatActivity {
 
         tasks = new ArrayList<Task>();
         completedTasks = new ArrayList<Task>();
-//        tasks.add(new Task("UIMA HW", "Finish the UIMA homework", 10, "Study"));
-//        tasks.add(new Task("Other HW", "Finish the Other homework", 10, "Study"));
-//        tasks.add(new Task("UIMA HW", "Finish the UIMA homework", 10, "Study"));
-//        tasks.add(new Task("Other HW", "Finish the Other homework", 10, "Study"));
-//        tasks.add(new Task("UIMA HW", "Finish the UIMA homework", 10, "Study"));
-//        tasks.add(new Task("Other HW", "Finish the Other homework", 10, "Study"));
-//        tasks.add(new Task("UIMA HW", "Finish the UIMA homework", 10, "Study"));
-//        tasks.add(new Task("Other HW", "Finish the Other homework", 10, "Study"));
         taskAdapter = new TaskAdapter(this, R.layout.roomlayout, tasks);
         completedTaskAdapter = new TaskAdapter(this, R.layout.roomlayout, completedTasks);
-//        completedTasks.add(new Task("More HW", "Finish the More homework", 10, "Study"));
-//        completedTasks.add(new Task("Even More HW", "Finish the Even homework", 10, "Study"));
-//        completedTasks.add(new Task("More HW", "Finish the More homework", 10, "Study"));
-//        completedTasks.add(new Task("Even More HW", "Finish the Even homework", 10, "Study"));
-//        completedTasks.add(new Task("More HW", "Finish the More homework", 10, "Study"));
-//        completedTasks.add(new Task("Even More HW", "Finish the Even homework", 10, "Study"));
         current = null;
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         toolbar = binding.toolbar;
         toolbarText = binding.toolbarTitle;
 
 
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().hide();
         setContentView(binding.getRoot());
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_profile, R.id.navigation_home)
+                R.id.navigation_profile, R.id.navigation_home, R.id.navigation_stats)
                 .build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+        String Str = "stats";
+        if (getIntent().hasExtra(Str)) {
+            Log.w("MainActivity", "onCreate: " + "stats");
+            navController.navigate(R.id.navigation_stats);
+        }
+
+//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
 
         String name = myPrefs.getString("user_name", "Owner");
 
@@ -109,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
         pts_name = binding.petNamePts;
         pts_pts = binding.petPtsPts;
         pet_pts = binding.petPts;
+
+
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String username = myPrefs.getString("username","");
@@ -165,6 +164,17 @@ public class MainActivity extends AppCompatActivity {
         if (pet_user != -1) {
             pet_pts.setImageResource(pet_user);
         }
+
+
+//        String Str = "stats";
+//        if (getIntent().hasExtra(Str)) {
+//            Log.w("MainActivity", "onCreate: " + "stats");
+//            toolbarText.setText("Analytics");
+//            points.setVisibility(View.INVISIBLE);
+//            toolbarText.setVisibility(View.VISIBLE);
+//            return;
+//        }
+
 //        getSupportActionBar().setDisplayShowTitleEnabled(false);
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             // Update Toolbar title based on the current fragment
@@ -189,7 +199,11 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         });
+
+
+
     }
+
 //
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
