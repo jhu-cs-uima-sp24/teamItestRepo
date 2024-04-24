@@ -79,14 +79,14 @@ public class HomeFragment extends Fragment {
 
 
 
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("statsMode", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Calendar calendar = Calendar.getInstance();
-        editor.putInt("yearVal", calendar.get(Calendar.YEAR));
-        editor.putInt("monthVal", calendar.get(Calendar.MONTH));
-        editor.putInt("dayVal", calendar.get(Calendar.DAY_OF_MONTH));
-        Log.w("LoginActivity", "onCreate: " + calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH) + " " + calendar.get(Calendar.DAY_OF_MONTH));
-        editor.apply();
+//        SharedPreferences sharedPreferences = getContext().getSharedPreferences("statsMode", Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        Calendar calendar = Calendar.getInstance();
+//        editor.putInt("yearVal", calendar.get(Calendar.YEAR));
+//        editor.putInt("monthVal", calendar.get(Calendar.MONTH));
+//        editor.putInt("dayVal", calendar.get(Calendar.DAY_OF_MONTH));
+//        Log.w("LoginActivity", "onCreate: " + calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH) + " " + calendar.get(Calendar.DAY_OF_MONTH));
+//        editor.apply();
 
 
         myList = (ListView) myview.findViewById(R.id.toDoList);

@@ -31,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Map;
 import java.util.Random;
 
@@ -90,6 +91,17 @@ public class MainActivity extends AppCompatActivity {
         if (getIntent().hasExtra(Str)) {
             Log.w("MainActivity", "onCreate: " + "stats");
             navController.navigate(R.id.navigation_stats);
+        }
+        else{
+            SharedPreferences sharedPreferences = getSharedPreferences("statsMode", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            Calendar calendar = Calendar.getInstance();
+            editor.putInt("yearVal", calendar.get(Calendar.YEAR));
+            editor.putInt("monthVal", calendar.get(Calendar.MONTH));
+            editor.putInt("dayVal", calendar.get(Calendar.DAY_OF_MONTH));
+            Log.w("LoginActivity", "onCreate: " + calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH) + " " + calendar.get(Calendar.DAY_OF_MONTH));
+            editor.apply();
+
         }
 
 //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
