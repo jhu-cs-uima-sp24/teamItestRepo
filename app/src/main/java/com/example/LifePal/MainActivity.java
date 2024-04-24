@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
             editor.putInt("yearVal", calendar.get(Calendar.YEAR));
             editor.putInt("monthVal", calendar.get(Calendar.MONTH));
             editor.putInt("dayVal", calendar.get(Calendar.DAY_OF_MONTH));
+            editor.putString("mode", "day");
             Log.w("LoginActivity", "onCreate: " + calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH) + " " + calendar.get(Calendar.DAY_OF_MONTH));
             editor.apply();
 

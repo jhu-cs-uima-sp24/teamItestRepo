@@ -68,7 +68,7 @@ public class StatsFragment extends Fragment {
         int dd = sharedPreferences.getInt("dayVal", calendar.get(Calendar.DAY_OF_MONTH));
 
 
-        button.setText("Date: " + (mm + 1) + "/" + dd + "/" + yy);
+        button.setText("Start Date: " + (mm + 1) + "/" + dd + "/" + yy);
 
         DatePickerFragment currentFragment = new DatePickerFragment();
         currentFragment.setDate(yy, mm, dd);
@@ -95,18 +95,52 @@ public class StatsFragment extends Fragment {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Handle the button click
+                // For example, show a DatePickerDialog
+                SharedPreferences sharedPreferences = requireContext().getSharedPreferences("statsMode", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("mode", "day");
+                editor.apply();
+                Intent restartIntent = requireActivity().getIntent();
+                String str = "stats";
+                restartIntent.putExtra(str, "stats");
+                startActivity(restartIntent);
+                requireActivity().finish();
+            }
+        });
 
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                String currentDate = Calendar.DATE + "," + Calendar.MONTH + "," + Calendar.YEAR+",";
-                String time = Calendar.HOUR + ":" + Calendar.MINUTE + ":" + Calendar.SECOND;
-                String tagid = currentDate + " " + time;
-//                db.collection("tags").document("study").update(tagid, 20);
-//                db.collection("tags").document("workout").update(tagid, 30);
-//                db.collection("tags").document("gaming").update(tagid, 40);
-//                db.collection("tags").document("break").update(tagid, 10);
 
+        Button button3 = (Button) root.findViewById(R.id.week_button);
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                SharedPreferences sharedPreferences = requireContext().getSharedPreferences("statsMode", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("mode", "week");
+                editor.apply();
+                Intent restartIntent = requireActivity().getIntent();
+                String str = "stats";
+                restartIntent.putExtra(str, "stats");
+                startActivity(restartIntent);
+                requireActivity().finish();
+            }
+        });
 
+        Button button4 = (Button) root.findViewById(R.id.month_button);
+        button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SharedPreferences sharedPreferences = requireContext().getSharedPreferences("statsMode", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("mode", "month");
+                editor.apply();
+                Intent restartIntent = requireActivity().getIntent();
+                String str = "stats";
+                restartIntent.putExtra(str, "stats");
+                startActivity(restartIntent);
+                requireActivity().finish();
             }
         });
 
