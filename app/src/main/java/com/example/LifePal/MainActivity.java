@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_profile, R.id.navigation_home, R.id.navigation_stats)
+                R.id.navigation_home, R.id.navigation_stats, R.id.navigation_profile)
                 .build();
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         String Str = "stats";
         if (getIntent().hasExtra(Str)) {
             Log.w("MainActivity", "onCreate: " + "stats");
-            navController.navigate(R.id.navigation_stats);
+            navView.post(() -> navController.navigate(R.id.navigation_stats));
         }
         else{
             SharedPreferences sharedPreferences = getSharedPreferences("statsMode", Context.MODE_PRIVATE);
@@ -102,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
             editor.putString("mode", "day");
             Log.w("LoginActivity", "onCreate: " + calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH) + " " + calendar.get(Calendar.DAY_OF_MONTH));
             editor.apply();
-
         }
 
 //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
