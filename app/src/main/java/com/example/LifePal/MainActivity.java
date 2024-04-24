@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -87,10 +88,22 @@ public class MainActivity extends AppCompatActivity {
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+        navController.navigate(R.id.navigation_stats);
+        Log.e("HomeId", String.valueOf(R.id.navigation_home));
+        Log.e("StatsId", String.valueOf(R.id.navigation_stats));
+        Log.e("ProfileId", String.valueOf(R.id.navigation_profile));
+
         String Str = "stats";
         if (getIntent().hasExtra(Str)) {
-            Log.w("MainActivity", "onCreate: " + "stats");
-            navView.post(() -> navController.navigate(R.id.navigation_stats));
+//            Log.w("MainActivity", "onCreate: " + "stats");
+//            navView.post(() -> {
+//                navController.navigate(R.id.navigation_stats);
+//
+//                new Handler().postDelayed(() -> {
+//                    // Access destination here (might not be reliable)
+//                }, 100); // 100 milliseconds delay
+//            });
         }
         else{
             SharedPreferences sharedPreferences = getSharedPreferences("statsMode", Context.MODE_PRIVATE);
@@ -188,8 +201,15 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
 //        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        navController.navigate(R.id.navigation_home);
+        Log.e("HomeId", String.valueOf(R.id.navigation_home));
+        Log.e("StatsId", String.valueOf(R.id.navigation_stats));
+        Log.e("ProfileId", String.valueOf(R.id.navigation_profile));
+
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             // Update Toolbar title based on the current fragment
+
+            Log.e("Destination", String.valueOf(destination.getId()));
             switch (destination.getId()) {
                 case R.id.navigation_profile:
                     toolbarText.setText("Profile");

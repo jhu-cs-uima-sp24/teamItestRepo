@@ -218,11 +218,11 @@ public class StatsFragment extends Fragment {
                 ft.setReorderingAllowed(false);
             }
             ft.detach(this).attach(this).commit();
-            Intent restartIntent = requireActivity().getIntent();
+            Intent restartIntent = getActivity().getIntent();
             String str = "stats";
             restartIntent.putExtra(str, "stats");
             startActivity(restartIntent);
-            requireActivity().finish();
+            getActivity().finish();
         }
 
         public void setDate(int year, int month, int day) {
