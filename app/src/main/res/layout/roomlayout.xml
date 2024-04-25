@@ -12,15 +12,15 @@
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="94dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
         android:backgroundTint="@color/primary_pink"
         card_view:cardCornerRadius="10dp"
         card_view:cardElevation="10dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view2"
-            android:layout_width="387dp"
+            android:layout_width="match_parent"
             android:layout_height="84dp"
             android:layout_gravity="center"
             card_view:cardCornerRadius="10dp">

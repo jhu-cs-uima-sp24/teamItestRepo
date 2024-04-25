@@ -109,7 +109,7 @@ public class GetStarted extends Fragment {
                     startActivity(intent);
                 } else if (!name.isEmpty() && !password.isEmpty()) {
                     Toast.makeText(getActivity(), "Invalid username or password", Toast.LENGTH_SHORT).show();
-                    Log.d("tag", "invalid");
+                    Log.d("tag", allEntry.toString());
                 } else {
                     Toast.makeText(getActivity(), "Please enter email and password", Toast.LENGTH_SHORT).show();
                     Log.d("tag", "empty");
