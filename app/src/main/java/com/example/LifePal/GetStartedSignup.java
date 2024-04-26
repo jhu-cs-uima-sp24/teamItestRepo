@@ -28,7 +28,7 @@ public class GetStartedSignup extends Fragment {
 
     private FragmentGetStartedSignupBinding binding;
     private SharedPreferences sharedPrefs;
-    private Button loginButton, signUpButton;
+    private Button loginButton, signUpButton, backButton;
     private EditText usernameInput, passwordInput, passwordInputConfirmation;
 
 
@@ -39,6 +39,7 @@ public class GetStartedSignup extends Fragment {
         View root = binding.getRoot();
         sharedPrefs = getActivity().getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
         signUpButton = binding.signUpButton;
+        backButton = binding.signUpBackButton;
         usernameInput = binding.usernameInput;
         passwordInput = binding.passwordInput;
         passwordInputConfirmation = binding.passwordInputConfirmation;
@@ -58,6 +59,20 @@ public class GetStartedSignup extends Fragment {
                         allEntry.put(s, entry.get(s));
                     }
                 });
+
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new GetStarted();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.get_started, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                root.setVisibility(View.GONE);
+            }
+        });
 
 
         signUpButton.setOnClickListener(new View.OnClickListener() {

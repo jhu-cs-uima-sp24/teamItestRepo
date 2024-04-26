@@ -108,6 +108,7 @@ public class ProfileFragment extends Fragment {
             String curr_happ = "Current Happniess Points: " + String.valueOf(points) + " pts";
             pet_points_dropdown.setText(curr_happ);
             float percentage = ((float)points/(float)next_level_points) * 100;
+
             petProgress.setProgress((int) percentage);
             String next_happ = String.valueOf(next_level_points - points) + " pts until the next evolution";
             pet_points_next_level.setText(next_happ);

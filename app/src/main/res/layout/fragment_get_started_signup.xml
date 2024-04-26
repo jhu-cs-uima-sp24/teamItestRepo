@@ -106,12 +106,26 @@
         android:id="@+id/sign_up_button"
         android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:background="@drawable/rounded_rect"
         android:padding="12dp"
         android:text="Sign Up"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_input_confirmation" />
+        app:layout_constraintTop_toBottomOf="@+id/password_input" />
+
+
+    <Button
+        android:id="@+id/sign_up_back_button"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_rect"
+        android:padding="12dp"
+        android:text="Back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/sign_up_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password_input" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
