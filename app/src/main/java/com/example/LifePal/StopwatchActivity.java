@@ -53,7 +53,9 @@ public class StopwatchActivity extends AppCompatActivity {
     private SharedPreferences myPrefs;
     private String username;
     private double prev_points;
+    private int original_points;
     private int points;
+    private int pet_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,7 @@ public class StopwatchActivity extends AppCompatActivity {
         stopwatchCurrentlyPause.setVisibility(View.VISIBLE);
         fullSeconds = myPrefs.getInt("seconds",0);
         prev_points = fullSeconds;
+
 
         int hour = fullSeconds / 3600;
         int minute = (fullSeconds % 3600) / 60;
@@ -270,6 +273,10 @@ public class StopwatchActivity extends AppCompatActivity {
                             if (userData != null) {
                                 if (userData.containsKey("current_points")) {
                                     points = Math.toIntExact((Long) userData.get("current_points"));
+                                    original_points = points;
+                                }
+                                if (userData.containsKey("pet_id")) {
+                                    pet_id = Math.toIntExact((Long)  userData.get("pet_id"));
                                 }
                             }
                         }
@@ -289,7 +296,34 @@ public class StopwatchActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        // Current points updated successfully
+                        if (original_points < 1000 && points >= 1000) {
+                            pet_id++;
+                            db.collection("users").document(username).update("pet_id", pet_id).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    //check
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // Failed to update current points
+                                }
+                            });
+                        }
+                        if (original_points < 2000 && points >= 2000) {
+                            pet_id++;
+                            db.collection("users").document(username).update("pet_id", pet_id).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    //check
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // Failed to update current points
+                                }
+                            });
+                        }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

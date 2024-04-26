@@ -52,9 +52,13 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout points;
     private TextView pts_name;
     private TextView pts_pts;
-    private ImageView pet_pts;
+    private ImageView pet_pts_pic;
+    private boolean level1 = false;
 
-    private int pet_id = 2131230854;
+    private boolean level2 = false;
+
+
+    private int pet_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         Context context = getApplicationContext();
         SharedPreferences myPrefs = context.getSharedPreferences(getString(R.string.storage), Context.MODE_PRIVATE);
+        pet_id = myPrefs.getInt("pet_id", -1);
         SharedPreferences.Editor peditor = myPrefs.edit();
         peditor.putBoolean("inRoom",false);
         peditor.apply();
@@ -130,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         points = binding.ptBar;
         pts_name = binding.petNamePts;
         pts_pts = binding.petPtsPts;
-        pet_pts = binding.petPts;
+        pet_pts_pic = binding.petPts;
 
 
 
@@ -158,18 +163,8 @@ public class MainActivity extends AppCompatActivity {
                         peditor.putString("pet_type", (String) entry.get("pet_type"));
                         peditor.putString("user_goal", (String) entry.get("user_goal"));
                         peditor.putInt("current_points", Math.toIntExact((Long) entry.get("current_points")));
-                        peditor.putInt("pet_id", pet_id + 1);
+                        peditor.putInt("pet_id", Math.toIntExact((Long) entry.get("pet_id")));
 
-                        if(Math.toIntExact((Long) entry.get("current_points")) >= 1000 &&  Math.toIntExact((Long) entry.get("current_points")) < 2000) {
-                            db.collection("users").document(username).update("pet_id", pet_id + 1);
-                            pet_pts.setImageResource(pet_id + 1);
-                        } else if (Math.toIntExact((Long) entry.get("current_points")) >= 2000 && Math.toIntExact((Long) entry.get("current_points")) < 3000) {
-                            db.collection("users").document(username).update("pet_id", pet_id + 2);
-                            pet_pts.setImageResource(pet_id + 2);
-                        } else {
-                            db.collection("users").document(username).update("pet_id", pet_id );
-                            pet_pts.setImageResource(pet_id);
-                        }
                         //  peditor.putInt("pet_id", Math.toIntExact((Long) entry.get("pet_id")));
                         peditor.putInt("next_level", Math.toIntExact((Long) entry.get("next_level")));
                         peditor.putInt("pet_level", Math.toIntExact((Long) entry.get("pet_level")));
@@ -178,6 +173,10 @@ public class MainActivity extends AppCompatActivity {
                         String pet_pts = Integer.toString(myPrefs.getInt("current_points", 0));
                         pts_name.setText("Current Pal: " + name_pts);
                         pts_pts.setText(pet_pts+" pts");
+                        int pet_user = myPrefs.getInt("pet_id", -1);
+                        if (pet_user != -1) {
+                            pet_pts_pic.setImageResource(pet_user);
+                        }
 
                     }
                 } else {
@@ -185,10 +184,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        int pet_user = myPrefs.getInt("pet_id", -1);
-        if (pet_user != -1) {
-            pet_pts.setImageResource(pet_user);
-        }
+
 
 
 //        String Str = "stats";

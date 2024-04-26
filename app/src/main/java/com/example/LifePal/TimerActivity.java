@@ -62,6 +62,8 @@ public class TimerActivity extends AppCompatActivity {
     private double progress;
     private int points;
     private double accumalated_points = 0;
+    private int original_points;
+    private int pet_id;
 
     private Context cntx;
     private SharedPreferences myPrefs;
@@ -419,7 +421,11 @@ public class TimerActivity extends AppCompatActivity {
                             if (userData != null) {
                                 if (userData.containsKey("current_points")) {
                                     points = Math.toIntExact((Long) userData.get("current_points"));
+                                    original_points = points;
                                     //Log.d("read points", Integer.toString(points));
+                                }
+                                if (userData.containsKey("pet_id")) {
+                                    pet_id = Math.toIntExact((Long)  userData.get("pet_id"));
                                 }
                             }
                         }
@@ -440,7 +446,34 @@ public class TimerActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        // Current points updated successfully
+                        if (original_points < 1000 && points >= 1000) {
+                            pet_id++;
+                            db.collection("users").document(username).update("pet_id", pet_id).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    //check
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // Failed to update current points
+                                }
+                            });
+                        }
+                        if (original_points < 2000 && points >= 2000) {
+                            pet_id++;
+                            db.collection("users").document(username).update("pet_id", pet_id).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    //check
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // Failed to update current points
+                                }
+                            });
+                        }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
