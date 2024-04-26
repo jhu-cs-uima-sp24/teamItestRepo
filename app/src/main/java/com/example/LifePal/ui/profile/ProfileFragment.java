@@ -4,7 +4,6 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -22,24 +21,16 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.example.LifePal.GetStarted;
 import com.example.LifePal.MainActivity;
 
 import com.example.LifePal.OpeningActivity;
-import com.example.LifePal.PetName;
 import com.example.LifePal.R;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.Map;
 
 public class ProfileFragment extends Fragment {
 
@@ -82,7 +73,7 @@ public class ProfileFragment extends Fragment {
         ImageView pet_pic_dropdown = pet_profile_dropdown.findViewById(R.id.profile_pet_dropdown_image);
         EditText pet_name_dropdown = pet_profile_dropdown.findViewById(R.id.pet_name_text_view);
         TextView pet_points_dropdown = pet_profile_dropdown.findViewById(R.id.current_happniess_pet_text_view);
-        TextView pet_points_next_level = pet_profile_dropdown.findViewById(R.id.points_till_next_level_text_view);
+        TextView pet_points_next_level = pet_profile_dropdown.findViewById(R.id.pet_point_until_next_upgrade);
         View pet_tags_dropdown = LayoutInflater.from(cntx).inflate(R.layout.fragment_tags_profile_dropdown, null, false);
         View pet_personal_information_dropdown = LayoutInflater.from(cntx).inflate(R.layout.fragment_profile_personal_information_dropdown, null, false);
         TextView name = myview.findViewById(R.id.profile_title_text_view);
@@ -90,7 +81,7 @@ public class ProfileFragment extends Fragment {
         petProgress = pet_profile_dropdown.findViewById(R.id.PetProgressBar);
         TextView pet_level = pet_profile_dropdown.findViewById(R.id.level_text_view);
         TextView current_points = pet_profile_dropdown.findViewById(R.id.current_happniess_pet_text_view);
-        TextView next_level = pet_profile_dropdown.findViewById(R.id.points_till_next_level_text_view);
+        TextView next_level = pet_profile_dropdown.findViewById(R.id.pet_point_until_next_upgrade);
         EditText user_name = pet_personal_information_dropdown.findViewById(R.id.user_name_edit_text_view);
         EditText goal = pet_personal_information_dropdown.findViewById(R.id.current_goal_text_view);
         ImageView pet_pic_dropdown_picture = pet_profile_dropdown.findViewById(R.id.profile_pet_dropdown_image);
