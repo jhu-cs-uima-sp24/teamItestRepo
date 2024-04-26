@@ -38,6 +38,11 @@ import java.util.Calendar;
 public class StatsFragment extends Fragment {
 
     private FragmentStatsBinding binding;
+
+    private static StatsDataFragment firstFragment;
+    private static StatsPieChartFragment secondFragment;
+
+    private static Fragment thisFragment;
     private static View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -46,13 +51,17 @@ public class StatsFragment extends Fragment {
         binding = FragmentStatsBinding.inflate(inflater, container, false);
         root = binding.getRoot();
 
+        Log.e("thisFragment", this.toString());
+
+        thisFragment = this;
+
         if (savedInstanceState == null) {
-            StatsDataFragment firstFragment = new StatsDataFragment();
+            firstFragment = new StatsDataFragment();
             getChildFragmentManager().beginTransaction()
                     .add(R.id.fragmentContainerView, firstFragment, "StatsDataFragment")
                     .commit();
 
-            StatsPieChartFragment secondFragment = new StatsPieChartFragment();
+            secondFragment = new StatsPieChartFragment();
             getChildFragmentManager().beginTransaction()
                     .add(R.id.fragmentContainerView2, secondFragment, "StatsPieChartFragment")
                     .commit();
@@ -101,11 +110,24 @@ public class StatsFragment extends Fragment {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("mode", "day");
                 editor.apply();
-                Intent restartIntent = requireActivity().getIntent();
-                String str = "stats";
-                restartIntent.putExtra(str, "stats");
-                startActivity(restartIntent);
-                requireActivity().finish();
+
+                getChildFragmentManager().beginTransaction().remove(firstFragment).commit();
+                getChildFragmentManager().beginTransaction().remove(secondFragment).commit();
+                firstFragment = new StatsDataFragment();
+                getChildFragmentManager().beginTransaction()
+                        .add(R.id.fragmentContainerView, firstFragment, "StatsDataFragment")
+                        .commit();
+
+                secondFragment = new StatsPieChartFragment();
+                getChildFragmentManager().beginTransaction()
+                        .add(R.id.fragmentContainerView2, secondFragment, "StatsPieChartFragment")
+                        .commit();
+
+//                Intent restartIntent = requireActivity().getIntent();
+//                String str = "stats";
+//                restartIntent.putExtra(str, "stats");
+//                startActivity(restartIntent);
+//                requireActivity().finish();
             }
         });
 
@@ -119,11 +141,24 @@ public class StatsFragment extends Fragment {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("mode", "week");
                 editor.apply();
-                Intent restartIntent = requireActivity().getIntent();
-                String str = "stats";
-                restartIntent.putExtra(str, "stats");
-                startActivity(restartIntent);
-                requireActivity().finish();
+
+
+                thisFragment.getChildFragmentManager().beginTransaction().remove(firstFragment).commit();
+                thisFragment.getChildFragmentManager().beginTransaction().remove(secondFragment).commit();
+                firstFragment = new StatsDataFragment();
+                thisFragment.getChildFragmentManager().beginTransaction()
+                        .add(R.id.fragmentContainerView, firstFragment, "StatsDataFragment")
+                        .commit();
+
+                secondFragment = new StatsPieChartFragment();
+                thisFragment.getChildFragmentManager().beginTransaction()
+                        .add(R.id.fragmentContainerView2, secondFragment, "StatsPieChartFragment")
+                        .commit();
+//                Intent restartIntent = requireActivity().getIntent();
+//                String str = "stats";
+//                restartIntent.putExtra(str, "stats");
+//                startActivity(restartIntent);
+//                requireActivity().finish();
             }
         });
 
@@ -136,11 +171,24 @@ public class StatsFragment extends Fragment {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("mode", "month");
                 editor.apply();
-                Intent restartIntent = requireActivity().getIntent();
-                String str = "stats";
-                restartIntent.putExtra(str, "stats");
-                startActivity(restartIntent);
-                requireActivity().finish();
+
+
+                getChildFragmentManager().beginTransaction().remove(firstFragment).commit();
+                getChildFragmentManager().beginTransaction().remove(secondFragment).commit();
+                firstFragment = new StatsDataFragment();
+                getChildFragmentManager().beginTransaction()
+                        .add(R.id.fragmentContainerView, firstFragment, "StatsDataFragment")
+                        .commit();
+
+                secondFragment = new StatsPieChartFragment();
+                getChildFragmentManager().beginTransaction()
+                        .add(R.id.fragmentContainerView2, secondFragment, "StatsPieChartFragment")
+                        .commit();
+//                Intent restartIntent = requireActivity().getIntent();
+//                String str = "stats";
+//                restartIntent.putExtra(str, "stats");
+//                startActivity(restartIntent);
+//                requireActivity().finish();
             }
         });
 
@@ -213,16 +261,30 @@ public class StatsFragment extends Fragment {
 
 //            startActivity(requireActivity().getIntent());
 //            requireActivity().finish();
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            if (Build.VERSION.SDK_INT >= 26) {
-                ft.setReorderingAllowed(false);
-            }
-            ft.detach(this).attach(this).commit();
-            Intent restartIntent = getActivity().getIntent();
-            String str = "stats";
-            restartIntent.putExtra(str, "stats");
-            startActivity(restartIntent);
-            getActivity().finish();
+//            FragmentTransaction ft = getFragmentManager().beginTransaction();
+//            if (Build.VERSION.SDK_INT >= 26) {
+//                ft.setReorderingAllowed(false);
+//            }
+//            ft.detach(this).attach(this).commit();
+
+            thisFragment.getChildFragmentManager().beginTransaction().remove(firstFragment).commit();
+            thisFragment.getChildFragmentManager().beginTransaction().remove(secondFragment).commit();
+            firstFragment = new StatsDataFragment();
+            thisFragment.getChildFragmentManager().beginTransaction()
+                    .add(R.id.fragmentContainerView, firstFragment, "StatsDataFragment")
+                    .commit();
+
+            secondFragment = new StatsPieChartFragment();
+            thisFragment.getChildFragmentManager().beginTransaction()
+                    .add(R.id.fragmentContainerView2, secondFragment, "StatsPieChartFragment")
+                    .commit();
+
+
+//            Intent restartIntent = getActivity().getIntent();
+//            String str = "stats";
+//            restartIntent.putExtra(str, "stats");
+//            startActivity(restartIntent);
+//            getActivity().finish();
         }
 
         public void setDate(int year, int month, int day) {
