@@ -204,12 +204,12 @@ public class HomeFragment extends Fragment {
                         return;
                     }
                     completedList.setVisibility(View.GONE);
-                    ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) myList.getLayoutParams();
-                    lp.height = (int) (lp.height * 2);
-                    myList.setLayoutParams(lp);
-                    ViewGroup.LayoutParams lp2 = (ViewGroup.LayoutParams) completedList.getLayoutParams();
-                    lp2.height = (int) (lp2.height / 2);
-                    completedList.setLayoutParams(lp2);
+//                    ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) myList.getLayoutParams();
+//                    lp.height = (int) (lp.height * 2);
+//                    myList.setLayoutParams(lp);
+//                    ViewGroup.LayoutParams lp2 = (ViewGroup.LayoutParams) completedList.getLayoutParams();
+//                    lp2.height = (int) (lp2.height / 2);
+//                    completedList.setLayoutParams(lp2);
                    // myview.findViewById(R.id.header).findViewById(R.id.imageButton2).setVisibility(View.GONE);
                 }
                 else{
@@ -219,12 +219,12 @@ public class HomeFragment extends Fragment {
                     }
                     view.animate().alpha(1.0f);
                     completedList.setVisibility(View.VISIBLE);
-                    ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) myList.getLayoutParams();
-                    lp.height = (int) (lp.height/2);
-                    myList.setLayoutParams(lp);
-                    ViewGroup.LayoutParams lp2 = (  ViewGroup.LayoutParams) completedList.getLayoutParams();
-                    lp2.height = lp2.height * 2;
-                    completedList.setLayoutParams(lp2);
+//                    ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) myList.getLayoutParams();
+//                    lp.height = (int) (lp.height/2);
+//                    myList.setLayoutParams(lp);
+//                    ViewGroup.LayoutParams lp2 = (  ViewGroup.LayoutParams) completedList.getLayoutParams();
+//                    lp2.height = lp2.height * 2;
+//                    completedList.setLayoutParams(lp2);
                 }
 
             }
