@@ -238,6 +238,12 @@ public class ProfileFragment extends Fragment {
                 else{
                     ObjectAnimator.ofFloat(v, "rotation", 0f, 180f).start();
                     popWindow = initPopWindow(v,pet_profile_dropdown);
+                    popWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                        @Override
+                        public void onDismiss() {
+                            ObjectAnimator.ofFloat(v, "rotation", 180f, 0f).start();
+                        }
+                    });
                     //move element below lower without constraint
                     //ConstraintLayout constraintLayout = myview.findViewById(R.id.profile_constraint_layout);
 
@@ -258,6 +264,12 @@ public class ProfileFragment extends Fragment {
                 else{
                     ObjectAnimator.ofFloat(v, "rotation", 0f, 180f).start();
                     popWindow = initPopWindow(v, pet_tags_dropdown);
+                    popWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                        @Override
+                        public void onDismiss() {
+                            ObjectAnimator.ofFloat(v, "rotation", 180f, 0f).start();
+                        }
+                    });
                 }
 
             }
@@ -274,6 +286,12 @@ public class ProfileFragment extends Fragment {
                 else{
                     ObjectAnimator.ofFloat(v, "rotation", 0f, 180f).start();
                     popWindow = initPopWindow(v, pet_personal_information_dropdown);
+                    popWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                        @Override
+                        public void onDismiss() {
+                            ObjectAnimator.ofFloat(v, "rotation", 180f, 0f).start();
+                        }
+                    });
                 }
 
             }
