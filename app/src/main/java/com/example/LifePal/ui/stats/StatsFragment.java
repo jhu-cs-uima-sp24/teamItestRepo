@@ -315,7 +315,20 @@ public class StatsFragment extends Fragment {
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            return new DatePickerDialog(requireContext(), this, CurrentPickedYear, CurrentPickedMonth, CurrentPickedDay);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), this, CurrentPickedYear, CurrentPickedMonth, CurrentPickedDay);
+
+            // Set a custom style for the buttons immediately after the dialog is created
+            datePickerDialog.setOnShowListener(dialog -> {
+                Button positiveButton = datePickerDialog.getButton(Dialog.BUTTON_POSITIVE);
+                positiveButton.setTextColor(getResources().getColor(R.color.black)); // Set your custom color for the OK button
+
+                Button negativeButton = datePickerDialog.getButton(Dialog.BUTTON_NEGATIVE);
+                negativeButton.setTextColor(getResources().getColor(R.color.black)); // Set your custom color for the Cancel button
+            });
+
+            return datePickerDialog;
+            //return new DatePickerDialog(requireContext(), this, CurrentPickedYear, CurrentPickedMonth, CurrentPickedDay);
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
