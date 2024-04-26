@@ -32,5 +32,13 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="CustomDatePickerDialog" parent="@android:style/Theme.DeviceDefault.Light.Dialog">
+        <item name="android:datePickerStyle">@style/CustomDatePicker</item>
+    </style>
+
+    <style name="CustomDatePicker">
+        <item name="android:calendarTextColor">@color/black</item>
+    </style>
+
 
 </resources>

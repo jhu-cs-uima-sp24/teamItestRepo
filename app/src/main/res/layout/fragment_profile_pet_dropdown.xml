@@ -93,7 +93,7 @@
                         app:layout_constraintVertical_bias="0.812" />
 
                     <TextView
-                        android:id="@+id/points_till_next_level_text_view"
+                        android:id="@+id/pet_point_until_next_upgrade"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="4500 pts until next evolution"
