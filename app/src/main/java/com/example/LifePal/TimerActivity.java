@@ -269,7 +269,7 @@ public class TimerActivity extends AppCompatActivity {
                             public void onSuccess(Void aVoid) {
 //                                MainActivity.taskAdapter.notifyDataSetChanged();
 //                                MainActivity.completedTaskAdapter.notifyDataSetChanged();
-                                points += (secondPast / 30) * 10;
+                                points += ((secondPast -1) / 30) * 10;
                                 Log.d("increased points",Integer.toString(points));
                                 updateCurrentPointsInFirebase(points);
                                 Intent intent = new Intent(TimerActivity.this, MainActivity.class);

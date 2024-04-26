@@ -118,12 +118,14 @@ public class ProfileFragment extends Fragment {
         db.collection("users").document(username).get().addOnSuccessListener(documentSnapshot -> {
             pet_name.setText(documentSnapshot.getString("pet_name"));
             goal.setText(documentSnapshot.getString("user_goal"));
-            int level = points/1000 + 1;
-            String pet_level_string_builder = "Pet Level: " + level;
+            String pet_level_string_builder = "Pet Level: " + documentSnapshot.get("pet_level").toString();
             pet_level.setText(pet_level_string_builder);
             String current_point_string_builder = "Current Happiness Points: " +
                     documentSnapshot.get("current_points").toString();
             current_points.setText(current_point_string_builder);
+            String next_level_string_builder = "Points until next level: " +
+                    documentSnapshot.get("next_level").toString();
+            next_level.setText(next_level_string_builder);
            // Log.d("pet_id", documentSnapshot.getLong("pet_id").toString());
            // Log.d("pet_id", String.valueOf(myPrefs.getInt("pet_id", 0)));
             pet_pic_dropdown_picture.setImageResource(documentSnapshot.getLong("pet_id").intValue());

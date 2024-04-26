@@ -90,7 +90,8 @@ public class StopwatchActivity extends AppCompatActivity {
         int second = fullSeconds % 60;
         timerTextView.setText(String.format("%02d:%02d:%02d", hour, minute, second));
 
-//        startStopwatch();
+        stopwatchCurrentlyPause.setVisibility(View.INVISIBLE);
+        startStopwatch();
 //        isRunning = true;
         startPauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
