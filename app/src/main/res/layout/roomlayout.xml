@@ -93,12 +93,12 @@
 
                 <Button
                     android:id="@+id/tag_button"
-                    android:layout_width="140dp"
+                    android:layout_width="120dp"
                     android:layout_height="38dp"
                     android:backgroundTint="@color/task_green"
                     android:drawableStart="@drawable/ic_home_black_24dp"
                     android:text="Study"
-                    android:textSize="12dp"
+                    android:textSize="10dp"
                     card_view:layout_constraintBottom_toBottomOf="parent"
                     card_view:layout_constraintEnd_toEndOf="parent"
                     card_view:layout_constraintHorizontal_bias="0.092"
@@ -113,10 +113,10 @@
                     android:text="Time Spent: 5 mins"
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="13sp"
                     card_view:layout_constraintBottom_toBottomOf="parent"
                     card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintHorizontal_bias="0.896"
+                    card_view:layout_constraintHorizontal_bias="0.94"
                     card_view:layout_constraintStart_toStartOf="parent"
                     card_view:layout_constraintTop_toTopOf="parent"
                     card_view:layout_constraintVertical_bias="0.978" />
