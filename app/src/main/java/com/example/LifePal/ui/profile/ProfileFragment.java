@@ -85,7 +85,6 @@ public class ProfileFragment extends Fragment {
         TextView pet_points_next_level = pet_profile_dropdown.findViewById(R.id.points_till_next_level_text_view);
         View pet_tags_dropdown = LayoutInflater.from(cntx).inflate(R.layout.fragment_tags_profile_dropdown, null, false);
         View pet_personal_information_dropdown = LayoutInflater.from(cntx).inflate(R.layout.fragment_profile_personal_information_dropdown, null, false);
-
         TextView name = myview.findViewById(R.id.profile_title_text_view);
         EditText pet_name = pet_profile_dropdown.findViewById(R.id.pet_name_text_view);
         petProgress = pet_profile_dropdown.findViewById(R.id.PetProgressBar);
@@ -105,9 +104,9 @@ public class ProfileFragment extends Fragment {
             pet_pic.setImageResource(pet_user);
             pet_pic_dropdown.setImageResource(pet_user);
             pet_name_dropdown.setText(petname);
-            String curr_happ = "Current Happniess Points: " + String.valueOf(points) + " pts";
+            String curr_happ = "Current Happiness Points: " + String.valueOf(points) + " pts";
             pet_points_dropdown.setText(curr_happ);
-            float percentage = ((float)points/(float)next_level_points) * 100;
+            float percentage = (float) ((float) points % 1000.0 / (float) next_level_points  * 100.0);
 
 
             while(percentage > 100){
@@ -115,7 +114,9 @@ public class ProfileFragment extends Fragment {
                 next_level_points += 1000;
             }
             petProgress.setProgress((int) percentage);
-            String next_happ = String.valueOf(next_level_points - points) + " pts until the next evolution";
+            String next_happ = String.valueOf(next_level_points - (points % 1000)) + " pts until the next evolution";
+            Log.d("per", String.valueOf(next_level_points));
+            Log.d("per", String.valueOf(points));
             Log.d("points", next_happ);
             pet_points_next_level.setText(next_happ);
         }
@@ -126,14 +127,12 @@ public class ProfileFragment extends Fragment {
         db.collection("users").document(username).get().addOnSuccessListener(documentSnapshot -> {
             pet_name.setText(documentSnapshot.getString("pet_name"));
             goal.setText(documentSnapshot.getString("user_goal"));
-            String pet_level_string_builder = "Pet Level: " + documentSnapshot.get("pet_level").toString();
+            int level = points/1000 + 1;
+            String pet_level_string_builder = "Pet Level: " + level;
             pet_level.setText(pet_level_string_builder);
             String current_point_string_builder = "Current Happiness Points: " +
                     documentSnapshot.get("current_points").toString();
             current_points.setText(current_point_string_builder);
-            String next_level_string_builder = "Points until next level: " +
-                    documentSnapshot.get("next_level").toString();
-            next_level.setText(next_level_string_builder);
            // Log.d("pet_id", documentSnapshot.getLong("pet_id").toString());
            // Log.d("pet_id", String.valueOf(myPrefs.getInt("pet_id", 0)));
             pet_pic_dropdown_picture.setImageResource(documentSnapshot.getLong("pet_id").intValue());
