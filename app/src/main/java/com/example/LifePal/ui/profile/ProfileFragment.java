@@ -109,8 +109,14 @@ public class ProfileFragment extends Fragment {
             pet_points_dropdown.setText(curr_happ);
             float percentage = ((float)points/(float)next_level_points) * 100;
 
+
+            while(percentage > 100){
+                percentage -= 100;
+                next_level_points += 1000;
+            }
             petProgress.setProgress((int) percentage);
             String next_happ = String.valueOf(next_level_points - points) + " pts until the next evolution";
+            Log.d("points", next_happ);
             pet_points_next_level.setText(next_happ);
         }
         TextView usernameText = myview.findViewById(R.id.profile_title_text_view);
