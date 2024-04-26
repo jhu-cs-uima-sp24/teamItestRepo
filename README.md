@@ -1,4 +1,17 @@
 # teamItestRepo
+Sprint 2:
+Test Login and Password:
+admintest
+passwd
+
+Completed Features
+Stats page
+Profile page
+Pet score and level system
+Dynamic progress bar for timers
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Sprint 1:
 
 Team I
 Andreas, Eric, Itel, Johnny, Timothy
