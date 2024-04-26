@@ -101,6 +101,15 @@ public class StatsFragment extends Fragment {
 //
 
         Button button2 = (Button) root.findViewById(R.id.day_button);
+        Button button3 = (Button) root.findViewById(R.id.week_button);
+        Button button4 = (Button) root.findViewById(R.id.month_button);
+
+        String mode = sharedPreferences.getString("mode", "day");
+        if(mode.equals("day")) {
+            button2.setBackgroundColor(getResources().getColor(R.color.light_pink));
+        } else {
+            button2.setBackgroundColor(getResources().getColor(R.color.dark_pink));
+        }
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,6 +132,23 @@ public class StatsFragment extends Fragment {
                         .add(R.id.fragmentContainerView2, secondFragment, "StatsPieChartFragment")
                         .commit();
 
+                String mod1 = sharedPreferences.getString("mode", "day");
+                if(mod1.equals("day")) {
+                    button2.setBackgroundColor(getResources().getColor(R.color.light_pink));
+                } else {
+                    button2.setBackgroundColor(getResources().getColor(R.color.dark_pink));
+                }
+                if(mod1.equals("week")) {
+                    button3.setBackgroundColor(getResources().getColor(R.color.light_pink));
+                } else {
+                    button3.setBackgroundColor(getResources().getColor(R.color.dark_pink));
+                }
+                if(mod1.equals("month")) {
+                    button4.setBackgroundColor(getResources().getColor(R.color.light_pink));
+                } else {
+                    button4.setBackgroundColor(getResources().getColor(R.color.dark_pink));
+                }
+
 //                Intent restartIntent = requireActivity().getIntent();
 //                String str = "stats";
 //                restartIntent.putExtra(str, "stats");
@@ -132,7 +158,12 @@ public class StatsFragment extends Fragment {
         });
 
 
-        Button button3 = (Button) root.findViewById(R.id.week_button);
+
+        if(mode.equals("week")) {
+            button3.setBackgroundColor(getResources().getColor(R.color.light_pink));
+        } else {
+            button3.setBackgroundColor(getResources().getColor(R.color.dark_pink));
+        }
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,6 +185,24 @@ public class StatsFragment extends Fragment {
                 thisFragment.getChildFragmentManager().beginTransaction()
                         .add(R.id.fragmentContainerView2, secondFragment, "StatsPieChartFragment")
                         .commit();
+
+                String mod1 = sharedPreferences.getString("mode", "day");
+                if(mod1.equals("day")) {
+                    button2.setBackgroundColor(getResources().getColor(R.color.light_pink));
+                } else {
+                    button2.setBackgroundColor(getResources().getColor(R.color.dark_pink));
+                }
+                if(mod1.equals("week")) {
+                    button3.setBackgroundColor(getResources().getColor(R.color.light_pink));
+                } else {
+                    button3.setBackgroundColor(getResources().getColor(R.color.dark_pink));
+                }
+                if(mod1.equals("month")) {
+                    button4.setBackgroundColor(getResources().getColor(R.color.light_pink));
+                } else {
+                    button4.setBackgroundColor(getResources().getColor(R.color.dark_pink));
+                }
+
 //                Intent restartIntent = requireActivity().getIntent();
 //                String str = "stats";
 //                restartIntent.putExtra(str, "stats");
@@ -162,7 +211,11 @@ public class StatsFragment extends Fragment {
             }
         });
 
-        Button button4 = (Button) root.findViewById(R.id.month_button);
+        if(mode.equals("month")) {
+            button4.setBackgroundColor(getResources().getColor(R.color.light_pink));
+        } else {
+            button4.setBackgroundColor(getResources().getColor(R.color.dark_pink));
+        }
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,6 +237,24 @@ public class StatsFragment extends Fragment {
                 getChildFragmentManager().beginTransaction()
                         .add(R.id.fragmentContainerView2, secondFragment, "StatsPieChartFragment")
                         .commit();
+
+
+                String mod1 = sharedPreferences.getString("mode", "day");
+                if(mod1.equals("day")) {
+                    button2.setBackgroundColor(getResources().getColor(R.color.light_pink));
+                } else {
+                    button2.setBackgroundColor(getResources().getColor(R.color.dark_pink));
+                }
+                if(mod1.equals("week")) {
+                    button3.setBackgroundColor(getResources().getColor(R.color.light_pink));
+                } else {
+                    button3.setBackgroundColor(getResources().getColor(R.color.dark_pink));
+                }
+                if(mod1.equals("month")) {
+                    button4.setBackgroundColor(getResources().getColor(R.color.light_pink));
+                } else {
+                    button4.setBackgroundColor(getResources().getColor(R.color.dark_pink));
+                }
 //                Intent restartIntent = requireActivity().getIntent();
 //                String str = "stats";
 //                restartIntent.putExtra(str, "stats");
@@ -251,7 +322,7 @@ public class StatsFragment extends Fragment {
             // Do something with the date the user picks.
             Button thisButton = (Button) root.findViewById(R.id.button6);
             setDate(year, month, day);
-            thisButton.setText("Date: " + (month + 1) + "/" + day + "/" + year);
+            thisButton.setText("Start Date: " + (month + 1) + "/" + day + "/" + year);
             SharedPreferences sharedPreferences = requireContext().getSharedPreferences("statsMode", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putInt("yearVal", year);
